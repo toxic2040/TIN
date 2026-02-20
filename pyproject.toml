@@ -17,7 +17,18 @@ dependencies = [
     "scipy>=1.10",
     "matplotlib>=3.7",
     "tqdm>=4.60",
+    "plotly>=5.15",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.1"]
+
+[project.scripts]
+tin-demo = "tin.cli.demo:main"
+
+[project.urls]
+Repository = "https://github.com/toxic2040/TIN"
+Homepage = "https://github.com/toxic2040/TIN"
 
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -28,17 +39,6 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Astronomy",
     "Topic :: Scientific/Engineering :: Physics",
 ]
-
-[project.optional-dependencies]
-viz = ["plotly>=5.15"]
-dev = ["pytest>=7.0", "ruff>=0.1"]
-
-[project.scripts]
-tin-demo = "tin.cli.demo:main"
-
-[project.urls]
-Repository = "https://github.com/toxic2040/TIN"
-Homepage = "https://github.com/toxic2040/TIN"
 
 [tool.setuptools.packages.find]
 include = ["tin*"]
