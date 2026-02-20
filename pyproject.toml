@@ -1,3 +1,5 @@
+cd ~/Desktop/TINProject/TIN
+cat > pyproject.toml << 'EOF'
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -41,3 +43,4 @@ Homepage = "https://github.com/toxic2040/TIN"
 
 [tool.setuptools.packages.find]
 include = ["tin*"]
+EOF
