@@ -1,5 +1,3 @@
-cd ~/Desktop/TINProject/TIN
-cat > pyproject.toml << 'EOF'
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -32,15 +30,15 @@ tin-demo = "tin.cli.demo:main"
 Repository = "https://github.com/toxic2040/TIN"
 Homepage = "https://github.com/toxic2040/TIN"
 
-[project.classifiers]
-    "Development Status :: 4 - Beta"
-    "Intended Audience :: Science/Research"
-    "License :: OSI Approved :: MIT License"
-    "Programming Language :: Python :: 3"
-    "Programming Language :: Python :: 3.10"
-    "Topic :: Scientific/Engineering :: Astronomy"
-    "Topic :: Scientific/Engineering :: Physics"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Physics",
+]
 
 [tool.setuptools.packages.find]
 include = ["tin*"]
-EOF
