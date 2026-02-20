@@ -19,6 +19,16 @@ dependencies = [
     "tqdm>=4.60",
 ]
 
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
 [project.optional-dependencies]
 viz = ["plotly>=5.15"]
 dev = ["pytest>=7.0", "ruff>=0.1"]
@@ -29,16 +39,6 @@ tin-demo = "tin.cli.demo:main"
 [project.urls]
 Repository = "https://github.com/toxic2040/TIN"
 Homepage = "https://github.com/toxic2040/TIN"
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Scientific/Engineering :: Astronomy",
-    "Topic :: Scientific/Engineering :: Physics",
-]
 
 [tool.setuptools.packages.find]
 include = ["tin*"]
