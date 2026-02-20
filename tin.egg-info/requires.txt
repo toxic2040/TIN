@@ -1,0 +1,11 @@
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+tqdm>=4.60
+
+[dev]
+pytest>=7.0
+ruff>=0.1
+
+[viz]
+plotly>=5.15

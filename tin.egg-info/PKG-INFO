@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: tin
+Version: 0.4.0
+Summary: Tolerant Interlunar Network — planet-agnostic cislunar DTN for Shackleton 100 % coverage, ≤5.6 min latency
+Author: TIN Project Contributors
+License: MIT
+Project-URL: Repository, https://github.com/toxic2040/TIN
+Project-URL: Homepage, https://github.com/toxic2040/TIN
+Keywords: dtn,lunar,cislunar,bundle-protocol,space-networking,artemis,shackleton
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.24
+Requires-Dist: scipy>=1.10
+Requires-Dist: matplotlib>=3.7
+Requires-Dist: tqdm>=4.60
+Provides-Extra: viz
+Requires-Dist: plotly>=5.15; extra == "viz"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: ruff>=0.1; extra == "dev"
