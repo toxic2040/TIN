@@ -1,0 +1,88 @@
+{
+  "label": "saturn_epoch200_alpha3",
+  "target": "saturn",
+  "epoch_day": 200.0,
+  "alpha": 3.0,
+  "n_cells_fit": 3,
+  "n_orbs": [
+    3,
+    6,
+    12
+  ],
+  "p_refs": [
+    1.0
+  ],
+  "cell_mean_ln_phi": [
+    [
+      2.2223269920082562
+    ],
+    [
+      1.3096717388298347
+    ],
+    [
+      1.3506374858303254
+    ]
+  ],
+  "cell_se_ln_phi": [
+    [
+      0.0
+    ],
+    [
+      0.0
+    ],
+    [
+      4.452036136345021e-16
+    ]
+  ],
+  "cell_n_positive_seeds": [
+    [
+      3
+    ],
+    [
+      4
+    ],
+    [
+      3
+    ]
+  ],
+  "cell_E_H": [
+    [
+      2.0
+    ],
+    [
+      3.278260869565217
+    ],
+    [
+      3.769565217391304
+    ]
+  ],
+  "cell_z_logit": [
+    [
+      -6.588499147637255
+    ],
+    [
+      -6.588499147637255
+    ],
+    [
+      -6.588499147637255
+    ]
+  ],
+  "fit_unweighted": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "fit_wls_floored": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": false,
+  "both_span_above_threshold": false,
+  "both_same_sign_pattern": false,
+  "both_beta_Hp_significant": false,
+  "verdict": "degenerate",
+  "notes": [
+    "only 3 admissible cells (< 8); both fits skipped"
+  ]
+}

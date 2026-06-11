@@ -1,0 +1,62 @@
+{
+  "total_configs": 89178,
+  "total_errors": 0,
+  "total_wall_s": 217.5,
+  "blocks": {
+    "P7": {
+      "configs": 72,
+      "wall_s": 1.4,
+      "errors": 0
+    },
+    "P8": {
+      "configs": 40,
+      "wall_s": 0.6,
+      "errors": 0
+    },
+    "P5P6": {
+      "configs": 418,
+      "wall_s": 0.9,
+      "errors": 0
+    },
+    "P4": {
+      "configs": 320,
+      "wall_s": 10.3,
+      "errors": 0
+    },
+    "P3": {
+      "configs": 1672,
+      "wall_s": 2.4,
+      "errors": 0
+    },
+    "P1": {
+      "configs": 1536,
+      "wall_s": 48.6,
+      "errors": 0
+    },
+    "P12": {
+      "configs": 2176,
+      "wall_s": 14.2,
+      "errors": 0
+    },
+    "P14d": {
+      "configs": 320,
+      "wall_s": 21.6,
+      "errors": 0
+    },
+    "P14c": {
+      "configs": 5760,
+      "wall_s": 6.9,
+      "errors": 0
+    },
+    "P14b": {
+      "configs": 25600,
+      "wall_s": 34.8,
+      "errors": 0
+    },
+    "P14a": {
+      "configs": 51264,
+      "wall_s": 71.5,
+      "errors": 0
+    }
+  }
+}

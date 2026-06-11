@@ -1,0 +1,217 @@
+{
+  "entries": {
+    "europa": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0025275377754938938,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "3": 0.17588091478329643,
+        "6": 0.17588091478329643,
+        "12": 0.17588091478329643,
+        "24": 0.17588091478329643
+      },
+      "p_c_U": 0.13812586334237598,
+      "p_c_kappa_x": 0.188045479482696,
+      "p_c_kappa_raw": 0.011299087064476972,
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 32
+    },
+    "venus": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.005359077259206186,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "3": 0.5882533358898032,
+        "6": 0.5882533358898032,
+        "12": 0.9293102247459162,
+        "24": 0.9293102247459162
+      },
+      "p_c_U": 0.7979247628886941,
+      "p_c_kappa_x": 0.048894429782381336,
+      "p_c_kappa_raw": 0.048894429782381336,
+      "notes": [],
+      "n_rows": 25200,
+      "n_admissible_bins": 34
+    },
+    "mars": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0026505928827755677,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "3": 0.9135357341677536,
+        "6": 0.9135357341677536,
+        "12": 0.9135357341677536,
+        "24": 0.9135357341677536
+      },
+      "p_c_U": 0.6249015736044923,
+      "p_c_kappa_x": 0.7556519829500279,
+      "p_c_kappa_raw": 0.8677723280176881,
+      "notes": [],
+      "n_rows": 27840,
+      "n_admissible_bins": 39
+    },
+    "mercury": {
+      "bucket": "persistent_trap",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "p_c_chi": {
+        "3": 0.7327490607708399,
+        "6": 0.7327490607708399,
+        "12": 0.7327490607708399,
+        "24": 0.7327490607708399
+      },
+      "p_c_U": 0.6465430077875725,
+      "p_c_kappa_x": 0.05822418521668791,
+      "p_c_kappa_raw": 0.05822418521668791,
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 25680,
+      "n_admissible_bins": 38
+    },
+    "ceres": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0027340805966298157,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "3": 0.43414673123310266,
+        "6": 0.28581502936396486,
+        "12": 0.28581502936396486,
+        "24": 0.28581502936396486
+      },
+      "p_c_U": 0.0001542263359830982,
+      "p_c_kappa_x": 0.31775497515935786,
+      "p_c_kappa_raw": 0.021880604579371046,
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 36
+    },
+    "jupiter": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0007563545026784132,
+      "p_c_gamma_orientation": "neg_to_pos",
+      "p_c_chi": {
+        "3": 0.22395585762481032,
+        "6": 0.22395585762481032,
+        "12": 0.17588091478329643,
+        "24": 0.17588091478329643
+      },
+      "p_c_U": 0.00020267250218200297,
+      "p_c_kappa_x": 0.2127314700486905,
+      "p_c_kappa_raw": 0.014621029330175464,
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 29
+    },
+    "saturn": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0009763685101791774,
+      "p_c_gamma_orientation": "neg_to_pos",
+      "p_c_chi": {
+        "3": 0.10987388413804905,
+        "6": 0.10987388413804905,
+        "12": 0.10987388413804905,
+        "24": 0.10987388413804905
+      },
+      "p_c_U": 0.06325785485613815,
+      "p_c_kappa_x": 0.10436677186540286,
+      "p_c_kappa_raw": 0.010745863230417726,
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 23
+    },
+    "titan": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.00015420921391290734,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "3": 0.10987388413804905,
+        "6": 0.10987388413804905,
+        "12": 0.10987388413804905,
+        "24": 0.10987388413804905
+      },
+      "p_c_U": 0.10987388413804905,
+      "p_c_kappa_x": 0.10437062671315919,
+      "p_c_kappa_raw": 0.005587155936386304,
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 25
+    },
+    "crawdad_exp1": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.5509310119979786,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "p_c_chi": {
+        "35896": 0.925,
+        "107690": 0.925,
+        "358969": 0.925,
+        "1076907": 0.925
+      },
+      "p_c_U": 0.575,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "notes": [],
+      "n_rows": 12000,
+      "n_admissible_bins": 5
+    },
+    "crawdad_exp2": {
+      "bucket": "persistent_cluster",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "p_c_chi": {
+        "45560": 0.925,
+        "136682": 0.925,
+        "455609": 0.925,
+        "1366827": 0.925
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.4768759398496241,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 5
+    },
+    "crawdad_exp3": {
+      "bucket": "persistent_cluster",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "p_c_chi": {
+        "25415": 0.925,
+        "76245": 0.925,
+        "254150": 0.925,
+        "762450": 0.925
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 2
+    },
+    "crawdad_exp6": {
+      "bucket": "persistent_cluster",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "p_c_chi": {
+        "33554": 0.925,
+        "100663": 0.925,
+        "335545": 0.575,
+        "1006635": 0.575
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 2
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,32 @@
+{
+  "label": "saturn_epoch300_alpha3",
+  "target": "saturn",
+  "epoch_day": 300.0,
+  "alpha": 3.0,
+  "n_cells_fit": 0,
+  "n_orbs": [],
+  "p_refs": [],
+  "cell_mean_ln_phi": [],
+  "cell_se_ln_phi": [],
+  "cell_n_positive_seeds": [],
+  "cell_E_H": [],
+  "cell_z_logit": [],
+  "fit_unweighted": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "fit_wls_floored": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": false,
+  "both_span_above_threshold": false,
+  "both_same_sign_pattern": false,
+  "both_beta_Hp_significant": false,
+  "verdict": "degenerate",
+  "notes": [
+    "only 0 admissible cells (< 8); both fits skipped"
+  ]
+}

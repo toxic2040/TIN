@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "europa", "n_rows": 28800}
+{"stage": "analysis", "entry": "europa", "notes": ["EDGE_PINNED: p_c_gamma=0.00253 within 2x of class-complete floor 0.00178"]}
+{"stage": "done", "entry": "europa", "plot": "runs/results/gamma_pc_triangulation_v5/triangulation.europa.png"}

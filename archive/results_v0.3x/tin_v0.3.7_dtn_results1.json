@@ -1,0 +1,11 @@
+{
+  "version": "0.3.7",
+  "coverage_south_pole_pct": 100.0,
+  "dtn_success_rate_pct": 100.0,
+  "avg_hops": 1.59,
+  "avg_latency_hours": 170.56,
+  "retransmits": 1058,
+  "storm_prob": 0.12,
+  "contacts_used": 7391,
+  "timestamp": "2026-02-19"
+}

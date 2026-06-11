@@ -1,0 +1,141 @@
+{
+  "label": "saturn_epoch0_alpha2",
+  "target": "saturn",
+  "epoch_day": 0.0,
+  "alpha": 2.0,
+  "n_cells_fit": 8,
+  "n_orbs": [
+    12,
+    24
+  ],
+  "p_refs": [
+    0.3441,
+    0.491,
+    0.7007,
+    1.0
+  ],
+  "cell_mean_ln_phi": [
+    [
+      1.513065667161858,
+      1.1575538521707736,
+      0.8019181445888044,
+      0.4462427009831572
+    ],
+    [
+      0.3570438150369059,
+      0.0015320000458187682,
+      -0.35410370753614784,
+      -0.7097791511417976
+    ]
+  ],
+  "cell_se_ln_phi": [
+    [
+      2.2260180681725107e-16,
+      2.2260180681725107e-16,
+      1.1130090340862554e-16,
+      5.565045170431277e-17
+    ],
+    [
+      5.565045170431277e-17,
+      4.347691539399435e-19,
+      0.0,
+      2.2260180681725107e-16
+    ]
+  ],
+  "cell_n_positive_seeds": [
+    [
+      3,
+      5,
+      7,
+      10
+    ],
+    [
+      3,
+      4,
+      7,
+      8
+    ]
+  ],
+  "cell_E_H": [
+    [
+      4.959459459459458,
+      4.959459459459458,
+      4.959459459459458,
+      4.959459459459458
+    ],
+    [
+      6.61851851851852,
+      6.61851851851852,
+      6.61851851851852,
+      6.61851851851852
+    ]
+  ],
+  "cell_z_logit": [
+    [
+      -5.515055351622405,
+      -5.157823441458993,
+      -4.799727157348606,
+      -4.440529268545799
+    ],
+    [
+      -5.515055351622405,
+      -5.157823441458993,
+      -4.799727157348606,
+      -4.440529268545799
+    ]
+  ],
+  "fit_unweighted": {
+    "ok": true,
+    "beta_H": -0.6967936709743202,
+    "se_beta_H": 6.678054204517532e-16,
+    "beta_p": -0.9928595252932999,
+    "se_beta_p": 3.561628909076017e-15,
+    "beta_Hp": -9.992007221626409e-16,
+    "se_beta_Hp": 0.0,
+    "beta_Hp_significance": NaN,
+    "r2": 0.9999995912864723,
+    "z_min": -5.515055351622405,
+    "z_max": -4.440529268545799,
+    "z_star": -697351048212015.2,
+    "z_star_interior": false,
+    "gamma_at_z_min": -0.6967936709743147,
+    "gamma_at_z_max": -0.6967936709743158,
+    "gamma_sign_flip_in_sampled_z": false,
+    "gamma_span": 1.1102230246251565e-15,
+    "n_cells": 8
+  },
+  "fit_wls_floored": {
+    "ok": true,
+    "beta_H": -0.6967936709758502,
+    "se_beta_H": 0.0033716614798101345,
+    "beta_p": -0.9928595252915167,
+    "se_beta_p": 0.0039480272554105605,
+    "beta_Hp": -3.141931159689193e-13,
+    "se_beta_Hp": 0.0006750933554858178,
+    "beta_Hp_significance": 4.6540691508186494e-10,
+    "r2": 0.9999995912864723,
+    "z_min": -5.515055351622405,
+    "z_max": -4.440529268545799,
+    "z_star": -2217724181597.851,
+    "z_star_interior": false,
+    "gamma_at_z_min": -0.6967936709741174,
+    "gamma_at_z_max": -0.696793670974455,
+    "gamma_sign_flip_in_sampled_z": false,
+    "gamma_span": 3.376188217885101e-13,
+    "n_cells": 8
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": false,
+  "both_span_above_threshold": false,
+  "both_same_sign_pattern": true,
+  "both_beta_Hp_significant": false,
+  "verdict": "not_robust_crossing",
+  "notes": [
+    "no_sign_flip_in_one_or_both_fits",
+    "interior mismatch: unw=False, wls=False",
+    "non-finite coefficient SE in at least one fit",
+    "span below threshold: unw=0.000, wls=0.000, thr=0.3",
+    "beta_Hp sig insufficient: unw=nan, wls=0.00, thr=2.0"
+  ]
+}

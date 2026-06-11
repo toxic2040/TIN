@@ -1,0 +1,84 @@
+{
+  "description": "Within-S_T-bin shuffle attribution of pooled MI(S_T;eta); retained share = bin-level conditional ('mean') structure. Historical 2026-03-15 anchor reproduces at the session's 20-bin convention, not the prescribed deciles.",
+  "n_valid": 91540,
+  "mi_full_nats": 0.545209,
+  "historical_anchor": {
+    "source": "2026-03-15 ensemble analysis session; source chain in the workspace provenance ledger",
+    "mi_full": 0.545,
+    "mi_shuffled": 0.421,
+    "retained_fraction": 0.7725
+  },
+  "attribution": {
+    "historical_20bin": {
+      "n_bins": 20,
+      "mi_shuffled_per_seed": {
+        "42": 0.421375,
+        "43": 0.421249,
+        "44": 0.421701,
+        "45": 0.421419,
+        "46": 0.420066
+      },
+      "mi_shuffled_mean": 0.421162,
+      "retained_fraction": 0.7725
+    },
+    "prescribed_decile": {
+      "n_bins": 10,
+      "mi_shuffled_per_seed": {
+        "42": 0.355245,
+        "43": 0.355211,
+        "44": 0.35534,
+        "45": 0.355307,
+        "46": 0.355019
+      },
+      "mi_shuffled_mean": 0.355224,
+      "retained_fraction": 0.6515
+    }
+  },
+  "bin_count_sensitivity_seed42": {
+    "8": {
+      "mi_shuffled": 0.302951,
+      "retained_fraction": 0.5557
+    },
+    "10": {
+      "mi_shuffled": 0.355245,
+      "retained_fraction": 0.6516
+    },
+    "12": {
+      "mi_shuffled": 0.38505,
+      "retained_fraction": 0.7062
+    },
+    "14": {
+      "mi_shuffled": 0.41286,
+      "retained_fraction": 0.7573
+    },
+    "15": {
+      "mi_shuffled": 0.463053,
+      "retained_fraction": 0.8493
+    },
+    "16": {
+      "mi_shuffled": 0.393055,
+      "retained_fraction": 0.7209
+    },
+    "18": {
+      "mi_shuffled": 0.397109,
+      "retained_fraction": 0.7284
+    },
+    "20": {
+      "mi_shuffled": 0.421375,
+      "retained_fraction": 0.7729
+    },
+    "22": {
+      "mi_shuffled": 0.411801,
+      "retained_fraction": 0.7553
+    },
+    "24": {
+      "mi_shuffled": 0.451749,
+      "retained_fraction": 0.8286
+    },
+    "25": {
+      "mi_shuffled": 0.419457,
+      "retained_fraction": 0.7694
+    }
+  },
+  "wall_time_s": 1.1
+}

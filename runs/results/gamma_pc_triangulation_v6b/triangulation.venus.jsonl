@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "venus", "n_rows": 28800}
+{"stage": "analysis", "entry": "venus", "notes": ["no admissible gamma root in sweep", "convergence_band_FAIL: |log10(p_U/p_kx)|=1.21 > 0.3"]}
+{"stage": "done", "entry": "venus", "plot": "runs/results/gamma_pc_triangulation_v6b/triangulation.venus.png"}

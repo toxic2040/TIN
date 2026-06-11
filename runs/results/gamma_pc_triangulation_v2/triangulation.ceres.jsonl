@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "ceres", "n_rows": 28800}
+{"stage": "analysis", "entry": "ceres", "notes": ["convergence_band_FAIL: |log10(p_U/p_kx)|=3.31 > 0.3"]}
+{"stage": "done", "entry": "ceres", "plot": "runs/results/gamma_pc_triangulation_v2/triangulation.ceres.png"}

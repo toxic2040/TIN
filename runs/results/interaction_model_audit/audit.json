@@ -1,0 +1,105 @@
+{
+  "schema": "interaction_model_audit_v1",
+  "slices": {
+    "saturn_epoch0_alpha1": {
+      "target": "saturn",
+      "epoch_day": 0,
+      "alpha": 1,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 20,
+      "beta_H": -0.6949570461588482,
+      "se_beta_H": 0.00546020249179365,
+      "beta_Hp": 0.0004089210113098207,
+      "se_beta_Hp": 0.001108919084323688,
+      "beta_Hp_significance": 0.3687564016983395,
+      "r2": 0.9999978042336449,
+      "z_range_sampled": [
+        -5.780894995466313,
+        -2.1118964942372576
+      ],
+      "z_star": 1699.4896983474177,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6973209755866702,
+      "gamma_at_z_max": -0.6958206450090534,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.37 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "titan_epoch0_alpha1": {
+      "target": "titan",
+      "epoch_day": 0,
+      "alpha": 1,
+      "verdict": "degenerate",
+      "n_cells_fit": 45,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.135986757630827,
+        -2.1118964942372576
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "europa_epoch0_alpha1": {
+      "target": "europa",
+      "epoch_day": 0,
+      "alpha": 1,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 48,
+      "beta_H": -1.3807000136464302,
+      "se_beta_H": 0.15820182603550195,
+      "beta_Hp": -0.19938672930125628,
+      "se_beta_Hp": 0.04928591695916991,
+      "beta_Hp_significance": 4.045511204883027,
+      "r2": 0.8098541922094828,
+      "z_range_sampled": [
+        -5.523069847770858,
+        -1.3932826670930194
+      ],
+      "z_star": -6.924733749758795,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.27947318099701146,
+      "gamma_at_z_max": -1.102897939662622,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -6.925 extrapolated outside sampled z range [-5.523, -1.393]"
+      ]
+    },
+    "mars_epoch200_alpha1": {
+      "target": "mars",
+      "epoch_day": 200,
+      "alpha": 1,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.5651554737702494,
+      "se_beta_H": 0.23696497548734316,
+      "beta_Hp": 0.02324530448111574,
+      "se_beta_Hp": 0.12756070380298629,
+      "beta_Hp_significance": 0.18222935267758808,
+      "r2": 0.2885322724666206,
+      "z_range_sampled": [
+        -4.824661736792511,
+        -0.4126966638215574
+      ],
+      "z_star": 24.312672446574158,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6773062048603801,
+      "gamma_at_z_max": -0.5747487333791222,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.18 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    }
+  }
+}

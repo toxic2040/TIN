@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+.pytest_cache/
+
+# SPICE kernels (fetch from NAIF)
+data/kernels/
+data/traces
+
+# Simulation outputs
+outputs/
+local_results/
+runs/PROVENANCE.json
+runs/analysis_braess_variance_results.json
+runs/crawdad_contacts.Exp*_results.json
+runs/ffwd_gap_analysis_results.json
+runs/phi_decompose_results.json
+runs/synodic_sweep_results.json
+runs/results/mobility_edge_v7_audit/
+
+# Run logs
+*_run.log
+runs/epyc_results/**/*.txt
+
+# Sphinx / documentation builds
+_build/
+
+# Large binaries / generated docs
+*.pdf
+*.docx
+*.png
+*.html
+*.jsx
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+texput.*
+
+# Environment
+.env
+
+# Dev tooling config
+.coverage
+/[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z].md
+!/README.md
+.*/agent-memory/
+.*/agents/
+
+# Local draft run scripts held out of public release
+runs/epyc_collect.sh
+runs/gamma_v7.py
+runs/interaction_model_audit.py
+runs/mobility_edge_v7_audit.py

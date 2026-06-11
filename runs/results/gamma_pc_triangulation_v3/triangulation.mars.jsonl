@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "mars", "n_rows": 28800}
+{"stage": "analysis", "entry": "mars", "notes": []}
+{"stage": "done", "entry": "mars", "plot": "runs/results/gamma_pc_triangulation_v3/triangulation.mars.png"}

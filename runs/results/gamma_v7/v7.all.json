@@ -1,0 +1,118 @@
+{
+  "bodies": {},
+  "crawdad": {
+    "Exp1": {
+      "verdict": "no_trace_level_transition",
+      "n_ttl_slices": 4,
+      "admissible_ttls": [],
+      "common_orientation": "",
+      "n_consistent_roots": 0,
+      "coherent_roots_p_eff": [],
+      "log10_span": NaN,
+      "gamma_stats": {
+        "n": 23,
+        "min": -0.05053213894215311,
+        "median": 1.203972804325931,
+        "max": 4.104917332426187,
+        "frac_positive": 0.9565217391304348,
+        "frac_sig_negative": 0.043478260869565216,
+        "frac_sig_positive": 0.6521739130434783
+      },
+      "ttl_rejection_reasons": {
+        "35896.9": "no_flip",
+        "107690.7": "edge_supported_right",
+        "358969.0": "no_flip",
+        "1076907.0": "no_flip"
+      },
+      "notes": [
+        "only 0/4 ttl slices admit a root with consistent orientation",
+        "ttl rejection reasons: {'no_flip': 3, 'edge_supported_right': 1}"
+      ]
+    },
+    "Exp2": {
+      "verdict": "no_trace_level_transition",
+      "n_ttl_slices": 4,
+      "admissible_ttls": [],
+      "common_orientation": "",
+      "n_consistent_roots": 0,
+      "coherent_roots_p_eff": [],
+      "log10_span": NaN,
+      "gamma_stats": {
+        "n": 20,
+        "min": -0.08291987985748159,
+        "median": 0.756095220896732,
+        "max": 3.762434667429721,
+        "frac_positive": 0.65,
+        "frac_sig_negative": 0.0,
+        "frac_sig_positive": 0.6
+      },
+      "ttl_rejection_reasons": {
+        "45560.9": "edge_supported_right",
+        "136682.69999999998": "underpowered_95.05_0.92",
+        "455609.0": "underpowered_11.90_0.58",
+        "1366827.0": "underpowered_11.94_0.56"
+      },
+      "notes": [
+        "only 0/4 ttl slices admit a root with consistent orientation",
+        "ttl rejection reasons: {'edge_supported_right': 1, 'underpowered_95.05_0.92': 1, 'underpowered_11.90_0.58': 1, 'underpowered_11.94_0.56': 1}"
+      ]
+    },
+    "Exp3": {
+      "verdict": "no_trace_level_transition",
+      "n_ttl_slices": 4,
+      "admissible_ttls": [],
+      "common_orientation": "",
+      "n_consistent_roots": 0,
+      "coherent_roots_p_eff": [],
+      "log10_span": NaN,
+      "gamma_stats": {
+        "n": 18,
+        "min": 0.008003157363544797,
+        "median": 1.2592632073631074,
+        "max": 2.731368684103292,
+        "frac_positive": 1.0,
+        "frac_sig_negative": 0.0,
+        "frac_sig_positive": 0.8888888888888888
+      },
+      "ttl_rejection_reasons": {
+        "25415.0": "no_flip",
+        "76245.0": "no_flip",
+        "254150.0": "no_flip",
+        "762450.0": "no_flip"
+      },
+      "notes": [
+        "only 0/4 ttl slices admit a root with consistent orientation",
+        "ttl rejection reasons: {'no_flip': 4}"
+      ]
+    },
+    "Exp6": {
+      "verdict": "no_trace_level_transition",
+      "n_ttl_slices": 4,
+      "admissible_ttls": [],
+      "common_orientation": "",
+      "n_consistent_roots": 0,
+      "coherent_roots_p_eff": [],
+      "log10_span": NaN,
+      "gamma_stats": {
+        "n": 13,
+        "min": -0.21375905979651935,
+        "median": 0.7941912403577054,
+        "max": 2.09683852084782,
+        "frac_positive": 0.6923076923076923,
+        "frac_sig_negative": 0.07692307692307693,
+        "frac_sig_positive": 0.6923076923076923
+      },
+      "ttl_rejection_reasons": {
+        "33554.5": "edge_supported_right",
+        "100663.5": "edge_supported_right",
+        "335545.0": "edge_supported_right",
+        "1006635.0": "edge_supported_right"
+      },
+      "notes": [
+        "only 0/4 ttl slices admit a root with consistent orientation",
+        "ttl rejection reasons: {'edge_supported_right': 4}"
+      ]
+    }
+  },
+  "schema_version": 7
+}

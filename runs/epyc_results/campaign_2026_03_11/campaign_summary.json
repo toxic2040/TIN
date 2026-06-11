@@ -1,0 +1,1050 @@
+{
+  "total_configs": 7026,
+  "total_wall_s": 18.5,
+  "total_wall_min": 0.3,
+  "per_bucket": {
+    "1": {
+      "label": "Percolation threshold n_c",
+      "grid_size": 660,
+      "wall_s": 1.5,
+      "contacts_gt_0": 660,
+      "st_gt_1pct": 475,
+      "errors": 0,
+      "pass": true,
+      "analysis": {
+        "n_c_per_family": {
+          "Mars_areostationary": 2,
+          "Mars_frozen_elliptical": 1,
+          "Mars_molniya": 1,
+          "Mars_polar": 1,
+          "Mars_sunsync": 1,
+          "Moon_dro": null,
+          "Moon_frozen_elliptical": null,
+          "Moon_lissajous_l2": 3,
+          "Moon_nrho": 5,
+          "Moon_polar": 1,
+          "Moon_sunsync": null
+        }
+      }
+    },
+    "2": {
+      "label": "Window convergence",
+      "grid_size": 180,
+      "wall_s": 2.6,
+      "contacts_gt_0": 180,
+      "st_gt_1pct": 160,
+      "errors": 0,
+      "pass": true,
+      "analysis": {
+        "recommended_window_s": {
+          "Mars_n4": 14400.0,
+          "Mars_n8": 3600.0,
+          "Moon_n4": 7200.0,
+          "Moon_n8": 7200.0
+        }
+      }
+    },
+    "3": {
+      "label": "Altitude phase transition",
+      "grid_size": 540,
+      "wall_s": 1.1,
+      "contacts_gt_0": 540,
+      "st_gt_1pct": 400,
+      "errors": 0,
+      "pass": true
+    },
+    "4": {
+      "label": "Braess paradox hunt",
+      "grid_size": 1386,
+      "wall_s": 2.2,
+      "contacts_gt_0": 1386,
+      "st_gt_1pct": 999,
+      "errors": 0,
+      "pass": true,
+      "analysis": {
+        "braess_cases": [
+          {
+            "body": "Mars",
+            "family": "areostationary",
+            "band": "Ka",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6634,
+            "DR_to": 0.6291,
+            "delta": -0.0343
+          },
+          {
+            "body": "Mars",
+            "family": "areostationary",
+            "band": "UHF",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6634,
+            "DR_to": 0.6291,
+            "delta": -0.0343
+          },
+          {
+            "body": "Mars",
+            "family": "areostationary",
+            "band": "X",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6634,
+            "DR_to": 0.6291,
+            "delta": -0.0343
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "Ka",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.9899,
+            "DR_to": 0.6597,
+            "delta": -0.3302
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "Ka",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.7055,
+            "DR_to": 0.6026,
+            "delta": -0.1029
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "Ka",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6291,
+            "DR_to": 0.6177,
+            "delta": -0.0114
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "UHF",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.9899,
+            "DR_to": 0.6597,
+            "delta": -0.3302
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "UHF",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.7055,
+            "DR_to": 0.6026,
+            "delta": -0.1029
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "UHF",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6291,
+            "DR_to": 0.6177,
+            "delta": -0.0114
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "X",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.9899,
+            "DR_to": 0.6597,
+            "delta": -0.3302
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "X",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.7055,
+            "DR_to": 0.6026,
+            "delta": -0.1029
+          },
+          {
+            "body": "Mars",
+            "family": "frozen_elliptical",
+            "band": "X",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6291,
+            "DR_to": 0.6177,
+            "delta": -0.0114
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "Ka",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.6634,
+            "DR_to": 0.6429,
+            "delta": -0.0205
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "Ka",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6429,
+            "DR_to": 0.6288,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "Ka",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6426,
+            "DR_to": 0.6239,
+            "delta": -0.0187
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "Ka",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6363,
+            "DR_to": 0.6222,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "Ka",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6393,
+            "DR_to": 0.6261,
+            "delta": -0.0132
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "UHF",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.6634,
+            "DR_to": 0.6429,
+            "delta": -0.0205
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "UHF",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6429,
+            "DR_to": 0.6288,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "UHF",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6426,
+            "DR_to": 0.6239,
+            "delta": -0.0187
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "UHF",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6363,
+            "DR_to": 0.6222,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "UHF",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6393,
+            "DR_to": 0.6261,
+            "delta": -0.0132
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "X",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.6634,
+            "DR_to": 0.6429,
+            "delta": -0.0205
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "X",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6429,
+            "DR_to": 0.6288,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "X",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6426,
+            "DR_to": 0.6239,
+            "delta": -0.0187
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "X",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.6363,
+            "DR_to": 0.6222,
+            "delta": -0.0141
+          },
+          {
+            "body": "Mars",
+            "family": "molniya",
+            "band": "X",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6393,
+            "DR_to": 0.6261,
+            "delta": -0.0132
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6344,
+            "DR_to": 0.6118,
+            "delta": -0.0227
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 7,
+            "n_to": 8,
+            "DR_from": 0.6179,
+            "DR_to": 0.5969,
+            "delta": -0.0209
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "Ka",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5919,
+            "delta": -0.0127
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6344,
+            "DR_to": 0.6118,
+            "delta": -0.0227
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 7,
+            "n_to": 8,
+            "DR_from": 0.6179,
+            "DR_to": 0.5969,
+            "delta": -0.0209
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "UHF",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5919,
+            "delta": -0.0127
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6344,
+            "DR_to": 0.6118,
+            "delta": -0.0227
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 7,
+            "n_to": 8,
+            "DR_from": 0.6179,
+            "DR_to": 0.5969,
+            "delta": -0.0209
+          },
+          {
+            "body": "Mars",
+            "family": "polar",
+            "band": "X",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5919,
+            "delta": -0.0127
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6333,
+            "DR_to": 0.6118,
+            "delta": -0.0216
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.6226,
+            "DR_to": 0.609,
+            "delta": -0.0136
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "Ka",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5916,
+            "delta": -0.013
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6333,
+            "DR_to": 0.6118,
+            "delta": -0.0216
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.6226,
+            "DR_to": 0.609,
+            "delta": -0.0136
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "UHF",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5916,
+            "delta": -0.013
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.9899,
+            "DR_to": 0.6651,
+            "delta": -0.3248
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 2,
+            "n_to": 3,
+            "DR_from": 0.6651,
+            "DR_to": 0.6334,
+            "delta": -0.0317
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.6333,
+            "DR_to": 0.6118,
+            "delta": -0.0216
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6118,
+            "DR_to": 0.598,
+            "delta": -0.0138
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.6226,
+            "DR_to": 0.609,
+            "delta": -0.0136
+          },
+          {
+            "body": "Mars",
+            "family": "sunsync",
+            "band": "X",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6045,
+            "DR_to": 0.5916,
+            "delta": -0.013
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "Ka",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.4872,
+            "DR_to": 0.3248,
+            "delta": -0.1624
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "Ka",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.657,
+            "DR_to": 0.5977,
+            "delta": -0.0593
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "UHF",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.4872,
+            "DR_to": 0.3248,
+            "delta": -0.1624
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "UHF",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.657,
+            "DR_to": 0.5977,
+            "delta": -0.0593
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "X",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.4872,
+            "DR_to": 0.3248,
+            "delta": -0.1624
+          },
+          {
+            "body": "Moon",
+            "family": "lissajous_l2",
+            "band": "X",
+            "n_from": 4,
+            "n_to": 5,
+            "DR_from": 0.657,
+            "DR_to": 0.5977,
+            "delta": -0.0593
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.1088,
+            "DR_to": 0.0726,
+            "delta": -0.0363
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 3,
+            "n_to": 4,
+            "DR_from": 0.3003,
+            "DR_to": 0.1732,
+            "delta": -0.1271
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6241,
+            "DR_to": 0.3035,
+            "delta": -0.3207
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.3035,
+            "DR_to": 0.2149,
+            "delta": -0.0886
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.4729,
+            "DR_to": 0.3072,
+            "delta": -0.1657
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6284,
+            "DR_to": 0.4189,
+            "delta": -0.2095
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "Ka",
+            "n_from": 11,
+            "n_to": 12,
+            "DR_from": 0.4189,
+            "DR_to": 0.3089,
+            "delta": -0.11
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.1088,
+            "DR_to": 0.0726,
+            "delta": -0.0363
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 3,
+            "n_to": 4,
+            "DR_from": 0.3003,
+            "DR_to": 0.1732,
+            "delta": -0.1271
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6241,
+            "DR_to": 0.3035,
+            "delta": -0.3207
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.3035,
+            "DR_to": 0.2149,
+            "delta": -0.0886
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.4729,
+            "DR_to": 0.3072,
+            "delta": -0.1657
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6284,
+            "DR_to": 0.4189,
+            "delta": -0.2095
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "UHF",
+            "n_from": 11,
+            "n_to": 12,
+            "DR_from": 0.4189,
+            "DR_to": 0.3089,
+            "delta": -0.11
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 1,
+            "n_to": 2,
+            "DR_from": 0.1088,
+            "DR_to": 0.0726,
+            "delta": -0.0363
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 3,
+            "n_to": 4,
+            "DR_from": 0.3003,
+            "DR_to": 0.1732,
+            "delta": -0.1271
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 5,
+            "n_to": 6,
+            "DR_from": 0.6241,
+            "DR_to": 0.3035,
+            "delta": -0.3207
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 6,
+            "n_to": 7,
+            "DR_from": 0.3035,
+            "DR_to": 0.2149,
+            "delta": -0.0886
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 8,
+            "n_to": 9,
+            "DR_from": 0.4729,
+            "DR_to": 0.3072,
+            "delta": -0.1657
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 10,
+            "n_to": 11,
+            "DR_from": 0.6284,
+            "DR_to": 0.4189,
+            "delta": -0.2095
+          },
+          {
+            "body": "Moon",
+            "family": "nrho",
+            "band": "X",
+            "n_from": 11,
+            "n_to": 12,
+            "DR_from": 0.4189,
+            "DR_to": 0.3089,
+            "delta": -0.11
+          }
+        ],
+        "n_braess": 90
+      }
+    },
+    "5": {
+      "label": "Optical throughput advantage",
+      "grid_size": 750,
+      "wall_s": 1.6,
+      "contacts_gt_0": 750,
+      "st_gt_1pct": 525,
+      "errors": 0,
+      "pass": true
+    },
+    "6": {
+      "label": "Mars conjunction survival",
+      "grid_size": 2880,
+      "wall_s": 4.1,
+      "contacts_gt_0": 2880,
+      "st_gt_1pct": 2790,
+      "errors": 0,
+      "pass": true,
+      "analysis": {
+        "mars_comparison": {
+          "opposition": {
+            "heritage_mean_DR": 0.537,
+            "optimal_best_DR": 0.7097,
+            "optimal_mean_DR": 0.6561
+          },
+          "quadrature": {
+            "heritage_mean_DR": null,
+            "optimal_best_DR": 0.7097,
+            "optimal_mean_DR": 0.6561
+          },
+          "conjunction": {
+            "heritage_mean_DR": 0.537,
+            "optimal_best_DR": null,
+            "optimal_mean_DR": null
+          }
+        },
+        "moon_heritage_mean_DR": 0.424
+      }
+    },
+    "6b": {
+      "label": "Heritage fleet",
+      "grid_size": 81,
+      "wall_s": 0.4,
+      "contacts_gt_0": 81,
+      "st_gt_1pct": 81,
+      "errors": 0,
+      "pass": true
+    },
+    "7": {
+      "label": "Mixed architecture tournament",
+      "grid_size": 405,
+      "wall_s": 1.4,
+      "contacts_gt_0": 405,
+      "st_gt_1pct": 405,
+      "errors": 0,
+      "pass": true
+    },
+    "8": {
+      "label": "Dense neighborhood robustness",
+      "grid_size": 144,
+      "wall_s": 3.5,
+      "contacts_gt_0": 144,
+      "st_gt_1pct": 120,
+      "errors": 0,
+      "pass": true,
+      "analysis": {
+        "dense_wall_time_by_n": {
+          "16": 0.407,
+          "20": 0.563,
+          "24": 0.734,
+          "32": 1.168
+        },
+        "convergence_recommendation": {
+          "Mars_n4": 14400.0,
+          "Mars_n8": 3600.0,
+          "Moon_n4": 7200.0,
+          "Moon_n8": 7200.0
+        }
+      }
+    }
+  }
+}

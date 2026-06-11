@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "ceres", "n_rows": 28800}
+{"stage": "analysis", "entry": "ceres", "notes": ["EDGE_PINNED: p_c_gamma=0.00273 within 2x of class-complete floor 0.00189", "convergence_band_FAIL: |log10(p_U/p_kx)|=3.31 > 0.3", "simpson_splicing_flagged: pooled gamma sign opposite to majority within-class slope"]}
+{"stage": "done", "entry": "ceres", "plot": "runs/results/gamma_pc_triangulation_v5/triangulation.ceres.png"}

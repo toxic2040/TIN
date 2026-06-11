@@ -1,0 +1,92 @@
+[
+  {
+    "epoch_day": 50,
+    "dist_au": 2.289,
+    "sep_deg": 19.9,
+    "mean_p": 0.168,
+    "S_T": 0.9865,
+    "n_feasible": 292,
+    "greedy": {
+      "eta": 0.2219,
+      "s": 0.3
+    },
+    "cgr": {
+      "eta": 1.0,
+      "s": "inf"
+    },
+    "delta_eta": 0.7781,
+    "recovery_pct": 100.0
+  },
+  {
+    "epoch_day": 200,
+    "dist_au": 2.511,
+    "sep_deg": 17.6,
+    "mean_p": 0.1396,
+    "S_T": 1.0,
+    "n_feasible": 296,
+    "greedy": {
+      "eta": 0.2703,
+      "s": 0.4
+    },
+    "cgr": {
+      "eta": 0.9993,
+      "s": 1479.0
+    },
+    "delta_eta": 0.7291,
+    "recovery_pct": 99.9
+  },
+  {
+    "epoch_day": 390,
+    "dist_au": 1.238,
+    "sep_deg": 95.6,
+    "mean_p": 0.5727,
+    "S_T": 0.9595,
+    "n_feasible": 284,
+    "greedy": {
+      "eta": 0.6725,
+      "s": 2.1
+    },
+    "cgr": {
+      "eta": 0.9958,
+      "s": 235.7
+    },
+    "delta_eta": 0.3232,
+    "recovery_pct": 98.7
+  },
+  {
+    "epoch_day": 550,
+    "dist_au": 0.818,
+    "sep_deg": 108.2,
+    "mean_p": 1.0,
+    "S_T": 0.9932,
+    "n_feasible": 294,
+    "greedy": {
+      "eta": 0.6272,
+      "s": 1.7
+    },
+    "cgr": {
+      "eta": 1.0,
+      "s": "inf"
+    },
+    "delta_eta": 0.3728,
+    "recovery_pct": 100.0
+  },
+  {
+    "epoch_day": 700,
+    "dist_au": 1.667,
+    "sep_deg": 56.0,
+    "mean_p": 0.3169,
+    "S_T": 0.9392,
+    "n_feasible": 278,
+    "greedy": {
+      "eta": 0.5072,
+      "s": 1.0
+    },
+    "cgr": {
+      "eta": 1.0,
+      "s": "inf"
+    },
+    "delta_eta": 0.4928,
+    "recovery_pct": 100.0
+  }
+]

@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "mars", "n_rows": 28800}
+{"stage": "analysis", "entry": "mars", "notes": ["EDGE_PINNED: p_c_gamma=0.00265 within 2x of class-complete floor 0.00254", "offset_induced_crossing_FLAGGED: |pooled|=0.0132 < 0.2 * median|within-class|=0.185", "near_cancellation_FLAGGED: |pooled|=0.0132 < 0.25 * SD(within-class)=0.166"]}
+{"stage": "done", "entry": "mars", "plot": "runs/results/gamma_pc_triangulation_v5/triangulation.mars.png"}

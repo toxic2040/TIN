@@ -1,0 +1,10 @@
+{
+  "version": "0.3.8-fix1a",
+  "delivery_pct": 100.0,
+  "overall_avg_h": 0.03,
+  "emergency_avg_h": 0.03,
+  "emergency_worst_min": 3.9,
+  "normal_avg_h": 0.03,
+  "polar_touches": 300,
+  "timestamp": "2026-02-19"
+}

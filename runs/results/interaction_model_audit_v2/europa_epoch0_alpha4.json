@@ -1,0 +1,204 @@
+{
+  "label": "europa_epoch0_alpha4",
+  "target": "europa",
+  "epoch_day": 0.0,
+  "alpha": 4.0,
+  "n_cells_fit": 9,
+  "n_orbs": [
+    3,
+    6,
+    12
+  ],
+  "p_refs": [
+    0.1689,
+    0.2411,
+    0.3441,
+    0.491,
+    0.7007,
+    1.0
+  ],
+  "cell_mean_ln_phi": [
+    [
+      2.6459564293091464,
+      2.290051467935773,
+      1.9343309403194666,
+      1.5788191253283816,
+      1.2231834177464112,
+      0.8675079741407616
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      0.9269030928370742
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      1.296285102295716,
+      1.1138964538300533
+    ]
+  ],
+  "cell_se_ln_phi": [
+    [
+      8.904072272690043e-16,
+      4.452036136345021e-16,
+      4.452036136345021e-16,
+      0.0,
+      2.2260180681725107e-16,
+      0.0
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      0.0
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      2.2260180681725107e-16,
+      0.14940061340166186
+    ]
+  ],
+  "cell_n_positive_seeds": [
+    [
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      3,
+      4
+    ]
+  ],
+  "cell_E_H": [
+    [
+      2.393835616438356,
+      2.393835616438356,
+      2.393835616438356,
+      2.393835616438356,
+      2.393835616438356,
+      2.393835616438356
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      3.106164383561645
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      3.2705479452054793,
+      3.2705479452054793
+    ]
+  ],
+  "cell_z_logit": [
+    [
+      -8.238313995227811,
+      -7.882296034027839,
+      -7.526414279568005,
+      -7.17067247567827,
+      -6.814708366877628,
+      -6.458564016853387
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      -6.458564016853387
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      -6.814708366877628,
+      -6.458564016853387
+    ]
+  ],
+  "fit_unweighted": {
+    "ok": true,
+    "beta_H": 2.438863211526006,
+    "se_beta_H": 2.170493242356484,
+    "beta_p": -1.830640436354192,
+    "se_beta_p": 0.7660527827843853,
+    "beta_Hp": 0.3446530030020578,
+    "se_beta_Hp": 0.31757529918103056,
+    "beta_Hp_significance": 1.0852638851033307,
+    "r2": 0.996206927078969,
+    "z_min": -8.238313995227811,
+    "z_max": -6.458564016853387,
+    "z_star": -7.07628597540885,
+    "z_star_interior": true,
+    "gamma_at_z_min": -0.40049644660313977,
+    "gamma_at_z_max": 0.21289972803645307,
+    "gamma_sign_flip_in_sampled_z": true,
+    "gamma_span": 0.6133961746395928,
+    "n_cells": 9
+  },
+  "fit_wls_floored": {
+    "ok": true,
+    "beta_H": 0.4806885607049103,
+    "se_beta_H": 0.6735793833259854,
+    "beta_p": -1.1395232694520248,
+    "se_beta_p": 0.2440747117141257,
+    "beta_Hp": 0.05814305749910178,
+    "se_beta_Hp": 0.10053896310763608,
+    "beta_Hp_significance": 0.5783136776222206,
+    "r2": 0.9993265189156733,
+    "z_min": -8.238313995227811,
+    "z_max": -6.458564016853387,
+    "z_star": -8.267342334247493,
+    "z_star_interior": false,
+    "gamma_at_z_min": 0.0016877963847247712,
+    "gamma_at_z_max": 0.10516790171137402,
+    "gamma_sign_flip_in_sampled_z": false,
+    "gamma_span": 0.10348010532664925,
+    "n_cells": 9
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": true,
+  "both_span_above_threshold": false,
+  "both_same_sign_pattern": false,
+  "both_beta_Hp_significant": false,
+  "verdict": "not_robust_crossing",
+  "notes": [
+    "no_sign_flip_in_one_or_both_fits",
+    "interior mismatch: unw=True, wls=False",
+    "span below threshold: unw=0.613, wls=0.103, thr=0.3",
+    "sign pattern mismatch: unw=(-1, 1), wls=(1, 1)",
+    "beta_Hp sig insufficient: unw=1.09, wls=0.58, thr=2.0"
+  ]
+}

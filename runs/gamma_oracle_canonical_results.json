@@ -1,0 +1,96 @@
+{
+  "description": "Canonical gamma decomposition (normal/myopic/retry) per body",
+  "source": "phi_decompose_results.json",
+  "total_records": 230400,
+  "skipped": 125063,
+  "bodies": [
+    {
+      "body": "ceres",
+      "n_configs": 16395,
+      "gamma_normal": -0.777656180543095,
+      "gamma_normal_r2": 0.1088214609140351,
+      "gamma_myopic": -1.296659439788298,
+      "gamma_myopic_r2": 0.15453717091111507,
+      "gamma_retry": -0.1927312316213149,
+      "gamma_retry_r2": 0.019059888707184447,
+      "delta_policy": -1.103928208166983
+    },
+    {
+      "body": "europa",
+      "n_configs": 8482,
+      "gamma_normal": -0.32146181766133103,
+      "gamma_normal_r2": 0.07502883075504296,
+      "gamma_myopic": -0.6218011035525782,
+      "gamma_myopic_r2": 0.13137083833075636,
+      "gamma_retry": 0.03637095497971985,
+      "gamma_retry_r2": 0.002192201907697311,
+      "delta_policy": -0.6581720585322981
+    },
+    {
+      "body": "jupiter",
+      "n_configs": 4226,
+      "gamma_normal": -0.05291410025614823,
+      "gamma_normal_r2": 0.006225026435888292,
+      "gamma_myopic": -0.15243673530433688,
+      "gamma_myopic_r2": 0.02909674599069545,
+      "gamma_retry": -0.029134890578949708,
+      "gamma_retry_r2": 0.003471387212125032,
+      "delta_policy": -0.12330184472538717
+    },
+    {
+      "body": "mars",
+      "n_configs": 25156,
+      "gamma_normal": -0.5453110161110192,
+      "gamma_normal_r2": 0.12949042806914512,
+      "gamma_myopic": -0.45958010592147874,
+      "gamma_myopic_r2": 0.11771436346114228,
+      "gamma_retry": -0.06039080583075987,
+      "gamma_retry_r2": 0.008741138326729736,
+      "delta_policy": -0.39918930009071885
+    },
+    {
+      "body": "mercury",
+      "n_configs": 22308,
+      "gamma_normal": -0.6756784793578479,
+      "gamma_normal_r2": 0.18599653300730112,
+      "gamma_myopic": -0.7934600594763425,
+      "gamma_myopic_r2": 0.2517236407352573,
+      "gamma_retry": 0.02180859085259164,
+      "gamma_retry_r2": 0.0005924717654103295,
+      "delta_policy": -0.8152686503289341
+    },
+    {
+      "body": "saturn",
+      "n_configs": 3299,
+      "gamma_normal": 0.011420699383060597,
+      "gamma_normal_r2": 0.0003446682491886621,
+      "gamma_myopic": -0.23272037552558364,
+      "gamma_myopic_r2": 0.0814044212782965,
+      "gamma_retry": 0.11749218598475969,
+      "gamma_retry_r2": 0.03777820568701451,
+      "delta_policy": -0.3502125615103433
+    },
+    {
+      "body": "titan",
+      "n_configs": 4413,
+      "gamma_normal": -0.17810888317034715,
+      "gamma_normal_r2": 0.01581980833264962,
+      "gamma_myopic": -0.1644090943137006,
+      "gamma_myopic_r2": 0.01012533302091867,
+      "gamma_retry": -0.03652430066785039,
+      "gamma_retry_r2": 0.00257630330245473,
+      "delta_policy": -0.1278847936458502
+    },
+    {
+      "body": "venus",
+      "n_configs": 21058,
+      "gamma_normal": -0.6308101758077993,
+      "gamma_normal_r2": 0.30767198552166075,
+      "gamma_myopic": -0.3800428640505173,
+      "gamma_myopic_r2": 0.14400720605804118,
+      "gamma_retry": -0.23078716529189358,
+      "gamma_retry_r2": 0.15533950827070553,
+      "delta_policy": -0.1492556987586237
+    }
+  ]
+}

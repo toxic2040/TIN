@@ -1,0 +1,16 @@
+{
+  "avg_custody_hops": 2.0,
+  "delivered_count": 300,
+  "delivery_pct": 100.0,
+  "emergency_avg_min": 1.7,
+  "emergency_worst_min": 3.4,
+  "handoffs": 600,
+  "overall_avg_h": 0.03,
+  "polar_touches": 300,
+  "seed": 42,
+  "sim_days": 28,
+  "south_pole_coverage_pct": 100.0,
+  "timestamp_utc": "2026-05-03T22:38:22+00:00",
+  "total_bundles": 300,
+  "version": "0.3.8-repro"
+}

@@ -1,0 +1,4 @@
+{"stage": "start", "trace": "Exp1"}
+{"stage": "done", "trace": "Exp1", "verdict": "sparse_roots"}
+{"stage": "start", "trace": "Exp1"}
+{"stage": "done", "trace": "Exp1", "verdict": "no_trace_level_transition"}

@@ -1,0 +1,2001 @@
+{
+  "schema": "interaction_model_audit_v1",
+  "slices": {
+    "saturn_epoch0_alpha1": {
+      "target": "saturn",
+      "epoch_day": 0.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 20,
+      "beta_H": -0.6949570461588482,
+      "se_beta_H": 0.00546020249179365,
+      "beta_Hp": 0.0004089210113098207,
+      "se_beta_Hp": 0.001108919084323688,
+      "beta_Hp_significance": 0.3687564016983395,
+      "r2": 0.9999978042336449,
+      "z_range_sampled": [
+        -5.780894995466313,
+        -2.1118964942372576
+      ],
+      "z_star": 1699.4896983474177,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6973209755866702,
+      "gamma_at_z_max": -0.6958206450090534,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.37 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "saturn_epoch0_alpha2": {
+      "target": "saturn",
+      "epoch_day": 0.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 7,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 7 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch0_alpha3": {
+      "target": "saturn",
+      "epoch_day": 0.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch0_alpha4": {
+      "target": "saturn",
+      "epoch_day": 0.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch100_alpha1": {
+      "target": "saturn",
+      "epoch_day": 100.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 45,
+      "beta_H": -1.0569311966801744,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.07027557468328863,
+      "se_beta_Hp": 48481.04275537302,
+      "beta_Hp_significance": 1.4495475074223765e-06,
+      "r2": 0.7717729538623246,
+      "z_range_sampled": [
+        -5.989410437783235,
+        -1.9464220167875823
+      ],
+      "z_star": -15.03980865960119,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6360219361508703,
+      "gamma_at_z_max": -0.9201452708742215,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.00 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "saturn_epoch100_alpha2": {
+      "target": "saturn",
+      "epoch_day": 100.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 23,
+      "beta_H": -2.9562272661919815,
+      "se_beta_H": 41384.567736166005,
+      "beta_Hp": -0.26148329805125636,
+      "se_beta_Hp": 5908.315748260687,
+      "beta_Hp_significance": 4.4256825327629594e-05,
+      "r2": 0.9885648264714463,
+      "z_range_sampled": [
+        -7.004461084447622,
+        -4.144044736111692
+      ],
+      "z_star": -11.30560646979639,
+      "z_star_interior": false,
+      "gamma_at_z_min": -1.1246776807589376,
+      "gamma_at_z_max": -1.872628781321548,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.00 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "saturn_epoch100_alpha3": {
+      "target": "saturn",
+      "epoch_day": 100.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 6,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 6 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch100_alpha4": {
+      "target": "saturn",
+      "epoch_day": 100.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch200_alpha1": {
+      "target": "saturn",
+      "epoch_day": 200.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 47,
+      "beta_H": -4.018694733942607,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.4434897314146514,
+      "se_beta_Hp": 0.0,
+      "beta_Hp_significance": NaN,
+      "r2": -17.59853286846904,
+      "z_range_sampled": [
+        -6.106421742599658,
+        -2.078766731405379
+      ],
+      "z_star": -9.06152825934369,
+      "z_star_interior": false,
+      "gamma_at_z_min": -1.310559395412497,
+      "gamma_at_z_max": -3.096783034557923,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "saturn_epoch200_alpha2": {
+      "target": "saturn",
+      "epoch_day": 200.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 24,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.5254715385773885,
+        -4.380812012614288
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "saturn_epoch200_alpha3": {
+      "target": "saturn",
+      "epoch_day": 200.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 1,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 1 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch200_alpha4": {
+      "target": "saturn",
+      "epoch_day": 200.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch300_alpha1": {
+      "target": "saturn",
+      "epoch_day": 300.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch300_alpha2": {
+      "target": "saturn",
+      "epoch_day": 300.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch300_alpha3": {
+      "target": "saturn",
+      "epoch_day": 300.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch300_alpha4": {
+      "target": "saturn",
+      "epoch_day": 300.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch400_alpha1": {
+      "target": "saturn",
+      "epoch_day": 400.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 44,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.100027594330057,
+        -2.071585950658255
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "saturn_epoch400_alpha2": {
+      "target": "saturn",
+      "epoch_day": 400.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 22,
+      "beta_H": -1.1279801403674254,
+      "se_beta_H": 0.0,
+      "beta_Hp": 0.0036325976921016846,
+      "se_beta_Hp": 72277.60526248718,
+      "beta_Hp_significance": 5.025896581533589e-08,
+      "r2": 0.8539190496604544,
+      "z_range_sampled": [
+        -6.512692947354848,
+        -4.36789151541719
+      ],
+      "z_star": 310.51611986099635,
+      "z_star_interior": false,
+      "gamma_at_z_min": -1.1516381337373536,
+      "gamma_at_z_max": -1.1438469330056804,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.00 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "saturn_epoch400_alpha3": {
+      "target": "saturn",
+      "epoch_day": 400.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 1,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 1 admissible cells; fit underdetermined"
+      ]
+    },
+    "saturn_epoch400_alpha4": {
+      "target": "saturn",
+      "epoch_day": 400.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch0_alpha1": {
+      "target": "titan",
+      "epoch_day": 0.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 45,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.135986757630827,
+        -2.1118964942372576
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "titan_epoch0_alpha2": {
+      "target": "titan",
+      "epoch_day": 0.0,
+      "alpha": 2.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 21,
+      "beta_H": 0.13189501766319622,
+      "se_beta_H": 2.33904773827412e-10,
+      "beta_Hp": 0.008796540674800138,
+      "se_beta_Hp": 4.2384595898757594e-11,
+      "beta_Hp_significance": 207540982.47891963,
+      "r2": 1.0,
+      "z_range_sampled": [
+        -6.584555977795474,
+        -4.440529268545799
+      ],
+      "z_star": -14.993964393416842,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.07397370317901994,
+      "gamma_at_z_max": 0.0928337213347926,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -14.994 extrapolated outside sampled z range [-6.585, -4.441]"
+      ]
+    },
+    "titan_epoch0_alpha3": {
+      "target": "titan",
+      "epoch_day": 0.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 2,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 2 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch0_alpha4": {
+      "target": "titan",
+      "epoch_day": 0.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch100_alpha1": {
+      "target": "titan",
+      "epoch_day": 100.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 42,
+      "beta_H": 0.005566479873121224,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.0032448562202489033,
+      "se_beta_Hp": 0.0,
+      "beta_Hp_significance": NaN,
+      "r2": -8.389845097512893e+26,
+      "z_range_sampled": [
+        -5.989410437783235,
+        -1.9464220167875823
+      ],
+      "z_star": 1.71547812762386,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.02500125558778586,
+      "gamma_at_z_max": 0.011882339461523825,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "titan_epoch100_alpha2": {
+      "target": "titan",
+      "epoch_day": 100.0,
+      "alpha": 2.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 23,
+      "beta_H": 0.09655334808701388,
+      "se_beta_H": 0.004194373228788099,
+      "beta_Hp": 0.0023613640560801175,
+      "se_beta_Hp": 0.0007522491169454092,
+      "beta_Hp_significance": 3.139071888404067,
+      "r2": 0.9999995340428728,
+      "z_range_sampled": [
+        -6.647396997784069,
+        -4.144044736111692
+      ],
+      "z_star": -40.88880231678176,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.0808564237499517,
+      "gamma_at_z_max": 0.08676774980037172,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -40.889 extrapolated outside sampled z range [-6.647, -4.144]"
+      ]
+    },
+    "titan_epoch100_alpha3": {
+      "target": "titan",
+      "epoch_day": 100.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 2,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 2 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch100_alpha4": {
+      "target": "titan",
+      "epoch_day": 100.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch200_alpha1": {
+      "target": "titan",
+      "epoch_day": 200.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 43,
+      "beta_H": -0.7610652375902356,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.13352142652673366,
+      "se_beta_Hp": 0.0,
+      "beta_Hp_significance": NaN,
+      "r2": 0.999933555281453,
+      "z_range_sampled": [
+        -6.106421742599658,
+        -2.078766731405379
+      ],
+      "z_star": -5.699948370742243,
+      "z_star_interior": true,
+      "gamma_at_z_min": 0.054272904455533566,
+      "gamma_at_z_max": -0.483505338196674,
+      "gamma_sign_flip_in_sampled_z": true,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "titan_epoch200_alpha2": {
+      "target": "titan",
+      "epoch_day": 200.0,
+      "alpha": 2.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 21,
+      "beta_H": -0.02579072239224356,
+      "se_beta_H": 0.0015258000872169714,
+      "beta_Hp": 0.0025811652177365474,
+      "se_beta_Hp": 0.0002617775161051853,
+      "beta_Hp_significance": 9.860148633618346,
+      "r2": 0.9999999337270363,
+      "z_range_sampled": [
+        -6.5254715385773885,
+        -4.380812012614288
+      ],
+      "z_star": 9.991891342337137,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.0426340425569493,
+      "gamma_at_z_max": -0.037098321984646,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = 9.992 extrapolated outside sampled z range [-6.525, -4.381]"
+      ]
+    },
+    "titan_epoch200_alpha3": {
+      "target": "titan",
+      "epoch_day": 200.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 4,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 4 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch200_alpha4": {
+      "target": "titan",
+      "epoch_day": 200.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch300_alpha1": {
+      "target": "titan",
+      "epoch_day": 300.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch300_alpha2": {
+      "target": "titan",
+      "epoch_day": 300.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch300_alpha3": {
+      "target": "titan",
+      "epoch_day": 300.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch300_alpha4": {
+      "target": "titan",
+      "epoch_day": 300.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "titan_epoch400_alpha1": {
+      "target": "titan",
+      "epoch_day": 400.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 47,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.100027594330057,
+        -2.071585950658255
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "titan_epoch400_alpha2": {
+      "target": "titan",
+      "epoch_day": 400.0,
+      "alpha": 2.0,
+      "verdict": "crosses_sheet",
+      "n_cells_fit": 28,
+      "beta_H": 0.41338297573656035,
+      "se_beta_H": 0.12019029334969208,
+      "beta_Hp": 0.08400600720202167,
+      "se_beta_Hp": 0.018277376340519704,
+      "beta_Hp_significance": 4.596174288745483,
+      "r2": 0.9999156901135726,
+      "z_range_sampled": [
+        -7.2253517502502795,
+        -4.36789151541719
+      ],
+      "z_star": -4.920873988718892,
+      "z_star_interior": true,
+      "gamma_at_z_min": -0.19358997543210454,
+      "gamma_at_z_max": 0.04645384963477456,
+      "gamma_sign_flip_in_sampled_z": true,
+      "notes": []
+    },
+    "titan_epoch400_alpha3": {
+      "target": "titan",
+      "epoch_day": 400.0,
+      "alpha": 3.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 8,
+      "beta_H": 1.4285516135867624,
+      "se_beta_H": 0.011612714220080646,
+      "beta_Hp": 0.23426980975648526,
+      "se_beta_Hp": 0.00175623777994982,
+      "beta_Hp_significance": 133.39299064798556,
+      "r2": 0.9999999781974297,
+      "z_range_sampled": [
+        -7.992940361789211,
+        -6.569332900239076
+      ],
+      "z_star": -6.097890355875085,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.44395300436452856,
+      "gamma_at_z_max": -0.11044475517926555,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -6.098 extrapolated outside sampled z range [-7.993, -6.569]"
+      ]
+    },
+    "titan_epoch400_alpha4": {
+      "target": "titan",
+      "epoch_day": 400.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch0_alpha1": {
+      "target": "europa",
+      "epoch_day": 0.0,
+      "alpha": 1.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 48,
+      "beta_H": -1.3807000136464302,
+      "se_beta_H": 0.15820182603550195,
+      "beta_Hp": -0.19938672930125628,
+      "se_beta_Hp": 0.04928591695916991,
+      "beta_Hp_significance": 4.045511204883027,
+      "r2": 0.8098541922094828,
+      "z_range_sampled": [
+        -5.523069847770858,
+        -1.3932826670930194
+      ],
+      "z_star": -6.924733749758795,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.27947318099701146,
+      "gamma_at_z_max": -1.102897939662622,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -6.925 extrapolated outside sampled z range [-5.523, -1.393]"
+      ]
+    },
+    "europa_epoch0_alpha2": {
+      "target": "europa",
+      "epoch_day": 0.0,
+      "alpha": 2.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 38,
+      "beta_H": 0.1496957291547858,
+      "se_beta_H": 3.183823831855808e-08,
+      "beta_Hp": 0.00945320256356652,
+      "se_beta_Hp": 4.48965285371572e-09,
+      "beta_Hp_significance": 2105553.117707725,
+      "r2": 1.0,
+      "z_range_sampled": [
+        -7.141296511059095,
+        -3.189706429018033
+      ],
+      "z_star": -15.835451334950378,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.0821876066692533,
+      "gamma_at_z_max": 0.11954278816296791,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -15.835 extrapolated outside sampled z range [-7.141, -3.190]"
+      ]
+    },
+    "europa_epoch0_alpha3": {
+      "target": "europa",
+      "epoch_day": 0.0,
+      "alpha": 3.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 19,
+      "beta_H": -0.17149044698605956,
+      "se_beta_H": 1123299.342234087,
+      "beta_Hp": 0.007409301325796187,
+      "se_beta_Hp": 190092.99069104172,
+      "beta_Hp_significance": 3.897724634065298e-08,
+      "r2": 0.4759669612890264,
+      "z_range_sampled": [
+        -7.333358885256604,
+        -4.837199417698792
+      ],
+      "z_star": 23.145292578262307,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.22582551269713055,
+      "gamma_at_z_max": -0.20733071504475575,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.00 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "europa_epoch0_alpha4": {
+      "target": "europa",
+      "epoch_day": 0.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 6,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 6 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch100_alpha1": {
+      "target": "europa",
+      "epoch_day": 100.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch100_alpha2": {
+      "target": "europa",
+      "epoch_day": 100.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch100_alpha3": {
+      "target": "europa",
+      "epoch_day": 100.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch100_alpha4": {
+      "target": "europa",
+      "epoch_day": 100.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 0,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 0 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch200_alpha1": {
+      "target": "europa",
+      "epoch_day": 200.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.37169788744104615,
+      "se_beta_H": 0.47244919076021535,
+      "beta_Hp": 0.0503187398760202,
+      "se_beta_Hp": 0.17224718411367212,
+      "beta_Hp_significance": 0.29213098684279826,
+      "r2": 0.13360281297697574,
+      "z_range_sampled": [
+        -5.539641436309001,
+        -1.4138448254021287
+      ],
+      "z_star": 7.386867961257944,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6504456638811017,
+      "gamma_at_z_max": -0.4428407774355131,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.29 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "europa_epoch200_alpha2": {
+      "target": "europa",
+      "epoch_day": 200.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 38,
+      "beta_H": -2.238573276486455,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.377839917154808,
+      "se_beta_Hp": 0.0,
+      "beta_Hp_significance": NaN,
+      "r2": -100.71653820960012,
+      "z_range_sampled": [
+        -6.819837232134422,
+        -3.224055347342516
+      ],
+      "z_star": -5.9246606164410895,
+      "z_star_interior": true,
+      "gamma_at_z_min": 0.33823345831248997,
+      "gamma_at_z_max": -1.0203964711440432,
+      "gamma_sign_flip_in_sampled_z": true,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "europa_epoch200_alpha3": {
+      "target": "europa",
+      "epoch_day": 200.0,
+      "alpha": 3.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 23,
+      "beta_H": 0.08887372086238443,
+      "se_beta_H": 0.0005985942599909382,
+      "beta_Hp": 0.0008168627394287142,
+      "se_beta_Hp": 9.088265397297499e-05,
+      "beta_Hp_significance": 8.988103930939538,
+      "r2": 0.9999999922353081,
+      "z_range_sampled": [
+        -7.7397705534311525,
+        -4.8871010649388
+      ],
+      "z_star": -108.79884290540619,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.08255139068555896,
+      "gamma_at_z_max": 0.08488163009861353,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -108.799 extrapolated outside sampled z range [-7.740, -4.887]"
+      ]
+    },
+    "europa_epoch200_alpha4": {
+      "target": "europa",
+      "epoch_day": 200.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 6,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        NaN,
+        NaN
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "only 6 admissible cells; fit underdetermined"
+      ]
+    },
+    "europa_epoch300_alpha1": {
+      "target": "europa",
+      "epoch_day": 300.0,
+      "alpha": 1.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 48,
+      "beta_H": -1.5377229488944968,
+      "se_beta_H": 0.28915926869058833,
+      "beta_Hp": -0.21412655291745666,
+      "se_beta_Hp": 0.09765182091003828,
+      "beta_Hp_significance": 2.1927553518405016,
+      "r2": 0.5925251265197617,
+      "z_range_sampled": [
+        -5.289759261226939,
+        -1.0939057784278963
+      ],
+      "z_star": -7.18137441593837,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.4050450325247803,
+      "gamma_at_z_max": -1.3034886753432442,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -7.181 extrapolated outside sampled z range [-5.290, -1.094]"
+      ]
+    },
+    "europa_epoch300_alpha2": {
+      "target": "europa",
+      "epoch_day": 300.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 45,
+      "beta_H": 1.7551807135080484,
+      "se_beta_H": 10902754.653311795,
+      "beta_Hp": 0.16449745867447535,
+      "se_beta_Hp": 1633054.2979634113,
+      "beta_Hp_significance": 1.0072993830004354e-07,
+      "r2": -181.21281231123217,
+      "z_range_sampled": [
+        -6.6762964752059775,
+        -2.700522443698386
+      ],
+      "z_star": -10.669956409365462,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.6569469099793077,
+      "gamma_at_z_max": 1.31095163442628,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.00 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "europa_epoch300_alpha3": {
+      "target": "europa",
+      "epoch_day": 300.0,
+      "alpha": 3.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 31,
+      "beta_H": 0.11761859623837267,
+      "se_beta_H": 4.432489605169006e-08,
+      "beta_Hp": 0.005874888117126886,
+      "se_beta_Hp": 7.715192114093354e-09,
+      "beta_Hp_significance": 761470.1008410689,
+      "r2": 1.0,
+      "z_range_sampled": [
+        -7.705700710191211,
+        -4.1323824162239085
+      ],
+      "z_star": -20.020567863323674,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.07234846670193412,
+      "gamma_at_z_max": 0.09334131188587474,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -20.021 extrapolated outside sampled z range [-7.706, -4.132]"
+      ]
+    },
+    "europa_epoch300_alpha4": {
+      "target": "europa",
+      "epoch_day": 300.0,
+      "alpha": 4.0,
+      "verdict": "reliability_magnitude_only",
+      "n_cells_fit": 19,
+      "beta_H": 0.088617496748564,
+      "se_beta_H": 0.0007750526236233439,
+      "beta_Hp": 0.0008303320485444909,
+      "se_beta_Hp": 0.00013407997685638336,
+      "beta_Hp_significance": 6.19281169353036,
+      "r2": 0.9999999919786103,
+      "z_range_sampled": [
+        -7.664283600767196,
+        -5.527096595718402
+      ],
+      "z_star": -106.72537198088855,
+      "z_star_interior": false,
+      "gamma_at_z_min": 0.08225359644571303,
+      "gamma_at_z_max": 0.08402817130973786,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "z* = -106.725 extrapolated outside sampled z range [-7.664, -5.527]"
+      ]
+    },
+    "europa_epoch350_alpha1": {
+      "target": "europa",
+      "epoch_day": 350.0,
+      "alpha": 1.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 48,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -5.365199370129885,
+        -1.1929150673742024
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "europa_epoch350_alpha2": {
+      "target": "europa",
+      "epoch_day": 350.0,
+      "alpha": 2.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 40,
+      "beta_H": -1.8359959895551219,
+      "se_beta_H": 0.0,
+      "beta_Hp": -0.3662099892228423,
+      "se_beta_Hp": 0.0,
+      "beta_Hp_significance": NaN,
+      "r2": 0.5237206646869303,
+      "z_range_sampled": [
+        -6.826623061822314,
+        -2.8599947574266067
+      ],
+      "z_star": -5.013506030928885,
+      "z_star_interior": true,
+      "gamma_at_z_min": 0.6639815683432344,
+      "gamma_at_z_max": -0.7886373402605387,
+      "gamma_sign_flip_in_sampled_z": true,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "europa_epoch350_alpha3": {
+      "target": "europa",
+      "epoch_day": 350.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 23,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -7.218382871350804,
+        -4.360839124530551
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "europa_epoch350_alpha4": {
+      "target": "europa",
+      "epoch_day": 350.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 8,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -7.253203807496094,
+        -5.828429592691549
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "mars_epoch200_alpha1": {
+      "target": "mars",
+      "epoch_day": 200.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.5651554737702494,
+      "se_beta_H": 0.23696497548734316,
+      "beta_Hp": 0.02324530448111574,
+      "se_beta_Hp": 0.12756070380298629,
+      "beta_Hp_significance": 0.18222935267758808,
+      "r2": 0.2885322724666206,
+      "z_range_sampled": [
+        -4.824661736792511,
+        -0.4126966638215574
+      ],
+      "z_star": 24.312672446574158,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6773062048603801,
+      "gamma_at_z_max": -0.5747487333791222,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.18 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch200_alpha2": {
+      "target": "mars",
+      "epoch_day": 200.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.754422921274985,
+      "se_beta_H": 0.3993885829360622,
+      "beta_Hp": -0.04922057380436863,
+      "se_beta_Hp": 0.12667391032475114,
+      "beta_Hp_significance": 0.38856125683799386,
+      "r2": 0.309369348661106,
+      "z_range_sampled": [
+        -5.750117527236582,
+        -1.6685652761899388
+      ],
+      "z_star": -15.3273898080405,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.47139883714184316,
+      "gamma_at_z_max": -0.6722951809508714,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.39 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch200_alpha3": {
+      "target": "mars",
+      "epoch_day": 200.0,
+      "alpha": 3.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 43,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -6.672666597082331,
+        -2.6966531587285436
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    },
+    "mars_epoch200_alpha4": {
+      "target": "mars",
+      "epoch_day": 200.0,
+      "alpha": 4.0,
+      "verdict": "crosses_sheet",
+      "n_cells_fit": 37,
+      "beta_H": -0.18125563324228366,
+      "se_beta_H": 0.0005180103223518198,
+      "beta_Hp": -0.03389222108362422,
+      "se_beta_Hp": 7.608431246091487e-05,
+      "beta_Hp_significance": 445.45609978449795,
+      "r2": 0.9999999837461025,
+      "z_range_sampled": [
+        -7.594063451733597,
+        -3.6570629599364333
+      ],
+      "z_star": -5.348001029353056,
+      "z_star_interior": true,
+      "gamma_at_z_min": 0.07612404418694185,
+      "gamma_at_z_max": -0.057309646887384894,
+      "gamma_sign_flip_in_sampled_z": true,
+      "notes": []
+    },
+    "mars_epoch390_alpha1": {
+      "target": "mars",
+      "epoch_day": 390.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.357898178196921,
+      "se_beta_H": 0.054351756549359066,
+      "beta_Hp": 0.003385771517198384,
+      "se_beta_Hp": 0.04189409515425633,
+      "beta_Hp_significance": 0.08081739215829319,
+      "r2": 0.510795048156629,
+      "z_range_sampled": [
+        -4.108980970501304,
+        1.436775968172366
+      ],
+      "z_star": 105.70653583058969,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.37181024893155445,
+      "gamma_at_z_max": -0.3530335830472879,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.08 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch390_alpha2": {
+      "target": "mars",
+      "epoch_day": 390.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.3517930588371569,
+      "se_beta_H": 0.05847825320337229,
+      "beta_Hp": 0.01568522722009881,
+      "se_beta_Hp": 0.047133791863786294,
+      "beta_Hp_significance": 0.3327809327420152,
+      "r2": 0.48094615522132833,
+      "z_range_sampled": [
+        -4.325379296652544,
+        0.6313306089879114
+      ],
+      "z_star": 22.428304920337695,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.4196376159182632,
+      "gamma_at_z_max": -0.34189049478417816,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.33 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch390_alpha3": {
+      "target": "mars",
+      "epoch_day": 390.0,
+      "alpha": 3.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.33473352154594166,
+      "se_beta_H": 0.062294778389625285,
+      "beta_Hp": 0.020593298780249458,
+      "se_beta_Hp": 0.04503055058970666,
+      "beta_Hp_significance": 0.4573183874184472,
+      "r2": 0.5157388948489624,
+      "z_range_sampled": [
+        -4.5411655947768645,
+        0.10981331921926926
+      ],
+      "z_star": 16.254487691256955,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.42825110144977085,
+      "gamma_at_z_max": -0.33247210305320835,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.46 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch390_alpha4": {
+      "target": "mars",
+      "epoch_day": 390.0,
+      "alpha": 4.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.34873421521678755,
+      "se_beta_H": 0.08522760307707894,
+      "beta_Hp": 0.007527221615285143,
+      "se_beta_Hp": 0.0484159013443759,
+      "beta_Hp_significance": 0.15547002960339437,
+      "r2": 0.47981788450078666,
+      "z_range_sampled": [
+        -4.7564599343356475,
+        -0.2976329230062002
+      ],
+      "z_star": 46.32973931691221,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.3845371432467566,
+      "gamma_at_z_max": -0.35097456418826034,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.16 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch550_alpha1": {
+      "target": "mars",
+      "epoch_day": 550.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 44,
+      "beta_H": -0.7205841108794103,
+      "se_beta_H": 0.13468342068093414,
+      "beta_Hp": -0.024279306439440297,
+      "se_beta_Hp": 0.09244001993661449,
+      "beta_Hp_significance": 0.2626492990383219,
+      "r2": 0.46217617446059545,
+      "z_range_sampled": [
+        -3.686977040237373,
+        1.7832654701746316
+      ],
+      "z_star": -29.678941310648977,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6310668654843066,
+      "gamma_at_z_max": -0.7638805596926528,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.26 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch550_alpha2": {
+      "target": "mars",
+      "epoch_day": 550.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 40,
+      "beta_H": -0.7200114040655313,
+      "se_beta_H": 0.13234805358174706,
+      "beta_Hp": -0.01333372242617134,
+      "se_beta_Hp": 0.11718416188540831,
+      "beta_Hp_significance": 0.1137843392113866,
+      "r2": 0.4633605962821645,
+      "z_range_sampled": [
+        -3.4810996449244396,
+        1.009568409887442
+      ],
+      "z_star": -53.999279499946525,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6735953876622652,
+      "gamma_at_z_max": -0.7334727090132016,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.11 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch550_alpha3": {
+      "target": "mars",
+      "epoch_day": 550.0,
+      "alpha": 3.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 40,
+      "beta_H": -0.6948664933418256,
+      "se_beta_H": 0.14199749267047915,
+      "beta_Hp": -0.025049858815119827,
+      "se_beta_Hp": 0.08615521269491198,
+      "beta_Hp_significance": 0.2907526780048119,
+      "r2": 0.4925729888237341,
+      "z_range_sampled": [
+        -3.2739444527726094,
+        2.1480289789400926
+      ],
+      "z_star": -27.73933771324937,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.612854647031327,
+      "gamma_at_z_max": -0.748674315995061,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.29 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch550_alpha4": {
+      "target": "mars",
+      "epoch_day": 550.0,
+      "alpha": 4.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 36,
+      "beta_H": -0.7076502854294288,
+      "se_beta_H": 0.13789030549559342,
+      "beta_Hp": -0.016913591629189706,
+      "se_beta_Hp": 0.12224351569687612,
+      "beta_Hp_significance": 0.13835982655415338,
+      "r2": 0.4719208136978944,
+      "z_range_sampled": [
+        -3.065206305557896,
+        1.1900463041664253
+      ],
+      "z_star": -41.83914930334231,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6558066377180052,
+      "gamma_at_z_max": -0.7277782426379261,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.14 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch585_alpha1": {
+      "target": "mars",
+      "epoch_day": 585.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.5382539194149165,
+      "se_beta_H": 0.21944301435079475,
+      "beta_Hp": 0.010308857260942772,
+      "se_beta_Hp": 0.07796701285654066,
+      "beta_Hp_significance": 0.13222075443509776,
+      "r2": 0.21834279227630293,
+      "z_range_sampled": [
+        -3.9200145366317116,
+        3.5747100964891594
+      ],
+      "z_star": 52.21276284949665,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.5786647897338736,
+      "gamma_at_z_max": -0.5014027432809588,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.13 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch585_alpha2": {
+      "target": "mars",
+      "epoch_day": 585.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.5288126010975966,
+      "se_beta_H": 0.20589361270572695,
+      "beta_Hp": 0.025734284078176496,
+      "se_beta_Hp": 0.08830187458641219,
+      "beta_Hp_significance": 0.29143530869203615,
+      "r2": 0.21534417371476355,
+      "z_range_sampled": [
+        -3.9481933176882964,
+        2.86764839903183
+      ],
+      "z_star": 20.548953275371932,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6304165295305454,
+      "gamma_at_z_max": -0.4550157225605835,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.29 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch585_alpha3": {
+      "target": "mars",
+      "epoch_day": 585.0,
+      "alpha": 3.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.541652658966594,
+      "se_beta_H": 0.1934867307921974,
+      "beta_Hp": 0.02805535564528179,
+      "se_beta_Hp": 0.09617060431851937,
+      "beta_Hp_significance": 0.2917248554699914,
+      "r2": 0.2333103994666501,
+      "z_range_sampled": [
+        -3.976357078899996,
+        2.4482051288931763
+      ],
+      "z_star": 19.306568977951503,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6532107709877673,
+      "gamma_at_z_max": -0.47296739338289295,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.29 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch585_alpha4": {
+      "target": "mars",
+      "epoch_day": 585.0,
+      "alpha": 4.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.5418448837397364,
+      "se_beta_H": 0.1803144876071555,
+      "beta_Hp": 0.034324445847230725,
+      "se_beta_Hp": 0.10131753479801964,
+      "beta_Hp_significance": 0.3387809021968193,
+      "r2": 0.23053540066675815,
+      "z_range_sampled": [
+        -4.004506245058366,
+        2.1464812614286313
+      ],
+      "z_star": 15.7859761567994,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.6792973414931395,
+      "gamma_at_z_max": -0.46816810391973385,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.34 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch700_alpha1": {
+      "target": "mars",
+      "epoch_day": 700.0,
+      "alpha": 1.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.3362230141824104,
+      "se_beta_H": 0.17635600155756379,
+      "beta_Hp": 0.03172060775201711,
+      "se_beta_Hp": 0.13547563913119992,
+      "beta_Hp_significance": 0.23414252152962817,
+      "r2": 0.10851906746888185,
+      "z_range_sampled": [
+        -4.411106941365241,
+        0.40464800008497837
+      ],
+      "z_star": 10.59951362883424,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.4761460072216572,
+      "gamma_at_z_max": -0.32338733369407663,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.23 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch700_alpha2": {
+      "target": "mars",
+      "epoch_day": 700.0,
+      "alpha": 2.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.31484690257458514,
+      "se_beta_H": 0.2969939939419359,
+      "beta_Hp": 0.024021519584688338,
+      "se_beta_Hp": 0.1458212219352001,
+      "beta_Hp_significance": 0.16473267241830544,
+      "r2": 0.0962178709761583,
+      "z_range_sampled": [
+        -4.927106794811502,
+        -0.5763855925347098
+      ],
+      "z_star": 13.10686867517212,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.4332034949420006,
+      "gamma_at_z_max": -0.32869256037398986,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.16 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch700_alpha3": {
+      "target": "mars",
+      "epoch_day": 700.0,
+      "alpha": 3.0,
+      "verdict": "underpowered_interaction",
+      "n_cells_fit": 48,
+      "beta_H": -0.43797794664183054,
+      "se_beta_H": 0.38554024402592363,
+      "beta_Hp": -0.02723421939802913,
+      "se_beta_Hp": 0.13958172439697003,
+      "beta_Hp_significance": 0.19511307454961,
+      "r2": 0.10492725676382342,
+      "z_range_sampled": [
+        -5.441155541779622,
+        -1.2903814258801116
+      ],
+      "z_star": -16.08189830010424,
+      "z_star_interior": false,
+      "gamma_at_z_min": -0.2897923228382022,
+      "gamma_at_z_max": -0.4028354157822699,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "|beta_Hp|/SE = 0.20 < 2.0 -> interaction not distinguishable from 0"
+      ]
+    },
+    "mars_epoch700_alpha4": {
+      "target": "mars",
+      "epoch_day": 700.0,
+      "alpha": 4.0,
+      "verdict": "degenerate",
+      "n_cells_fit": 48,
+      "beta_H": NaN,
+      "se_beta_H": NaN,
+      "beta_Hp": NaN,
+      "se_beta_Hp": NaN,
+      "beta_Hp_significance": NaN,
+      "r2": NaN,
+      "z_range_sampled": [
+        -5.954041224900891,
+        -1.9060023510235664
+      ],
+      "z_star": NaN,
+      "z_star_interior": false,
+      "gamma_at_z_min": NaN,
+      "gamma_at_z_max": NaN,
+      "gamma_sign_flip_in_sampled_z": false,
+      "notes": [
+        "beta_Hp SE undefined"
+      ]
+    }
+  }
+}

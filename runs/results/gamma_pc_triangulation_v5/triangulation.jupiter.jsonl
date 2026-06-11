@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "jupiter", "n_rows": 28800}
+{"stage": "analysis", "entry": "jupiter", "notes": ["no admissible gamma root in sweep", "convergence_band_FAIL: |log10(p_U/p_kx)|=3.02 > 0.3"]}
+{"stage": "done", "entry": "jupiter", "plot": "runs/results/gamma_pc_triangulation_v5/triangulation.jupiter.png"}

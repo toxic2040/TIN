@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use TIN, please cite the software and the preferred Zenodo working-paper record."
+title: "TIN: Tolerant Interplanetary Network"
+type: software
+authors:
+  - family-names: Councilman
+    given-names: J.
+    orcid: https://orcid.org/0009-0003-6265-5168
+repository-code: https://github.com/toxic2040/TIN
+license: MIT
+preferred-citation:
+  type: generic
+  authors:
+    - family-names: Councilman
+      given-names: J.
+      orcid: https://orcid.org/0009-0003-6265-5168
+  title: "A Classification Framework for Temporal Contact Graphs: Morphology, Confinement, and the Routing Efficiency Frontier"
+  year: 2026
+  doi: "10.5281/zenodo.18851385"
+  url: "https://doi.org/10.5281/zenodo.18851385"
+  version: "7.5"

@@ -1,0 +1,4 @@
+{"stage": "start", "trace": "Exp6"}
+{"stage": "done", "trace": "Exp6", "verdict": "no_admissible_root"}
+{"stage": "start", "trace": "Exp6"}
+{"stage": "done", "trace": "Exp6", "verdict": "no_trace_level_transition"}

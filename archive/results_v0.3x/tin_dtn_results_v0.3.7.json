@@ -1,0 +1,10 @@
+{
+  "version": "0.3.7-fix4",
+  "success_rate_pct": 100.0,
+  "avg_hops": 1.64,
+  "avg_latency_hours": 186.91,
+  "retransmits": 8449,
+  "storm_prob": 0.12,
+  "contacts_generated": 6300,
+  "timestamp": "2026-02-19"
+}

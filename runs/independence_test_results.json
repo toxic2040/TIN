@@ -1,0 +1,177 @@
+{
+  "description": "Independence tests: S_T vs eta \u2014 pooled MI, stratified MI, heteroscedasticity",
+  "n_valid": 91540,
+  "pooled": {
+    "mi_nats": 0.545209,
+    "h_st": 2.809055,
+    "h_eta": 3.189924,
+    "nmi_st": 0.19409,
+    "nmi_eta": 0.170916,
+    "null_mean": 0.002739,
+    "null_std": 0.000169,
+    "z_score": 3216.6,
+    "spearman_rho": 0.1315
+  },
+  "stratified": {
+    "Ceres": {
+      "n": 948,
+      "mi": 0.35154,
+      "nmi_st": 0.173365,
+      "spearman_rho": 0.0249,
+      "spearman_p": 0.44373287699890296
+    },
+    "Jupiter": {
+      "n": 656,
+      "mi": 0.853251,
+      "nmi_st": 0.286672,
+      "spearman_rho": 0.0462,
+      "spearman_p": 0.2373675686367946
+    },
+    "Mars": {
+      "n": 76240,
+      "mi": 0.53755,
+      "nmi_st": 0.211841,
+      "spearman_rho": 0.1807,
+      "spearman_p": 0.0
+    },
+    "Mercury": {
+      "n": 958,
+      "mi": 0.451416,
+      "nmi_st": 0.239958,
+      "spearman_rho": 0.026,
+      "spearman_p": 0.42142700885206336
+    },
+    "Moon": {
+      "n": 10125,
+      "mi": 0.608027,
+      "nmi_st": 0.229718,
+      "spearman_rho": 0.0888,
+      "spearman_p": 3.535879009539599e-19
+    },
+    "Saturn": {
+      "n": 696,
+      "mi": 0.794959,
+      "nmi_st": 0.273574,
+      "spearman_rho": -0.0631,
+      "spearman_p": 0.09626614693842618
+    },
+    "Titan": {
+      "n": 957,
+      "mi": 0.390281,
+      "nmi_st": 0.183017,
+      "spearman_rho": -0.1136,
+      "spearman_p": 0.00043192256515954167
+    },
+    "Venus": {
+      "n": 960,
+      "mi": 0.49066,
+      "nmi_st": 0.203587,
+      "spearman_rho": 0.0461,
+      "spearman_p": 0.15329601128826922
+    }
+  },
+  "conditional_mi_weighted": 0.544706,
+  "heteroscedasticity": [
+    {
+      "st_lo": 0.0104,
+      "st_hi": 0.3125,
+      "n": 9039,
+      "mean_st": 0.245,
+      "mean_eta": 0.9285,
+      "std_eta": 0.0831,
+      "var_eta": 0.006898,
+      "cv_eta": 0.0894
+    },
+    {
+      "st_lo": 0.3125,
+      "st_hi": 0.3333,
+      "n": 4256,
+      "mean_st": 0.3199,
+      "mean_eta": 0.9206,
+      "std_eta": 0.0811,
+      "var_eta": 0.006585,
+      "cv_eta": 0.0882
+    },
+    {
+      "st_lo": 0.3333,
+      "st_hi": 0.4792,
+      "n": 14061,
+      "mean_st": 0.3702,
+      "mean_eta": 0.9311,
+      "std_eta": 0.063,
+      "var_eta": 0.003969,
+      "cv_eta": 0.0677
+    },
+    {
+      "st_lo": 0.4792,
+      "st_hi": 0.5,
+      "n": 6217,
+      "mean_st": 0.4918,
+      "mean_eta": 0.9139,
+      "std_eta": 0.0639,
+      "var_eta": 0.004087,
+      "cv_eta": 0.07
+    },
+    {
+      "st_lo": 0.5,
+      "st_hi": 0.6424,
+      "n": 12009,
+      "mean_st": 0.5335,
+      "mean_eta": 0.9565,
+      "std_eta": 0.0415,
+      "var_eta": 0.001726,
+      "cv_eta": 0.0434
+    },
+    {
+      "st_lo": 0.6424,
+      "st_hi": 0.6632,
+      "n": 4538,
+      "mean_st": 0.6514,
+      "mean_eta": 0.9483,
+      "std_eta": 0.048,
+      "var_eta": 0.002301,
+      "cv_eta": 0.0506
+    },
+    {
+      "st_lo": 0.6632,
+      "st_hi": 0.6667,
+      "n": 5121,
+      "mean_st": 0.6632,
+      "mean_eta": 0.937,
+      "std_eta": 0.0399,
+      "var_eta": 0.001589,
+      "cv_eta": 0.0425
+    },
+    {
+      "st_lo": 0.6667,
+      "st_hi": 0.9236,
+      "n": 17880,
+      "mean_st": 0.7036,
+      "mean_eta": 0.9628,
+      "std_eta": 0.0345,
+      "var_eta": 0.001187,
+      "cv_eta": 0.0358
+    },
+    {
+      "st_lo": 0.9236,
+      "st_hi": 0.9896,
+      "n": 6381,
+      "mean_st": 0.9677,
+      "mean_eta": 0.9602,
+      "std_eta": 0.0377,
+      "var_eta": 0.001418,
+      "cv_eta": 0.0392
+    },
+    {
+      "st_lo": 0.9896,
+      "st_hi": 1.0,
+      "n": 12038,
+      "mean_st": 0.9956,
+      "mean_eta": 0.9575,
+      "std_eta": 0.0382,
+      "var_eta": 0.001461,
+      "cv_eta": 0.0399
+    }
+  ],
+  "wall_time_s": 1.8
+}

@@ -1,0 +1,35 @@
+{
+  "config": {
+    "n_orbiters": 6,
+    "body": "Mars",
+    "t_sol_s": 88775.0,
+    "dt_inject_s": 300.0,
+    "sep_min_deg": 5.0
+  },
+  "geometry": {
+    "dist_au": 2.1236565726902836,
+    "owlt_s": 1059.7147889975477,
+    "sep_deg": 31.31947116975007
+  },
+  "contacts": {
+    "total": 868,
+    "intra_body": 790,
+    "inter_body": 78,
+    "surface": 40,
+    "isl": 750
+  },
+  "results": {
+    "S_T_full": 0.9628378378378378,
+    "eta": 0.9578947368421052,
+    "DR": 0.9222972972972973,
+    "residual": 0.0,
+    "delivered": 273,
+    "feasible": 285,
+    "total": 296,
+    "failed_reasons": {
+      "no_route": 12,
+      "ttl_expired": 0,
+      "link_failure": 175
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "label": "saturn_epoch100_alpha3",
+  "target": "saturn",
+  "epoch_day": 100.0,
+  "alpha": 3.0,
+  "n_cells_fit": 8,
+  "n_orbs": [
+    3,
+    6
+  ],
+  "p_refs": [
+    0.1689,
+    0.2411,
+    0.3441,
+    0.491,
+    0.7007,
+    1.0
+  ],
+  "cell_mean_ln_phi": [
+    [
+      2.849486771252902,
+      2.493581809879532,
+      2.1378612822632226,
+      1.7823494672721356,
+      1.426713759690169,
+      1.1576817136545132
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      1.426713759690169,
+      1.07103831608452
+    ]
+  ],
+  "cell_se_ln_phi": [
+    [
+      0.0,
+      8.904072272690043e-16,
+      4.452036136345021e-16,
+      6.678054204517532e-16,
+      4.452036136345021e-16,
+      0.07783500286117015
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      4.452036136345021e-16,
+      0.0
+    ]
+  ],
+  "cell_n_positive_seeds": [
+    [
+      3,
+      3,
+      4,
+      4,
+      5,
+      8
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      4,
+      4
+    ]
+  ],
+  "cell_E_H": [
+    [
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      3.0,
+      3.0
+    ]
+  ],
+  "cell_z_logit": [
+    [
+      -8.01778728186012,
+      -7.661741437884041,
+      -7.305819893800813,
+      -6.950021316463074,
+      -6.593976112611851,
+      -6.237715913753516
+    ],
+    [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      -6.593976112611851,
+      -6.237715913753516
+    ]
+  ],
+  "fit_unweighted": {
+    "ok": true,
+    "beta_H": -1.502765546042268,
+    "se_beta_H": 0.043794497944030474,
+    "beta_p": -0.09787840711528295,
+    "se_beta_p": 0.0019506539758624207,
+    "beta_Hp": -0.2936352213458371,
+    "se_beta_Hp": 0.005851961927587144,
+    "beta_Hp_significance": 50.17722688208047,
+    "r2": 0.9981692671472142,
+    "z_min": -8.01778728186012,
+    "z_max": -6.237715913753516,
+    "z_star": -5.117797310399435,
+    "z_star_interior": false,
+    "gamma_at_z_min": 0.8515391971705655,
+    "gamma_at_z_max": 0.32884754698519614,
+    "gamma_sign_flip_in_sampled_z": false,
+    "gamma_span": 0.5226916501853693,
+    "n_cells": 8
+  },
+  "fit_wls_floored": {
+    "ok": true,
+    "beta_H": -0.6775300874389923,
+    "se_beta_H": 8330816.837352018,
+    "beta_p": -0.049640879749195094,
+    "se_beta_p": 2550781.299012306,
+    "beta_Hp": -0.2657165933197435,
+    "se_beta_Hp": 850260.4330041211,
+    "beta_Hp_significance": 3.1251200574031135e-07,
+    "r2": -2.8039975803567843,
+    "z_min": -8.01778728186012,
+    "z_max": -6.237715913753516,
+    "z_star": -2.549822271067969,
+    "z_star_interior": false,
+    "gamma_at_z_min": 1.4529290350592445,
+    "gamma_at_z_max": 0.979934535259943,
+    "gamma_sign_flip_in_sampled_z": false,
+    "gamma_span": 0.4729944997993015,
+    "n_cells": 8
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": true,
+  "both_span_above_threshold": true,
+  "both_same_sign_pattern": true,
+  "both_beta_Hp_significant": false,
+  "verdict": "not_robust_crossing",
+  "notes": [
+    "no_sign_flip_in_one_or_both_fits",
+    "interior mismatch: unw=False, wls=False",
+    "beta_Hp sig insufficient: unw=50.18, wls=0.00, thr=2.0"
+  ]
+}

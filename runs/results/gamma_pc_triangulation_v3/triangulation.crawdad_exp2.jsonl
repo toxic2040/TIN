@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "crawdad_exp2", "n_rows": 12000}
+{"stage": "analysis", "entry": "crawdad_exp2", "notes": ["no admissible gamma root in sweep"]}
+{"stage": "done", "entry": "crawdad_exp2", "plot": "runs/results/gamma_pc_triangulation_v3/triangulation.crawdad_exp2.png"}

@@ -1,0 +1,83 @@
+{
+  "label": "titan_epoch100_alpha3",
+  "target": "titan",
+  "epoch_day": 100.0,
+  "alpha": 3.0,
+  "n_cells_fit": 4,
+  "n_orbs": [
+    3,
+    12
+  ],
+  "p_refs": [
+    0.7007,
+    1.0
+  ],
+  "cell_mean_ln_phi": [
+    [
+      1.003578564263857,
+      0.647903120658209
+    ],
+    [
+      1.0184273439379339,
+      0.6627519003322861
+    ]
+  ],
+  "cell_se_ln_phi": [
+    [
+      2.2260180681725107e-16,
+      0.0
+    ],
+    [
+      2.2260180681725107e-16,
+      0.0
+    ]
+  ],
+  "cell_n_positive_seeds": [
+    [
+      3,
+      6
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "cell_E_H": [
+    [
+      2.4041095890410964,
+      2.4041095890410964
+    ],
+    [
+      2.5821917808219172,
+      2.5821917808219172
+    ]
+  ],
+  "cell_z_logit": [
+    [
+      -6.593976112611851,
+      -6.237715913753516
+    ],
+    [
+      -6.593976112611851,
+      -6.237715913753516
+    ]
+  ],
+  "fit_unweighted": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "fit_wls_floored": {
+    "ok": false,
+    "reason": "too_few_cells"
+  },
+  "se_floor_used": 0.04035520478502893,
+  "both_interior": false,
+  "both_finite_se": false,
+  "both_span_above_threshold": false,
+  "both_same_sign_pattern": false,
+  "both_beta_Hp_significant": false,
+  "verdict": "degenerate",
+  "notes": [
+    "only 4 admissible cells (< 8); both fits skipped"
+  ]
+}

@@ -1,0 +1,576 @@
+{
+  "entries": {
+    "europa": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0025275377754938938,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 1.8424834628922482,
+      "phi_at_pcgamma_normal": 2.261963598094844,
+      "phi_max": 2.337078326868199,
+      "phi_ratio": 0.7883704374432616,
+      "p_eff_min_class_complete": 0.0017835620433189695,
+      "within_class_slopes_at_crossing": {
+        "3": 0.004436564022294366,
+        "6": 0.09088547241708667,
+        "12": -0.016329082077978528,
+        "24": 0.032365862497340483
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 7,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 1.0,
+        "frac_finite_root": 1.0,
+        "root_range": [
+          0.0024077766128910933,
+          0.0028459302589763785
+        ],
+        "root_log10_span": 0.0726080614949951
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "3": 0.17588091478329643,
+        "6": 0.17588091478329643,
+        "12": 0.17588091478329643,
+        "24": 0.17588091478329643
+      },
+      "p_c_U": 0.13812586334237598,
+      "p_c_kappa_x": 0.188045479482696,
+      "p_c_kappa_raw": 0.011299087064476972,
+      "convergence_band_log_ratio": 0.1339878921129186,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "EDGE_PINNED: p_c_gamma=0.00253 within 2x of class-complete floor 0.00178"
+      ],
+      "n_rows": 28680,
+      "n_admissible_bins": 21
+    },
+    "venus": {
+      "bucket": "persistent_trap",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 0.9414129987764005,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.006075768672879907,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "3": 0.5882533358898032,
+        "6": 0.5882533358898032,
+        "12": 0.9293102247459162,
+        "24": 0.9293102247459162
+      },
+      "p_c_U": 0.7979247628886941,
+      "p_c_kappa_x": 0.048894429782381336,
+      "p_c_kappa_raw": 0.048894429782381336,
+      "convergence_band_log_ratio": 1.2127025575710304,
+      "convergence_band_pass": false,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep",
+        "convergence_band_FAIL: |log10(p_U/p_kx)|=1.21 > 0.3"
+      ],
+      "n_rows": 25200,
+      "n_admissible_bins": 31
+    },
+    "mars": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0026505928827755677,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 1.784661279874883,
+      "phi_at_pcgamma_normal": 2.6558638413808633,
+      "phi_max": 1.8372538782189545,
+      "phi_ratio": 0.9713743435419742,
+      "p_eff_min_class_complete": 0.002538398211731842,
+      "within_class_slopes_at_crossing": {
+        "3": 0.2522787739855285,
+        "6": 0.2437951300468202,
+        "12": 0.12520896096951442,
+        "24": -0.1031468494008491
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 6,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 0.8333333333333334,
+        "frac_finite_root": 0.8333333333333334,
+        "root_range": [
+          0.0026505928827755677,
+          0.0027226972455543343
+        ],
+        "root_log10_span": 0.011656324500767479
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "3": 0.9135357341677536,
+        "6": 0.9135357341677536,
+        "12": 0.9135357341677536,
+        "24": 0.9135357341677536
+      },
+      "p_c_U": 0.6249015736044923,
+      "p_c_kappa_x": 0.7556519829500279,
+      "p_c_kappa_raw": 0.8677723280176881,
+      "convergence_band_log_ratio": 0.082510208049836,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "EDGE_PINNED: p_c_gamma=0.00265 within 2x of class-complete floor 0.00254"
+      ],
+      "n_rows": 27840,
+      "n_admissible_bins": 32
+    },
+    "mercury": {
+      "bucket": "persistent_trap",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 0.7753079360158981,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.009171291131098316,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "3": 0.7327490607708399,
+        "6": 0.7327490607708399,
+        "12": 0.7327490607708399,
+        "24": 0.7327490607708399
+      },
+      "p_c_U": 0.6465430077875725,
+      "p_c_kappa_x": 0.05822418521668791,
+      "p_c_kappa_raw": 0.05822418521668791,
+      "convergence_band_log_ratio": 1.0454939994995502,
+      "convergence_band_pass": false,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep",
+        "convergence_band_FAIL: |log10(p_U/p_kx)|=1.05 > 0.3"
+      ],
+      "n_rows": 25680,
+      "n_admissible_bins": 38
+    },
+    "ceres": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.0027340805966298157,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 1.7204004797107921,
+      "phi_at_pcgamma_normal": 1.9905324906090691,
+      "phi_max": 2.1797106281381566,
+      "phi_ratio": 0.7892793004272803,
+      "p_eff_min_class_complete": 0.0018943812273830934,
+      "within_class_slopes_at_crossing": {
+        "3": 0.3104030197805416,
+        "6": -0.03111960428424209,
+        "12": 0.31155626848061757,
+        "24": 0.12933587856704984
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 7,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 1.0,
+        "frac_finite_root": 1.0,
+        "root_range": [
+          0.002588749761494859,
+          0.0032966376329002962
+        ],
+        "root_log10_span": 0.10498114013678483
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "3": 0.43414673123310266,
+        "6": 0.28581502936396486,
+        "12": 0.28581502936396486,
+        "24": 0.28581502936396486
+      },
+      "p_c_U": 0.0001542263359830982,
+      "p_c_kappa_x": 0.31775497515935786,
+      "p_c_kappa_raw": 0.021880604579371046,
+      "convergence_band_log_ratio": 3.313933818122146,
+      "convergence_band_pass": false,
+      "simpson_splicing_flag": true,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "EDGE_PINNED: p_c_gamma=0.00273 within 2x of class-complete floor 0.00189",
+        "convergence_band_FAIL: |log10(p_U/p_kx)|=3.31 > 0.3",
+        "simpson_splicing_flagged: pooled gamma sign opposite to every within-class slope"
+      ],
+      "n_rows": 28680,
+      "n_admissible_bins": 27
+    },
+    "jupiter": {
+      "bucket": "persistent_trap",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 2.600803812554121,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.004688814617625845,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "3": 0.22395585762481032,
+        "6": 0.22395585762481032,
+        "12": 0.17588091478329643,
+        "24": 0.17588091478329643
+      },
+      "p_c_U": 0.00020267250218200297,
+      "p_c_kappa_x": 0.2127314700486905,
+      "p_c_kappa_raw": 0.014621029330175464,
+      "convergence_band_log_ratio": 3.0210369119297686,
+      "convergence_band_pass": false,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep",
+        "convergence_band_FAIL: |log10(p_U/p_kx)|=3.02 > 0.3"
+      ],
+      "n_rows": 28680,
+      "n_admissible_bins": 11
+    },
+    "saturn": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.002024534344507245,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 3.43464709812882,
+      "phi_at_pcgamma_normal": 3.7041641404334134,
+      "phi_max": 3.4851965611263704,
+      "phi_ratio": 0.9854959506268957,
+      "p_eff_min_class_complete": 0.0017480117579125613,
+      "within_class_slopes_at_crossing": {
+        "3": NaN,
+        "6": NaN,
+        "12": 0.4518029190128676,
+        "24": 0.07710943585210385
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 6,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 0.8333333333333334,
+        "frac_finite_root": 1.0,
+        "root_range": [
+          0.002024534344507245,
+          0.004678801263368508
+        ],
+        "root_log10_span": 0.36380944989940067
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "3": 0.10987388413804905,
+        "6": 0.10987388413804905,
+        "12": 0.10987388413804905,
+        "24": 0.10987388413804905
+      },
+      "p_c_U": 0.06325785485613815,
+      "p_c_kappa_x": 0.10436677186540286,
+      "p_c_kappa_raw": 0.010745863230417726,
+      "convergence_band_log_ratio": 0.21744779023103228,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [
+        "EDGE_PINNED: p_c_gamma=0.00202 within 2x of class-complete floor 0.00175"
+      ],
+      "n_rows": 28680,
+      "n_admissible_bins": 16
+    },
+    "titan": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.010006371640223591,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 0.6159234288410362,
+      "phi_at_pcgamma_normal": 0.9576794773230747,
+      "phi_max": 1.9313882751718938,
+      "phi_ratio": 0.3189019198049232,
+      "p_eff_min_class_complete": 0.0023037447477723167,
+      "within_class_slopes_at_crossing": {
+        "3": 0.2367821420411815,
+        "6": 0.3340056001579487,
+        "12": 0.1678470335886102,
+        "24": 0.09719652276751008
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 11,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 1.0,
+        "frac_finite_root": 1.0,
+        "root_range": [
+          0.010006371640223591,
+          0.02018853431443513
+        ],
+        "root_log10_span": 0.30482816165291027
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "3": 0.10987388413804905,
+        "6": 0.10987388413804905,
+        "12": 0.10987388413804905,
+        "24": 0.10987388413804905
+      },
+      "p_c_U": 0.10987388413804905,
+      "p_c_kappa_x": 0.10437062671315919,
+      "p_c_kappa_raw": 0.005587155936386304,
+      "convergence_band_log_ratio": 0.022316186199117006,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "notes": [],
+      "n_rows": 28680,
+      "n_admissible_bins": 15
+    },
+    "crawdad_exp1": {
+      "bucket": "crossing",
+      "p_c_gamma": 0.5509310119979786,
+      "p_c_gamma_orientation": "pos_to_neg",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": 0.5602350791831301,
+      "phi_at_pcgamma_normal": 2.766733802185921,
+      "phi_max": 98.1036696018831,
+      "phi_ratio": 0.00571064345968539,
+      "p_eff_min_class_complete": 0.026500000000000003,
+      "within_class_slopes_at_crossing": {
+        "35896.9": 0.6276734721254492,
+        "107690.7": 0.6733249014031242,
+        "358969.0": 0.46783334092073176,
+        "1076907.0": 0.46783334092073176
+      },
+      "direction_bin_sensitivity": {
+        "ok": true,
+        "n_perturbations": 5,
+        "orient_majority": "pos_to_neg",
+        "frac_same_direction": 0.8,
+        "frac_finite_root": 0.8,
+        "root_range": [
+          0.5509310119979786,
+          0.5637837712182922
+        ],
+        "root_log10_span": 0.010015350774291054
+      },
+      "phi_gate_pass": true,
+      "p_c_chi": {
+        "35896": 0.925,
+        "107690": 0.925,
+        "358969": 0.925,
+        "1076907": 0.925
+      },
+      "p_c_U": 0.575,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "convergence_band_log_ratio": 0.07921645670394785,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "35896.9",
+        "107690.7",
+        "358969.0",
+        "1076907.0"
+      ],
+      "notes": [],
+      "n_rows": 12000,
+      "n_admissible_bins": 5
+    },
+    "crawdad_exp2": {
+      "bucket": "persistent_cluster",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 774.083101339487,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.026500000000000003,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "45560": 0.925,
+        "136682": 0.925,
+        "455609": 0.925,
+        "1366827": 0.925
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.4768759398496241,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "convergence_band_log_ratio": 0.2877363215111577,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "45560.9",
+        "136682.69999999998",
+        "455609.0",
+        "1366827.0"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 5
+    },
+    "crawdad_exp3": {
+      "bucket": "insufficient",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 6.387667552465025,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.30000000000000004,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "25415": 0.925,
+        "76245": 0.925,
+        "254150": 0.925,
+        "762450": 0.925
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "convergence_band_log_ratio": 0.28569034475335003,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "25415.0",
+        "76245.0",
+        "254150.0",
+        "762450.0"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 2
+    },
+    "crawdad_exp6": {
+      "bucket": "insufficient",
+      "p_c_gamma": NaN,
+      "p_c_gamma_orientation": "",
+      "phi_variant_gate": "phi_myopic",
+      "phi_variant_phibar": "phi_normal",
+      "phi_at_pcgamma": NaN,
+      "phi_at_pcgamma_normal": NaN,
+      "phi_max": 5.65440482397125,
+      "phi_ratio": NaN,
+      "p_eff_min_class_complete": 0.30000000000000004,
+      "within_class_slopes_at_crossing": {},
+      "direction_bin_sensitivity": {
+        "ok": false,
+        "reason": "no_crossing"
+      },
+      "phi_gate_pass": false,
+      "p_c_chi": {
+        "33554": 0.925,
+        "100663": 0.925,
+        "335545": 0.575,
+        "1006635": 0.575
+      },
+      "p_c_U": 0.925,
+      "p_c_kappa_x": 0.47912781954887224,
+      "p_c_kappa_raw": 0.0715375939849624,
+      "convergence_band_log_ratio": 0.28569034475335003,
+      "convergence_band_pass": true,
+      "simpson_splicing_flag": false,
+      "required_classes": [
+        "33554.5",
+        "100663.5",
+        "335545.0",
+        "1006635.0"
+      ],
+      "notes": [
+        "no admissible gamma root in sweep"
+      ],
+      "n_rows": 12000,
+      "n_admissible_bins": 2
+    }
+  },
+  "schema_version": 1
+}

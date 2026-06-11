@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "saturn", "n_rows": 28800}
+{"stage": "analysis", "entry": "saturn", "notes": ["EDGE_PINNED: p_c_gamma=0.00202 within 2x of class-complete floor 0.00175"]}
+{"stage": "done", "entry": "saturn", "plot": "runs/results/gamma_pc_triangulation_v5/triangulation.saturn.png"}

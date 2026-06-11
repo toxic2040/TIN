@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "saturn", "n_rows": 28800}
+{"stage": "analysis", "entry": "saturn", "notes": []}
+{"stage": "done", "entry": "saturn", "plot": "runs/results/gamma_pc_triangulation_v2/triangulation.saturn.png"}

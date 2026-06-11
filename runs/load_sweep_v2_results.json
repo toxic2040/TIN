@@ -1,0 +1,618 @@
+{
+  "moon_K1": {
+    "label": "Moon K=1 (8 polar)",
+    "plan_stats": {
+      "n_contacts": 1057,
+      "n_dsn_links": 241,
+      "n_isl_links": 816,
+      "duration_mean_s": 3423.17880794702,
+      "duration_median_s": 1860.0,
+      "duration_std_s": 10311.176790792575,
+      "total_capacity_MB": 451947.0
+    },
+    "s_t_full": 1.0,
+    "n_feasible_slots": 288,
+    "load": {
+      "1": {
+        "lambda": 1,
+        "total_bundles": 288,
+        "eta_mean": 0.9979,
+        "eta_std": 0.0047,
+        "dr_mean": 0.9979,
+        "etas": [
+          1.0,
+          1.0,
+          0.9896,
+          1.0,
+          1.0
+        ],
+        "fail_totals": {
+          "no_route": 3,
+          "ttl_expired": 0,
+          "link_failure": 68,
+          "capacity_blocked": 0
+        },
+        "mean_hops": 2.0,
+        "avg_capacity_utilization": 0.0547,
+        "max_capacity_utilization": 0.3467
+      },
+      "2": {
+        "lambda": 2,
+        "total_bundles": 576,
+        "eta_mean": 0.9986,
+        "eta_std": 0.0015,
+        "dr_mean": 0.9986,
+        "etas": [
+          0.9983,
+          0.9965,
+          1.0,
+          0.9983,
+          1.0
+        ],
+        "fail_totals": {
+          "no_route": 4,
+          "ttl_expired": 0,
+          "link_failure": 127,
+          "capacity_blocked": 0
+        },
+        "mean_hops": 2.0,
+        "avg_capacity_utilization": 0.1095,
+        "max_capacity_utilization": 0.6933
+      },
+      "5": {
+        "lambda": 5,
+        "total_bundles": 1440,
+        "eta_mean": 0.9618,
+        "eta_std": 0.0,
+        "dr_mean": 0.9618,
+        "etas": [
+          0.9618,
+          0.9618,
+          0.9618,
+          0.9618,
+          0.9618
+        ],
+        "fail_totals": {
+          "no_route": 275,
+          "ttl_expired": 0,
+          "link_failure": 299,
+          "capacity_blocked": 267
+        },
+        "mean_hops": 1.92,
+        "avg_capacity_utilization": 0.2547,
+        "max_capacity_utilization": 1.0
+      },
+      "10": {
+        "lambda": 10,
+        "total_bundles": 2880,
+        "eta_mean": 0.9358,
+        "eta_std": 0.0,
+        "dr_mean": 0.9358,
+        "etas": [
+          0.9358,
+          0.9358,
+          0.9358,
+          0.9358,
+          0.9358
+        ],
+        "fail_totals": {
+          "no_route": 925,
+          "ttl_expired": 0,
+          "link_failure": 541,
+          "capacity_blocked": 4365
+        },
+        "mean_hops": 1.87,
+        "avg_capacity_utilization": 0.4751,
+        "max_capacity_utilization": 1.0
+      },
+      "20": {
+        "lambda": 20,
+        "total_bundles": 5760,
+        "eta_mean": 0.5922,
+        "eta_std": 0.0001,
+        "dr_mean": 0.5922,
+        "etas": [
+          0.592,
+          0.5922,
+          0.5922,
+          0.5922,
+          0.5922
+        ],
+        "fail_totals": {
+          "no_route": 11746,
+          "ttl_expired": 0,
+          "link_failure": 677,
+          "capacity_blocked": 1914485
+        },
+        "mean_hops": 1.18,
+        "avg_capacity_utilization": 0.5979,
+        "max_capacity_utilization": 1.0
+      },
+      "50": {
+        "lambda": 50,
+        "total_bundles": 14400,
+        "eta_mean": 0.2409,
+        "eta_std": 0.0001,
+        "dr_mean": 0.2409,
+        "etas": [
+          0.2408,
+          0.241,
+          0.241,
+          0.2409,
+          0.241
+        ],
+        "fail_totals": {
+          "no_route": 54652,
+          "ttl_expired": 0,
+          "link_failure": 690,
+          "capacity_blocked": 9719598
+        },
+        "mean_hops": 0.48,
+        "avg_capacity_utilization": 0.5912,
+        "max_capacity_utilization": 1.0
+      }
+    }
+  },
+  "moon_K2": {
+    "label": "Moon K=2 (8P+ELFO)",
+    "plan_stats": {
+      "n_contacts": 1235,
+      "n_dsn_links": 249,
+      "n_isl_links": 986,
+      "duration_mean_s": 3760.9554655870447,
+      "duration_median_s": 1860.0,
+      "duration_std_s": 9709.64954618639,
+      "total_capacity_MB": 580213.0
+    },
+    "s_t_full": 1.0,
+    "n_feasible_slots": 288,
+    "load": {
+      "1": {
+        "lambda": 1,
+        "total_bundles": 288,
+        "eta_mean": 0.9986,
+        "eta_std": 0.0019,
+        "dr_mean": 0.9986,
+        "etas": [
+          0.9965,
+          1.0,
+          1.0,
+          1.0,
+          0.9965
+        ],
+        "fail_totals": {
+          "no_route": 2,
+          "ttl_expired": 0,
+          "link_failure": 91,
+          "capacity_blocked": 0
+        },
+        "mean_hops": 2.89,
+        "avg_capacity_utilization": 0.0138,
+        "max_capacity_utilization": 0.15
+      },
+      "2": {
+        "lambda": 2,
+        "total_bundles": 576,
+        "eta_mean": 0.9948,
+        "eta_std": 0.0021,
+        "dr_mean": 0.9948,
+        "etas": [
+          0.9948,
+          0.9931,
+          0.9983,
+          0.9931,
+          0.9948
+        ],
+        "fail_totals": {
+          "no_route": 15,
+          "ttl_expired": 0,
+          "link_failure": 182,
+          "capacity_blocked": 0
+        },
+        "mean_hops": 2.88,
+        "avg_capacity_utilization": 0.0273,
+        "max_capacity_utilization": 0.3
+      },
+      "5": {
+        "lambda": 5,
+        "total_bundles": 1440,
+        "eta_mean": 0.9955,
+        "eta_std": 0.0012,
+        "dr_mean": 0.9955,
+        "etas": [
+          0.9938,
+          0.9972,
+          0.9958,
+          0.9951,
+          0.9958
+        ],
+        "fail_totals": {
+          "no_route": 32,
+          "ttl_expired": 0,
+          "link_failure": 411,
+          "capacity_blocked": 0
+        },
+        "mean_hops": 2.89,
+        "avg_capacity_utilization": 0.0663,
+        "max_capacity_utilization": 0.7444
+      },
+      "10": {
+        "lambda": 10,
+        "total_bundles": 2880,
+        "eta_mean": 0.9944,
+        "eta_std": 0.0011,
+        "dr_mean": 0.9944,
+        "etas": [
+          0.9951,
+          0.9934,
+          0.9934,
+          0.9944,
+          0.9958
+        ],
+        "fail_totals": {
+          "no_route": 80,
+          "ttl_expired": 0,
+          "link_failure": 835,
+          "capacity_blocked": 433
+        },
+        "mean_hops": 2.88,
+        "avg_capacity_utilization": 0.13,
+        "max_capacity_utilization": 1.0
+      },
+      "20": {
+        "lambda": 20,
+        "total_bundles": 5760,
+        "eta_mean": 0.9342,
+        "eta_std": 0.0003,
+        "dr_mean": 0.9342,
+        "etas": [
+          0.9344,
+          0.9339,
+          0.934,
+          0.9345,
+          0.934
+        ],
+        "fail_totals": {
+          "no_route": 1896,
+          "ttl_expired": 0,
+          "link_failure": 1585,
+          "capacity_blocked": 235388
+        },
+        "mean_hops": 2.7,
+        "avg_capacity_utilization": 0.2314,
+        "max_capacity_utilization": 1.0
+      },
+      "50": {
+        "lambda": 50,
+        "total_bundles": 14400,
+        "eta_mean": 0.6311,
+        "eta_std": 0.0006,
+        "dr_mean": 0.6311,
+        "etas": [
+          0.6316,
+          0.6309,
+          0.6301,
+          0.6311,
+          0.6317
+        ],
+        "fail_totals": {
+          "no_route": 26561,
+          "ttl_expired": 0,
+          "link_failure": 2871,
+          "capacity_blocked": 4417336
+        },
+        "mean_hops": 1.96,
+        "avg_capacity_utilization": 0.403,
+        "max_capacity_utilization": 1.0
+      }
+    }
+  },
+  "mars_K1": {
+    "label": "Mars K=1 (6 polar)",
+    "plan_stats": {
+      "n_contacts": 951,
+      "n_dsn_links": 201,
+      "n_isl_links": 750,
+      "duration_mean_s": 1529.5268138801262,
+      "duration_median_s": 1140.0,
+      "duration_std_s": 801.519906772714,
+      "total_capacity_MB": 181549.0
+    },
+    "s_t_full": 0.9899,
+    "n_feasible_slots": 293,
+    "load": {
+      "1": {
+        "lambda": 1,
+        "total_bundles": 293,
+        "eta_mean": 0.6219,
+        "eta_std": 0.0015,
+        "dr_mean": 0.6156,
+        "etas": [
+          0.6212,
+          0.6246,
+          0.6212,
+          0.6212,
+          0.6212
+        ],
+        "fail_totals": {
+          "no_route": 554,
+          "ttl_expired": 0,
+          "link_failure": 94,
+          "capacity_blocked": 109606
+        },
+        "mean_hops": 3.02,
+        "avg_capacity_utilization": 0.0618,
+        "max_capacity_utilization": 1.0
+      },
+      "2": {
+        "lambda": 2,
+        "total_bundles": 586,
+        "eta_mean": 0.5344,
+        "eta_std": 0.0014,
+        "dr_mean": 0.529,
+        "etas": [
+          0.5358,
+          0.5324,
+          0.5341,
+          0.5358,
+          0.5341
+        ],
+        "fail_totals": {
+          "no_route": 1364,
+          "ttl_expired": 0,
+          "link_failure": 185,
+          "capacity_blocked": 269520
+        },
+        "mean_hops": 2.92,
+        "avg_capacity_utilization": 0.107,
+        "max_capacity_utilization": 1.0
+      },
+      "5": {
+        "lambda": 5,
+        "total_bundles": 1465,
+        "eta_mean": 0.4737,
+        "eta_std": 0.0,
+        "dr_mean": 0.4689,
+        "etas": [
+          0.4737,
+          0.4737,
+          0.4737,
+          0.4737,
+          0.4737
+        ],
+        "fail_totals": {
+          "no_route": 3855,
+          "ttl_expired": 0,
+          "link_failure": 405,
+          "capacity_blocked": 762127
+        },
+        "mean_hops": 2.79,
+        "avg_capacity_utilization": 0.2311,
+        "max_capacity_utilization": 1.0
+      },
+      "10": {
+        "lambda": 10,
+        "total_bundles": 2930,
+        "eta_mean": 0.356,
+        "eta_std": 0.0,
+        "dr_mean": 0.3524,
+        "etas": [
+          0.356,
+          0.356,
+          0.356,
+          0.356,
+          0.356
+        ],
+        "fail_totals": {
+          "no_route": 9435,
+          "ttl_expired": 0,
+          "link_failure": 538,
+          "capacity_blocked": 1877622
+        },
+        "mean_hops": 1.83,
+        "avg_capacity_utilization": 0.3283,
+        "max_capacity_utilization": 1.0
+      },
+      "20": {
+        "lambda": 20,
+        "total_bundles": 5860,
+        "eta_mean": 0.2053,
+        "eta_std": 0.0,
+        "dr_mean": 0.2032,
+        "etas": [
+          0.2053,
+          0.2053,
+          0.2053,
+          0.2053,
+          0.2053
+        ],
+        "fail_totals": {
+          "no_route": 23285,
+          "ttl_expired": 0,
+          "link_failure": 605,
+          "capacity_blocked": 4646762
+        },
+        "mean_hops": 1.02,
+        "avg_capacity_utilization": 0.3629,
+        "max_capacity_utilization": 1.0
+      },
+      "50": {
+        "lambda": 50,
+        "total_bundles": 14650,
+        "eta_mean": 0.0952,
+        "eta_std": 0.0,
+        "dr_mean": 0.0942,
+        "etas": [
+          0.0952,
+          0.0952,
+          0.0952,
+          0.0952,
+          0.0952
+        ],
+        "fail_totals": {
+          "no_route": 66275,
+          "ttl_expired": 0,
+          "link_failure": 675,
+          "capacity_blocked": 13243794
+        },
+        "mean_hops": 0.46,
+        "avg_capacity_utilization": 0.4177,
+        "max_capacity_utilization": 1.0
+      }
+    }
+  },
+  "mars_K2": {
+    "label": "Mars K=2 (6P+Ecc)",
+    "plan_stats": {
+      "n_contacts": 1097,
+      "n_dsn_links": 205,
+      "n_isl_links": 892,
+      "duration_mean_s": 1693.1814038286236,
+      "duration_median_s": 1200.0,
+      "duration_std_s": 1044.6604246483498,
+      "total_capacity_MB": 231865.0
+    },
+    "s_t_full": 0.9899,
+    "n_feasible_slots": 293,
+    "load": {
+      "1": {
+        "lambda": 1,
+        "total_bundles": 293,
+        "eta_mean": 0.6219,
+        "eta_std": 0.0015,
+        "dr_mean": 0.6156,
+        "etas": [
+          0.6212,
+          0.6246,
+          0.6212,
+          0.6212,
+          0.6212
+        ],
+        "fail_totals": {
+          "no_route": 554,
+          "ttl_expired": 0,
+          "link_failure": 94,
+          "capacity_blocked": 109604
+        },
+        "mean_hops": 3.01,
+        "avg_capacity_utilization": 0.0614,
+        "max_capacity_utilization": 1.0
+      },
+      "2": {
+        "lambda": 2,
+        "total_bundles": 586,
+        "eta_mean": 0.5341,
+        "eta_std": 0.0017,
+        "dr_mean": 0.5287,
+        "etas": [
+          0.5358,
+          0.5324,
+          0.5324,
+          0.5358,
+          0.5341
+        ],
+        "fail_totals": {
+          "no_route": 1365,
+          "ttl_expired": 0,
+          "link_failure": 185,
+          "capacity_blocked": 269707
+        },
+        "mean_hops": 2.93,
+        "avg_capacity_utilization": 0.104,
+        "max_capacity_utilization": 1.0
+      },
+      "5": {
+        "lambda": 5,
+        "total_bundles": 1465,
+        "eta_mean": 0.4737,
+        "eta_std": 0.0,
+        "dr_mean": 0.4689,
+        "etas": [
+          0.4737,
+          0.4737,
+          0.4737,
+          0.4737,
+          0.4737
+        ],
+        "fail_totals": {
+          "no_route": 3855,
+          "ttl_expired": 0,
+          "link_failure": 404,
+          "capacity_blocked": 762141
+        },
+        "mean_hops": 2.79,
+        "avg_capacity_utilization": 0.2304,
+        "max_capacity_utilization": 1.0
+      },
+      "10": {
+        "lambda": 10,
+        "total_bundles": 2930,
+        "eta_mean": 0.356,
+        "eta_std": 0.0,
+        "dr_mean": 0.3524,
+        "etas": [
+          0.356,
+          0.356,
+          0.356,
+          0.356,
+          0.356
+        ],
+        "fail_totals": {
+          "no_route": 9435,
+          "ttl_expired": 0,
+          "link_failure": 537,
+          "capacity_blocked": 1877624
+        },
+        "mean_hops": 1.83,
+        "avg_capacity_utilization": 0.3296,
+        "max_capacity_utilization": 1.0
+      },
+      "20": {
+        "lambda": 20,
+        "total_bundles": 5860,
+        "eta_mean": 0.2053,
+        "eta_std": 0.0,
+        "dr_mean": 0.2032,
+        "etas": [
+          0.2053,
+          0.2053,
+          0.2053,
+          0.2053,
+          0.2053
+        ],
+        "fail_totals": {
+          "no_route": 23285,
+          "ttl_expired": 0,
+          "link_failure": 605,
+          "capacity_blocked": 4646741
+        },
+        "mean_hops": 1.02,
+        "avg_capacity_utilization": 0.3576,
+        "max_capacity_utilization": 1.0
+      },
+      "50": {
+        "lambda": 50,
+        "total_bundles": 14650,
+        "eta_mean": 0.0952,
+        "eta_std": 0.0,
+        "dr_mean": 0.0942,
+        "etas": [
+          0.0952,
+          0.0952,
+          0.0952,
+          0.0952,
+          0.0952
+        ],
+        "fail_totals": {
+          "no_route": 66275,
+          "ttl_expired": 0,
+          "link_failure": 675,
+          "capacity_blocked": 13243779
+        },
+        "mean_hops": 0.46,
+        "avg_capacity_utilization": 0.4081,
+        "max_capacity_utilization": 1.0
+      }
+    }
+  }
+}

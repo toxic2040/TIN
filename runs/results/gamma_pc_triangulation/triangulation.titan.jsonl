@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "titan", "n_rows": 28800}
+{"stage": "analysis", "entry": "titan", "notes": []}
+{"stage": "done", "entry": "titan", "plot": "runs/results/gamma_pc_triangulation/triangulation.titan.png"}

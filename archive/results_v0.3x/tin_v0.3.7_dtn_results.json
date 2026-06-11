@@ -1,0 +1,11 @@
+{
+  "version": "0.3.7-fix7",
+  "dtn_success_rate_pct": 15.0,
+  "overall_avg_latency_h": 22.94,
+  "emergency_avg_latency_h": 22.94,
+  "normal_avg_latency_h": 0,
+  "avg_hops": 2.31,
+  "polar_touches": 275,
+  "retransmits": 131257,
+  "timestamp": "2026-02-19"
+}

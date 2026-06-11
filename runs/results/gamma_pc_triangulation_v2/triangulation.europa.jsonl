@@ -1,0 +1,3 @@
+{"stage": "start", "entry": "europa", "n_rows": 28800}
+{"stage": "analysis", "entry": "europa", "notes": []}
+{"stage": "done", "entry": "europa", "plot": "runs/results/gamma_pc_triangulation_v2/triangulation.europa.png"}
