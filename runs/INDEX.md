@@ -1,6 +1,6 @@
 # Experiment Index
 
-**Last updated:** 2026-06-11 (independence MI rows added; script count updated to match tree; historical table still needs full row-level regeneration)
+**Last updated:** 2026-06-12 (repro/verify baseline rows added with measured run contract; historical table still needs full row-level regeneration)
 **Total:** 111 Python scripts under `runs/` (counted: `find runs/ -maxdepth 1 -name "*.py" | wc -l`), JSON result files as per `runs/CONFIG_MANIFEST.md`
 
 Status: **yes** = results exist | **--** = no results found | **lib** = library/not a runner
@@ -186,6 +186,8 @@ No exploratory runner scripts are present in the current tree.
 | `build_provenance_manifest.py` | Generates PROVENANCE.json/.md linking every result to its producing script |
 | `paper_sims.py` | Original TIN conference paper quantitative results |
 | `validation.py` | Standalone TIN DTN core validation (custody FSM, routing, fragments) |
+| `repro_v0_3_8.py` | Deterministic v0.3.8 lunar-baseline entrypoint; seed 42 is the canonical baseline. Single 28-day sim + coverage grid; `--coverage_workers N` parallelizes the coverage loop with byte-identical output (integer reduction) |
+| `verify_repro_v0_3_8_baseline.py` | C1 contract: regenerates the seed-42 baseline in a temp dir and field-compares against `results/repro_v0_3_8_baseline.json` (only `timestamp_utc` excluded); prints pass/fail, exit 0/1. Measured 2026-06-12: 6m47s wall, 45 MB peak RSS at `--coverage-workers 2` on a 16-core box — PASSED |
 | `epyc_phase1.py` | Phase 1 EPYC batch orchestrator |
 | `epyc_phase3.py` | Phase 3 EPYC batch orchestrator |
 | `epyc_phase5.py` | Phase 5 EPYC batch orchestrator |
