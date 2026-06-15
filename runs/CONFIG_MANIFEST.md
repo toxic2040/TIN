@@ -56,7 +56,7 @@ two files by SHA-256 unless source runners are deliberately restored.
 | Factorization residual | <= 1.11e-16 | `verify_paper_claims.py` check #2 (per-config records only; aggregated figure-data files may exceed this due to Jensen's inequality on averaged S_T and η) |
 | Self-averaging CV | < 0.4% | `verify_paper_claims.py` check #4 |
 | Gamma gap | >= 1.95 | `verify_paper_claims.py` check #7 |
-| Test suite | 73 passed | `pytest tests/ -x -q` |
+| Test suite | 89 passed | `pytest tests/ -x -q` |
 
 ## Data License
 
