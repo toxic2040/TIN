@@ -1,17 +1,19 @@
-"""epyc_phase3.py — Routing Independence + Vehicular γ (target: ~2 hours)
+"""Historical Phase 3 policy-sign and vehicular-gamma batch replay.
 
-Two strengthening experiments:
+The two archived workloads were originally described as strengthening a global
+gamma classifier:
 
-  A) Routing independence — run 5 CRAWDAD traces under 4 routing policies
-     (greedy, no-retry, oracle, random). Confirm γ sign agreement across
-     all policies for each trace.
+  A) Compare fitted gamma signs for five CRAWDAD traces under four policies.
 
-  B) Vehicular γ — convert vehicular GPS trace to contacts, compute γ.
-     Confirm γ > 0 (cluster class) on a non-Bluetooth trace.
+  B) Convert a vehicular GPS trace to contacts and compute fitted gamma signs.
+
+Sign agreement is a descriptive result from assigned corpora, not routing
+independence, an independent classifier, or cross-domain validation.  Legacy
+``classification`` fields are retained in the summary for compatibility only.
 
 Usage:
     python runs/epyc_phase3.py                # full phase 3
-    python runs/epyc_phase3.py --skip-a       # skip routing independence
+    python runs/epyc_phase3.py --skip-a       # skip policy-sign comparison
     python runs/epyc_phase3.py --skip-b       # skip vehicular
 """
 
@@ -53,9 +55,10 @@ def run_one(label, cmd, timeout=14400):
 
 
 def run_routing_independence():
-    """Workload A: routing independence across 5 CRAWDAD traces."""
+    """Replay the archived cross-policy gamma-sign comparison."""
     print("=" * 70)
-    print("WORKLOAD A: Routing Independence (5 traces × 4 policies)")
+    print("WORKLOAD A: HISTORICAL CROSS-POLICY GAMMA-SIGN COMPARISON")
+    print("SIGN AGREEMENT DOES NOT ESTABLISH ROUTING INDEPENDENCE")
     print("=" * 70)
 
     n_workers = min(os.cpu_count() or 8, 48)
@@ -87,7 +90,7 @@ def run_routing_independence():
             trace = data.get("trace", rpath.stem)
             agreement = data.get("sign_agreement", {})
             sign_summary[trace] = agreement
-            mark = "PASS" if agreement.get("overall") else "FAIL"
+            mark = "AGREE" if agreement.get("overall") else "DIFFER"
             print(f"    [{mark}] {trace}: {agreement.get('fraction', '?')}")
         except Exception as e:
             print(f"    [ERR] {rpath.name}: {e}")
@@ -96,9 +99,10 @@ def run_routing_independence():
 
 
 def run_vehicular():
-    """Workload B: vehicular γ classification."""
+    """Replay the archived vehicular gamma-sign diagnostic."""
     print("\n" + "=" * 70)
-    print("WORKLOAD B: Vehicular γ Classification")
+    print("WORKLOAD B: HISTORICAL VEHICULAR GAMMA-SIGN DIAGNOSTIC")
+    print("GLOBAL CLASSIFIER AND CROSS-DOMAIN TRANSFER CLAIMS RETIRED")
     print("=" * 70)
 
     # Check for vehicular data
@@ -162,14 +166,18 @@ def run_vehicular():
                 dominant = max(set(signs), key=signs.count) if signs else "?"
                 gamma_summary = {
                     "classification": "CLUSTER" if dominant == "+" else "TRAP",
+                    "classification_status": "retired compatibility label",
+                    "label_semantics": "CLUSTER means majority positive fitted gamma sign; TRAP means negative",
                     "unanimous": len(set(signs)) == 1,
                     "signs": signs,
                     "n_nodes": data.get("trace_summary", {}).get("n_nodes"),
                     "n_contacts": data.get("trace_summary", {}).get("n_contacts"),
                 }
-                mark = "CLUSTER" if dominant == "+" else "TRAP"
-                print(f"  Classification: {mark} (γ {'>' if dominant == '+' else '<'} 0)")
-                print(f"  Unanimous: {'YES' if gamma_summary['unanimous'] else 'NO'}")
+                sign_word = "positive" if dominant == "+" else "negative"
+                print(
+                    f"  Majority fitted sign: {sign_word} (γ {'>' if dominant == '+' else '<'} 0)"
+                )
+                print(f"  All stored signs agree: {'YES' if gamma_summary['unanimous'] else 'NO'}")
             else:
                 gamma_summary = {"error": gamma.get("error")}
         except Exception as e:
@@ -179,13 +187,16 @@ def run_vehicular():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="EPYC Phase 3: Strengthening Experiments")
-    parser.add_argument("--skip-a", action="store_true", help="Skip routing independence")
+    parser = argparse.ArgumentParser(description="Historical EPYC Phase 3 diagnostic replay")
+    parser.add_argument(
+        "--skip-a", action="store_true", help="Skip historical policy-sign comparison"
+    )
     parser.add_argument("--skip-b", action="store_true", help="Skip vehicular γ")
     args = parser.parse_args()
 
     print("=" * 70)
-    print("TIN EPYC — PHASE 3: STRENGTHENING EXPERIMENTS")
+    print("TIN EPYC — HISTORICAL PHASE 3 DIAGNOSTIC REPLAY")
+    print("GLOBAL CLASSIFICATION AND INDEPENDENCE CLAIMS RETIRED")
     print(f"Machine: {os.cpu_count()} cores")
     print(f"Start:   {time.strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)
@@ -196,16 +207,18 @@ def main():
     if not args.skip_a:
         res_a, sign_summary = run_routing_independence()
         results["routing_independence"] = {
+            "claim_status": "historical sign comparison; not an independence test",
             "passed": res_a[1],
             "elapsed_s": round(res_a[2], 1),
             "sign_agreement": sign_summary,
         }
     else:
-        print("\n  [SKIP] Workload A: routing independence")
+        print("\n  [SKIP] Workload A: historical policy-sign comparison")
 
     if not args.skip_b:
         res_b, gamma_summary = run_vehicular()
         results["vehicular_gamma"] = {
+            "claim_status": "historical sign diagnostic; classifier and transfer claims retired",
             "passed": res_b[1] if res_b else False,
             "elapsed_s": round(res_b[2], 1) if res_b else 0,
             "gamma": gamma_summary,
@@ -226,9 +239,7 @@ def main():
         all_agree = all(
             v.get("overall", False) for v in sa.values() if isinstance(v, dict) and "overall" in v
         )
-        print(
-            f"  A) Routing independence: {'ALL SIGNS AGREE' if all_agree else 'SIGN DISAGREEMENT'}"
-        )
+        print(f"  A) Cross-policy fitted signs: {'ALL AGREE' if all_agree else 'DISAGREE'}")
 
     if "vehicular_gamma" in results:
         vg = results["vehicular_gamma"]
@@ -239,7 +250,8 @@ def main():
             print(f"  B) Vehicular γ: ERROR ({gamma['error']})")
         else:
             print(
-                f"  B) Vehicular γ: {gamma.get('classification', '?')} "
+                f"  B) Vehicular γ compatibility label (retired): "
+                f"{gamma.get('classification', '?')} "
                 f"(unanimous={gamma.get('unanimous', '?')})"
             )
 
@@ -250,6 +262,10 @@ def main():
     results["timestamp"] = time.strftime("%Y-%m-%dT%H:%M:%S")
     results["machine"] = f"{os.cpu_count()} cores"
     results["elapsed_s"] = round(total_elapsed, 1)
+    results["claim_status"] = (
+        "historical diagnostic replay; no independent classifier, routing-independence, "
+        "or cross-domain validation claim"
+    )
     with open(summary_path, "w") as f:
         json.dump(results, f, indent=2)
     print(f"  Summary: {summary_path}")

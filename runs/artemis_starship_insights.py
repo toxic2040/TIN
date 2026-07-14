@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""run_artemis_starship_insights.py — Actionable science for Artemis and Starship.
+"""Historical TIN diagnostics for Artemis and Starship scenarios.
 
-Pulls together existing simulation results into a mission-planning reference.
-No new simulations — arithmetic and analysis on data that already exists.
+Replays arithmetic and summaries from archived TIN simulation results. This is
+a retired claim surface, not a mission-planning, feasibility, reserve-sizing,
+crew-safety, or operations reference. No new simulations are run.
 
 Seven sections:
-  1. Commodity sweep: ξ and survival for all cargo types at Mars T_scheduled
-  2. Gateway UQ warning: coupling strength at NRHO under congestion
-  3. Parity locking design rule: even-n NRHO fleet S_T ceiling
-  4. Return leg crew safety: outbound vs return η by fleet size (Moon)
-  5. Fix the radio, not the constellation: Mars variance decomposition
-  6. Commodity synchronization penalty: F_sync for Artemis + Starship mixes
+  1. Commodity sweep: ξ and exponential remaining fraction at Mars T_scheduled
+  2. Historical Gateway UQ diagnostic: archived NRHO coupling measurements
+  3. Historical parity diagnostic: even-n NRHO fleet S_T pattern
+  4. Historical return-leg model output: outbound vs return η by fleet size
+  5. Historical Mars variance decomposition
+  6. Historical commodity synchronization diagnostic: F_sync
   7. One-tau screening table: every commodity × every route
 
 Output: runs/artemis_starship_insights_results.json
@@ -23,6 +24,10 @@ from pathlib import Path
 _HERE = Path(__file__).parent
 DAY = 86400.0
 LN2 = math.log(2)
+CLAIM_STATUS = (
+    "HISTORICAL/RETIRED: archived TIN model output; not mission feasibility, "
+    "reserve-sizing, crew-safety, or operations guidance"
+)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -39,7 +44,7 @@ COMMODITIES = {
     "CH4": {
         "tau_half_d": 3600,
         "category": "propellant",
-        "notes": "SpaceX Raptor fuel, very stable cryo",
+        "notes": "archived 3,600-day half-life input for a methane row",
     },
     "LOX": {"tau_half_d": 500, "category": "propellant", "notes": "moderate boiloff"},
     "LOX_ZBO": {"tau_half_d": 5000, "category": "propellant", "notes": "with zero boil-off"},
@@ -117,8 +122,8 @@ def _compute_xi(t_d, tau_half_d):
     return t_d * LN2 / tau_half_d
 
 
-def _compute_survival(t_d, tau_half_d):
-    """Compute survival fraction = exp(-ln(2) × T / τ_half)."""
+def _compute_remaining_fraction(t_d, tau_half_d):
+    """Compute the exponential model's remaining fraction."""
     if tau_half_d is None or tau_half_d <= 0:
         return None
     return math.exp(-LN2 * t_d / tau_half_d)
@@ -130,9 +135,9 @@ def _compute_survival(t_d, tau_half_d):
 
 
 def section1_commodity_sweep():
-    """ξ and survival for all commodities at Mars scheduled transit."""
+    """Render ξ and remaining-fraction references for archived commodity rows."""
     print("\n" + "=" * 70)
-    print("  1. COMMODITY SWEEP: Mars Hohmann (30d window)")
+    print("  1. HISTORICAL COMMODITY MODEL: Mars Hohmann (30d window)")
     print("     T_Hohmann = 258.9d, T_scheduled = 611.2d")
     print("=" * 70)
 
@@ -142,7 +147,7 @@ def section1_commodity_sweep():
     results = {}
     print(
         f"\n  {'Commodity':<20} {'τ_half':>8} {'ξ_Hohm':>8} {'ξ_Sched':>8} "
-        f"{'DR_Hohm':>8} {'DR_Sched':>8} {'Verdict':>12}"
+        f"{'Remain_H':>8} {'Remain_S':>8} {'Model band':>12}"
     )
     print(f"  {'-' * 20} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 12}")
 
@@ -150,18 +155,18 @@ def section1_commodity_sweep():
         tau = c["tau_half_d"]
         if tau is None:
             xi_h = xi_s = dr_h = dr_s = None
-            verdict = "N/A (crew)"
+            model_band = "NOT_MODELED"
         else:
             xi_h = _compute_xi(t_h, tau)
             xi_s = _compute_xi(t_s, tau)
-            dr_h = _compute_survival(t_h, tau)
-            dr_s = _compute_survival(t_s, tau)
+            dr_h = _compute_remaining_fraction(t_h, tau)
+            dr_s = _compute_remaining_fraction(t_s, tau)
             if xi_s > 1.0:
-                verdict = "INFEASIBLE"
+                model_band = "ABOVE_1.0"
             elif xi_s > 0.7:
-                verdict = "MARGINAL"
+                model_band = "0.7_TO_1.0"
             else:
-                verdict = "FEASIBLE"
+                model_band = "BELOW_0.7"
 
         tau_str = f"{tau}d" if tau else "N/A"
         xi_h_str = f"{xi_h:.4f}" if xi_h is not None else "N/A"
@@ -171,16 +176,16 @@ def section1_commodity_sweep():
 
         print(
             f"  {name:<20} {tau_str:>8} {xi_h_str:>8} {xi_s_str:>8} "
-            f"{dr_h_str:>8} {dr_s_str:>8} {verdict:>12}"
+            f"{dr_h_str:>8} {dr_s_str:>8} {model_band:>12}"
         )
 
         results[name] = {
             "tau_half_d": tau,
             "xi_hohmann": round(xi_h, 6) if xi_h else None,
             "xi_scheduled": round(xi_s, 6) if xi_s else None,
-            "dr_hohmann": round(dr_h, 6) if dr_h else None,
-            "dr_scheduled": round(dr_s, 6) if dr_s else None,
-            "verdict": verdict,
+            "model_remaining_hohmann": round(dr_h, 6) if dr_h else None,
+            "model_remaining_scheduled": round(dr_s, 6) if dr_s else None,
+            "model_band": model_band,
         }
 
     return results
@@ -192,9 +197,9 @@ def section1_commodity_sweep():
 
 
 def section2_gateway_uq():
-    """Pull NRHO coupling data and frame the Gateway warning."""
+    """Render archived NRHO coupling measurements without design advice."""
     print("\n" + "=" * 70)
-    print("  2. GATEWAY UQ WARNING: NRHO coupling under congestion")
+    print("  2. HISTORICAL GATEWAY UQ DIAGNOSTIC — CLASSIFIER RETIRED")
     print("=" * 70)
 
     with open(_HERE / "uq_moon_coupling_v4_results.json") as f:
@@ -206,9 +211,9 @@ def section2_gateway_uq():
     print(f"\n  Pooled ρ(S_T, η) at λ=50: {pooled_rho:.3f}")
     print(
         f"\n  {'n_orb':>5} {'Parity':>6} {'S_T':>8} {'η(λ=1)':>8} {'γ(λ=1)':>8} "
-        f"{'η(λ=50)':>8} {'γ(λ=50)':>8} {'Regime':>10}"
+        f"{'η(λ=50)':>8} {'γ(λ=50)':>8} {'Status':>12}"
     )
-    print(f"  {'-' * 5} {'-' * 6} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 10}")
+    print(f"  {'-' * 5} {'-' * 6} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 8} {'-' * 12}")
 
     results = {}
     for n_str, a in sorted(arch.items(), key=lambda x: int(x[0])):
@@ -220,17 +225,9 @@ def section2_gateway_uq():
         eta50 = a["lam_50"]["eta_mean"]
         gamma50 = a["lam_50"]["gamma"]
 
-        def _regime(g):
-            if g > -0.1:
-                return "MARGINAL"
-            return "TRAP"
-
-        regime1 = _regime(gamma1)
-        regime50 = _regime(gamma50)
-
         print(
             f"  {n:>5} {parity:>6} {s_t:>8.3f} {eta1:>8.3f} {gamma1:>8.2f} "
-            f"{eta50:>8.3f} {gamma50:>8.2f} {regime50:>10}"
+            f"{eta50:>8.3f} {gamma50:>8.2f} {'HISTORICAL':>12}"
         )
 
         results[n_str] = {
@@ -239,30 +236,33 @@ def section2_gateway_uq():
             "s_t": round(s_t, 4),
             "eta_lam1": round(eta1, 4),
             "gamma_lam1": round(gamma1, 3),
-            "regime_lam1": regime1,
+            "classifier_status_lam1": "RETIRED",
             "eta_lam50": round(eta50, 4),
             "gamma_lam50": round(gamma50, 3),
-            "regime_lam50": regime50,
+            "classifier_status_lam50": "RETIRED",
         }
 
-    print("\n  Gateway implication: n=2-3 NRHO relay sats are in the low-S_T regime")
-    print(f"  where congestion coupling is strongest (ρ = {pooled_rho:.2f}).")
-    print("  Factored UQ underestimates variance during surge operations.")
-    print("  Design margin should account for this — size reserves at γ(λ_max),")
-    print("  not γ(λ=1).")
+    print("\n  Historical observation: this archived sweep reported a pooled")
+    print(f"  association ρ(S_T, η) = {pooled_rho:.2f} at λ=50.")
+    print("  Gamma is retained here only as a descriptive, outcome-derived slope.")
+    print("  No gamma threshold, mission margin, or reserve-sizing rule is retained.")
 
-    return {"pooled_rho_lam50": round(pooled_rho, 4), "architectures": results}
+    return {
+        "claim_status": "historical diagnostic; classifier and reserve advice retired",
+        "pooled_rho_lam50": round(pooled_rho, 4),
+        "architectures": results,
+    }
 
 
 # ═══════════════════════════════════════════════════════════════
-# SECTION 3: Parity locking design rule
+# SECTION 3: Archived parity comparison
 # ═══════════════════════════════════════════════════════════════
 
 
-def section3_parity_locking():
-    """Parity locking: even-n NRHO fleets lock at S_T = 0.5675."""
+def section3_parity_comparison():
+    """Render the archived even-n NRHO parity pattern."""
     print("\n" + "=" * 70)
-    print("  3. PARITY LOCKING: NRHO fleet sizing design rule")
+    print("  3. HISTORICAL PARITY DIAGNOSTIC — NOT A FLEET-SIZING RULE")
     print("=" * 70)
 
     with open(_HERE / "uq_moon_coupling_v4_results.json") as f:
@@ -270,23 +270,23 @@ def section3_parity_locking():
 
     arch = data["architecture_summary"]
 
-    print("\n  Even-n fleets lock at S_T ≈ 0.5675 regardless of fleet size.")
-    print("  Golden-angle RAAN spacing (137.508°) breaks the resonance.")
+    print("\n  Each tested even-n row in this archive has S_T ≈ 0.5675.")
+    print("  The archived golden-angle rows provide a separate spacing comparison.")
     print(f"\n  {'n_orb':>5} {'Parity':>6} {'S_T':>8} {'Contacts':>10}")
     print(f"  {'-' * 5} {'-' * 6} {'-' * 8} {'-' * 10}")
 
     for n_str, a in sorted(arch.items(), key=lambda x: int(x[0])):
         print(f"  {a['n_orbiters']:>5} {a['parity']:>6} {a['s_t']:>8.4f} {a['n_contacts']:>10}")
 
-    print("\n  Design rules:")
-    print("    1. Use golden-angle RAAN spacing, not equal spacing")
-    print("    2. Evaluate S_T at both n and n+1 before committing")
-    print("    3. Even-n Gateway relay fleets are actively penalized")
+    print("\n  Archived comparison notes (not design rules):")
+    print("    1. Golden-angle and equal-spacing rows were both evaluated")
+    print("    2. Adjacent n and n+1 values were recorded")
+    print("    3. Tested even-n rows have lower S_T than neighboring odd-n rows")
 
     return {
-        "lock_in_s_t": 0.5675,
-        "fix": "golden-angle RAAN spacing (137.508 deg)",
-        "note": "Phase 5 forensic: exact in 24/24 constellations, survives 45 deg jitter",
+        "even_row_s_t_reference": 0.5675,
+        "comparison_spacing": "golden-angle RAAN spacing (137.508 deg)",
+        "archive_note": "Phase 5 archive: exact in 24/24 tested constellations; 45 deg jitter tested",
     }
 
 
@@ -296,9 +296,9 @@ def section3_parity_locking():
 
 
 def section4_return_leg():
-    """Outbound vs return η by fleet size — the silent killer."""
+    """Render archived outbound-versus-return model outputs."""
     print("\n" + "=" * 70)
-    print("  4. RETURN LEG: Crew safety vs fleet size")
+    print("  4. HISTORICAL RETURN-LEG MODEL OUTPUT — NOT CREW-SAFETY GUIDANCE")
     print("=" * 70)
 
     with open(_HERE / "binding_diagnostic_results.json") as f:
@@ -341,22 +341,22 @@ def section4_return_leg():
 
         results[body] = body_results
 
-    print("\n  Key finding: at n≥6, return η ≈ 0.80 vs outbound η ≈ 0.91.")
-    print("  The return leg degrades faster. Crew abort paths depend on return.")
-    print("  Braess collapse at n=8 (Mars) makes outbound WORSE than return.")
+    print("\n  Archived model observation: at n≥6, return η ≈ 0.80 vs outbound η ≈ 0.91.")
+    print("  This synthetic comparison is not a crew-abort or mission-safety result.")
+    print("  The archived n=8 Mars case has lower modeled outbound than return η.")
 
     return results
 
 
 # ═══════════════════════════════════════════════════════════════
-# SECTION 5: Fix the radio, not the constellation
+# SECTION 5: Archived variance decomposition
 # ═══════════════════════════════════════════════════════════════
 
 
 def section5_fix_the_radio():
-    """Mars variance decomposition — where to invest."""
+    """Render the archived Mars variance decomposition."""
     print("\n" + "=" * 70)
-    print("  5. FIX THE RADIO: Mars variance decomposition")
+    print("  5. HISTORICAL MARS VARIANCE DECOMPOSITION — NOT DESIGN GUIDANCE")
     print("=" * 70)
 
     with open(_HERE / "uncertainty_quantification_results.json") as f:
@@ -370,34 +370,34 @@ def section5_fix_the_radio():
 
     print("\n  Mars 6-polar, 50 perturbed plans × 5 seeds:")
     print(f"    Between-plan variance (geometry):  {var_between:.1f}%")
-    print("    Within-plan variance (link success): dominates")
+    print("    Within-plan variance component: larger in this archived decomposition")
     print(f"\n  CI overlap (factored vs direct): {ci_overlap:.3f}")
     print(f"  KS statistic:                    {ks:.3f}")
 
-    print("\n  Design prescription by fleet size:")
-    print("    n=2-4:  Fix geometry (S_T). Add orbiters for coverage.")
-    print("    n=4-6:  Fix routing (η). Better DTN stack, smarter forwarding.")
-    print("    n≥7:    Fix the radio (p_success). Phased-array, higher power.")
-    print("            More satellites past n=6 actively hurts (Braess at n=8).")
+    print("\n  Archived band labels from this model (not a design prescription):")
+    print("    n=2-4:  geometry-associated S_T band")
+    print("    n=4-6:  routing-associated η band")
+    print("    n≥7:    link-probability-associated band")
+    print("    The archived n=8 row is lower than the n=6 comparison; no cause is inferred.")
 
     return {
         "between_plan_pct": round(var_between, 1),
-        "within_plan_dominates": True,
+        "within_plan_fraction_exceeds_between_plan": True,
         "ci_overlap": round(ci_overlap, 4),
         "ks_statistic": round(ks, 4),
-        "prescription": "low_n=geometry, mid_n=routing, high_n=radio",
+        "archived_band_labels": "low_n=geometry, mid_n=routing, high_n=link_probability",
     }
 
 
 # ═══════════════════════════════════════════════════════════════
-# SECTION 6: Commodity synchronization penalty
+# SECTION 6: Historical commodity synchronization diagnostic
 # ═══════════════════════════════════════════════════════════════
 
 
 def section6_synchronization():
-    """F_sync computation for realistic mission commodity mixes."""
+    """Compute F_sync for archived synthetic commodity parameter rows."""
     print("\n" + "=" * 70)
-    print("  6. COMMODITY SYNCHRONIZATION: Hub idle time penalty")
+    print("  6. HISTORICAL COMMODITY SYNCHRONIZATION MODEL")
     print("=" * 70)
 
     def f_sync_geometric(p_h, p_p, decay_factor=1.0):
@@ -416,45 +416,45 @@ def section6_synchronization():
         return min(1.0, max(0.0, p_p * numerator / (p_h * p_p / q) if p_h * p_p > 0 else 0))
 
     scenarios = {
-        "Artemis Gateway (near-term)": {
+        "Archived Artemis-like row": {
             "p_hw": 0.85,
             "p_prop": 0.80,
             "tau_half_d": 500,
             "epoch_d": 30,
             "notes": "LOX/CH4, monthly resupply from Earth",
         },
-        "Mars ISRU era": {
+        "Archived Mars ISRU-like row": {
             "p_hw": 0.60,
             "p_prop": 0.35,
             "tau_half_d": 300,
             "epoch_d": 780,
             "notes": "synodic resupply, local ISRU propellant",
         },
-        "Mars cryo (LH2, no ZBO)": {
+        "Archived Mars LH2-like row": {
             "p_hw": 0.60,
             "p_prop": 0.095,
             "tau_half_d": 180,
             "epoch_d": 780,
             "notes": "from scheduling overhead result: 9.5% pipeline DR",
         },
-        "Starship Mars fleet (CH4)": {
+        "Archived methane-fleet row": {
             "p_hw": 0.70,
             "p_prop": 0.65,
             "tau_half_d": 3600,
             "epoch_d": 780,
-            "notes": "CH4 very stable, high fleet reliability",
+            "notes": "archived methane half-life and probability inputs",
         },
         "Symmetric stress test": {
             "p_hw": 0.30,
             "p_prop": 0.30,
             "tau_half_d": 180,
             "epoch_d": 780,
-            "notes": "worst-case near-knife-edge",
+            "notes": "synthetic low-probability comparison",
         },
     }
 
     print(
-        f"\n  {'Scenario':<30} {'p_hw':>6} {'p_prop':>7} {'τ_half':>7} {'F_sync':>7} {'Penalty':>8}"
+        f"\n  {'Archived row':<30} {'p_hw':>6} {'p_prop':>7} {'τ_half':>7} {'F_sync':>7} {'1-F_sync':>8}"
     )
     print(f"  {'-' * 30} {'-' * 6} {'-' * 7} {'-' * 7} {'-' * 7} {'-' * 8}")
 
@@ -479,11 +479,11 @@ def section6_synchronization():
             + (1 - p_hw_first) * s["p_prop"] * decay_if_prop_first
         )
         f_sync = min(1.0, f_sync / max(s["p_prop"], 0.001))
-        penalty = (1 - f_sync) * 100
+        reduction_pct = (1 - f_sync) * 100
 
         print(
             f"  {name:<30} {s['p_hw']:>6.2f} {s['p_prop']:>7.3f} {s['tau_half_d']:>5.0f}d "
-            f"{f_sync:>7.3f} {penalty:>7.1f}%"
+            f"{f_sync:>7.3f} {reduction_pct:>7.1f}%"
         )
 
         results[name] = {
@@ -491,26 +491,27 @@ def section6_synchronization():
             "p_prop": s["p_prop"],
             "tau_half_d": s["tau_half_d"],
             "f_sync": round(f_sync, 4),
-            "penalty_pct": round(penalty, 2),
+            "reduction_pct": round(reduction_pct, 2),
             "notes": s["notes"],
         }
 
-    print("\n  A hub needs ALL binding commodities simultaneously.")
-    print("  F_sync < 1 means the hub sits idle waiting for the last piece.")
+    print("\n  In this synthetic formula, availability is computed from both modeled inputs.")
+    print("  Values below one record the formula's synchronization reduction only.")
 
     return results
 
 
 # ═══════════════════════════════════════════════════════════════
-# SECTION 7: One-tau screening table
+# SECTION 7: One-tau model-band table
 # ═══════════════════════════════════════════════════════════════
 
 
 def section7_onetau_table():
-    """Every commodity × every route: instant feasibility screening."""
+    """Render the archived one-tau screening heuristic."""
     print("\n" + "=" * 70)
-    print("  7. ONE-TAU SCREENING TABLE: ξ = T_scheduled × ln(2) / τ_half")
-    print("     ξ < 0.7 = SAFE | 0.7-1.0 = MARGINAL | > 1.0 = INFEASIBLE")
+    print("  7. HISTORICAL ONE-TAU MODEL BANDS: ξ = T_scheduled × ln(2) / τ_half")
+    print("     BAND A: ξ < 0.7 | BAND B: 0.7-1.0 | BAND C: ξ > 1.0")
+    print("     Descriptive archived bands only — no mission or survivability verdict")
     print("=" * 70)
 
     # Filter to interesting commodities (skip crew, water, hypergolics)
@@ -566,25 +567,29 @@ def section7_onetau_table():
                 continue
 
             xi = _compute_xi(t_s, tau)
-            dr = _compute_survival(t_s, tau)
+            remaining_fraction = _compute_remaining_fraction(t_s, tau)
 
             if xi > 1.0:
-                marker = "X"  # infeasible
+                marker = "C"
             elif xi > 0.7:
-                marker = "~"  # marginal
+                marker = "B"
             else:
-                marker = "."  # safe
+                marker = "A"
 
             row += f"  {marker}{xi:>5.2f}    "
-            row_data[route_name] = {"xi": round(xi, 4), "dr": round(dr, 4)}
+            row_data[route_name] = {
+                "xi": round(xi, 4),
+                "model_remaining_fraction": round(remaining_fraction, 4),
+            }
 
         print(row)
         results[cname] = row_data
 
-    print("\n  Legend: . = safe (ξ<0.7)  ~ = marginal (0.7-1.0)  X = infeasible (ξ>1.0)")
-    print("\n  Key insight: CH4 is safe on every route including Jupiter (ξ=0.13).")
-    print("  LH2 is infeasible past Moon without ZBO. With ZBO, Mars becomes marginal.")
-    print("  Medical supplies cannot survive any route past Moon without fast transfer.")
+    print("\n  Legend: A = ξ<0.7  B = 0.7-1.0  C = ξ>1.0")
+    print("\n  Archived model row: CH4 is in Band A on each displayed route (Jupiter ξ=0.13).")
+    print("  LH2 is in Band C beyond Moon; the extended-half-life Mars row is in Band B.")
+    print("  The displayed medical-input rows are in Band C beyond Moon.")
+    print("  These bands are arithmetic references, not preservation or mission conclusions.")
 
     return results
 
@@ -596,14 +601,15 @@ def section7_onetau_table():
 
 def main():
     print("=" * 70)
-    print("  ACTIONABLE SCIENCE FOR ARTEMIS AND STARSHIP")
-    print("  From TIN framework — 290,000+ validated configurations")
+    print("  HISTORICAL TIN ARTEMIS/STARSHIP ANALYSIS — RETIRED CLAIM SURFACE")
+    print("  Historical TIN analysis — configuration counts are non-additive")
+    print(f"  {CLAIM_STATUS}")
     print("=" * 70)
 
-    results = {}
+    results = {"_claim_status": CLAIM_STATUS}
     results["commodity_sweep"] = section1_commodity_sweep()
     results["gateway_uq"] = section2_gateway_uq()
-    results["parity_locking"] = section3_parity_locking()
+    results["parity_comparison"] = section3_parity_comparison()
     results["return_leg"] = section4_return_leg()
     results["fix_the_radio"] = section5_fix_the_radio()
     results["synchronization"] = section6_synchronization()

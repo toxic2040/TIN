@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""P2 Fig 1: gamma vs Var[ln p] scatter across 82,515 production configs.
+"""Historical gamma vs Var[ln p] scatter from archived production panels.
 
-THE main result figure for Paper 2.  Color by body identity.
-Linear fit showing R² = 0.903.
+This reproduces a pooled in-sample association from the 2026-03-11 corpus. It
+does not establish an order parameter, mechanism, classifier, or current law.
 """
 
 import json
@@ -40,7 +40,7 @@ PANELS = [
 # Body colors from unified palette (colorblind-safe, Paul Tol derived)
 
 # Load all production panels
-print("Loading production panels...")
+print("Loading historical production panels...")
 by_body = defaultdict(lambda: {"vlp": [], "gamma": []})
 n_total = 0
 n_valid = 0
@@ -88,7 +88,7 @@ slope, intercept = np.polyfit(all_vlp, all_gamma, 1)
 ss_res = np.sum((all_gamma - (slope * all_vlp + intercept)) ** 2)
 ss_tot = np.sum((all_gamma - np.mean(all_gamma)) ** 2)
 r2 = 1 - ss_res / ss_tot
-print(f"  slope={slope:.2f}, intercept={intercept:.4f}, R²={r2:.4f}")
+print(f"  Historical pooled OLS: slope={slope:.2f}, intercept={intercept:.4f}, R²={r2:.4f}")
 
 # Plot
 fig, ax = plt.subplots(figsize=figsize_single("pre", height_ratio=0.95))
@@ -122,6 +122,7 @@ ax.plot(x_fit, y_fit, "-", color="#333333", lw=1.2, zorder=3)
 ax.text(
     0.97,
     0.03,
+    "Historical pooled fit\n"
     f"$\\gamma = {slope:.1f} \\times \\mathrm{{Var}}[\\ln p] + \\varepsilon$\n"
     f"$R^2 = {r2:.3f}$,  $n = {n_valid:,}$",
     transform=ax.transAxes,
@@ -132,7 +133,8 @@ ax.text(
 )
 
 ax.set_xlabel("$\\mathrm{Var}[\\ln p]$")
-ax.set_ylabel("$\\gamma$ (order parameter)")
+ax.set_ylabel("Archived $\\gamma$ diagnostic")
+ax.set_title("Historical Production-Corpus Association — Classifier Retired")
 ax.spines[["top", "right"]].set_visible(False)
 ax.grid(True, alpha=0.2)
 

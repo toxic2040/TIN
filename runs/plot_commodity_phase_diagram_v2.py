@@ -1,13 +1,15 @@
-"""
-Commodity Phase Diagram v2 — with T_actual scheduling overhead arrows
+"""Historical transit-time/half-life model diagram with archived schedule rows.
 
 Reproduces the original diagram and adds:
 - Arrows from T_Hohmann (open symbols) to T_actual (filled symbols)
   for EMJ relay chain and Mars direct
-- Annotations showing the scheduling overhead percentage
-- Visual demonstration that Mars crosses the pipeline line under
-  realistic scheduling
+- Annotations showing the archived scheduling-interval percentage
+
+The model-reference lines and plotted rows do not establish mission
+feasibility, preservation requirements, fleet design, or operational risk.
 """
+
+from pathlib import Path
 
 import matplotlib
 
@@ -36,18 +38,30 @@ tau_pipeline = T * np.log(2)
 # Below this, the commodity doesn't survive a single transit
 tau_survival = T * 1.0
 
-ax.plot(T, tau_pipeline, "k-", linewidth=2.0, zorder=3, label=r"Pipeline: $\tau_{1/2} = T \ln 2$")
 ax.plot(
-    T, tau_survival, "k--", linewidth=1.5, zorder=3, label=r"Survival: $\tau_{\mathrm{shelf}} = T$"
+    T,
+    tau_pipeline,
+    "k-",
+    linewidth=2.0,
+    zorder=3,
+    label=r"Archived exponential-decay reference: $\tau_{1/2} = T \ln 2$",
+)
+ax.plot(
+    T,
+    tau_survival,
+    "k--",
+    linewidth=1.5,
+    zorder=3,
+    label=r"Archived step-decay reference: $\tau_{\mathrm{shelf}} = T$",
 )
 
-# ── Fill regions ─────────────────────────────────────────────
-# Feasible (above pipeline line)
+# ── Historical model-reference regions ──────────────────────
+# Above the exponential-decay reference line
 ax.fill_between(T, tau_pipeline, 5000, alpha=0.08, color="green", zorder=1)
 ax.text(
     4,
     2500,
-    "feasible",
+    "above both\nmodel lines",
     fontsize=16,
     color="#2d7d2d",
     fontweight="bold",
@@ -56,12 +70,12 @@ ax.text(
     alpha=0.7,
 )
 
-# Infeasible (below survival line)
+# Below the step-decay reference line
 ax.fill_between(T, 1, tau_survival, alpha=0.08, color="red", zorder=1)
 ax.text(
     2000,
     8,
-    "infeasible",
+    "below both\nmodel lines",
     fontsize=16,
     color="#8b2020",
     fontweight="bold",
@@ -75,7 +89,7 @@ ax.fill_between(T, tau_survival, tau_pipeline, alpha=0.06, color="orange", zorde
 ax.text(
     30,
     12,
-    "exp. OK,\nstep fails",
+    "between\nmodel lines",
     fontsize=11,
     color="#b8700a",
     fontweight="bold",
@@ -152,7 +166,7 @@ for name, c in commodities.items():
 ax.text(
     10,
     22,
-    r"$\xi = 1$ threshold",
+    r"$\xi = 1$ model reference",
     fontsize=9,
     rotation=0,
     color="black",
@@ -164,7 +178,7 @@ ax.text(
 ax.text(
     55,
     22,
-    r"Pipeline: $\tau_{1/2} = T \ln 2$",
+    r"Archived model line: $\tau_{1/2} = T \ln 2$",
     fontsize=9,
     rotation=0,
     color="black",
@@ -186,7 +200,7 @@ ax.plot(
     zorder=5,
 )
 
-# ── Mars with scheduling overhead (MEASURED, 22 March 2026) ──
+# ── Mars archived scheduling-model row (22 March 2026) ───────
 # From run_mars_scheduling_overhead.py: 4 scenarios, 10yr, 5 synodic cycles
 mars_T_hohmann = 259
 mars_T_scheduled = 611  # measured mean, 30d departure window, +136% overhead
@@ -211,7 +225,7 @@ ax.annotate(
 
 # Mars annotations
 ax.annotate(
-    "LH₂ to Mars\n(Hohmann floor, ξ ≈ 1.0)",
+    "LH₂ model row\n(Hohmann floor, ξ ≈ 1.0)",
     xy=(259, 180),
     xytext=(40, 350),
     fontsize=9,
@@ -222,7 +236,7 @@ ax.annotate(
 )
 
 ax.annotate(
-    "+136% scheduling overhead\nξ = 2.35, DR = 9.5%\nsynodic wait kills LH₂",
+    "+136% archived schedule interval\nξ = 2.35, modeled DR = 9.5%\nno mission verdict",
     xy=(mars_T_scheduled, 200),
     xytext=(80, 900),
     fontsize=9,
@@ -232,7 +246,7 @@ ax.annotate(
     ha="center",
 )
 
-# ── LOX at Mars scheduled (THE HIDDEN PROBLEM) ──────────────
+# ── LOX archived Mars scheduling-model row ──────────────────
 # LOX Hohmann (open circle)
 ax.plot(
     mars_T_hohmann,
@@ -262,7 +276,7 @@ ax.annotate(
     arrowprops=dict(arrowstyle="->", color="#555555", lw=2.0),
 )
 ax.annotate(
-    "LOX to Mars\nξ = 0.85, DR = 43%\nmarginal — needs ZBO",
+    "LOX model row\nξ = 0.85, modeled DR = 43%\nno ZBO requirement inferred",
     xy=(mars_T_scheduled, 500),
     xytext=(2500, 500),
     fontsize=9,
@@ -272,7 +286,7 @@ ax.annotate(
     ha="left",
 )
 
-# ── CH4 at Mars scheduled (SAFE) ────────────────────────────
+# ── CH4 archived Mars scheduling-model row ──────────────────
 ax.plot(
     mars_T_scheduled,
     3600,
@@ -284,7 +298,7 @@ ax.plot(
     zorder=6,
 )
 ax.annotate(
-    "CH₄ to Mars: ξ = 0.12, DR = 89% — safe (SpaceX baseline)",
+    "CH₄ model row: ξ = 0.12, modeled DR = 89%",
     xy=(mars_T_scheduled, 3600),
     xytext=(30, 4500),
     fontsize=9,
@@ -294,7 +308,7 @@ ax.annotate(
     ha="left",
 )
 
-# Trap-class risk bracket between Hohmann and scheduled
+# Archived interval difference between Hohmann and scheduled inputs
 ax.annotate(
     "",
     xy=(mars_T_scheduled, 115),
@@ -304,7 +318,7 @@ ax.annotate(
 ax.text(
     (mars_T_hohmann * mars_T_scheduled) ** 0.5,
     82,
-    "schedule-limited trap zone",
+    "archived schedule-interval difference",
     fontsize=8,
     color="#884400",
     ha="center",
@@ -345,7 +359,7 @@ ax.annotate(
     arrowprops=dict(arrowstyle="->", color="#cc3300", lw=2.0),
 )
 
-# HW (durable cargo) at EMJ — in feasible zone
+# HW (durable cargo) archived EMJ model row
 hw_tau = 2000
 ax.plot(
     emj_T_hohmann,
@@ -376,7 +390,7 @@ ax.annotate(
 
 # EMJ labels — long leader lines to far corners
 ax.annotate(
-    "EMJ relay: HW\nDR = 0.42",
+    "EMJ model row: HW\nmodeled DR = 0.42",
     xy=(emj_T_actual, hw_tau),
     xytext=(4500, 1500),
     fontsize=9,
@@ -387,7 +401,7 @@ ax.annotate(
 )
 
 ax.annotate(
-    "EMJ relay: LH₂\nDR = 0.027",
+    "EMJ model row: LH₂\nmodeled DR = 0.027",
     xy=(emj_T_actual, 180),
     xytext=(5500, 30),
     fontsize=9,
@@ -410,7 +424,7 @@ ax2.set_xlabel("")
 ax.text(
     60,
     2800,
-    "○ → ●  Hohmann floor → hull $T_{actual}$\n◇  measured scheduling overhead (synodic gating)",
+    "○ → ●  Hohmann floor → archived $T_{actual}$\n◇  archived scheduling-model interval",
     fontsize=8.5,
     color="#555555",
     va="top",
@@ -419,14 +433,18 @@ ax.text(
 )
 
 # ── Axis labels ──────────────────────────────────────────────
-ax.set_xlabel(r"Minimum transit time $T_{\mathrm{Hohmann}}$ (days)", fontsize=13, labelpad=8)
+ax.set_xlabel(
+    r"Two-body Hohmann transfer-time floor $T_{\mathrm{Hohmann}}$ (days)",
+    fontsize=13,
+    labelpad=8,
+)
 ax.set_ylabel(r"Commodity half-life $\tau_{1/2}$ (days)", fontsize=13, labelpad=8)
 
 # Title
 ax.set_title(
-    "Commodity Phase Diagram — with Scheduling Overhead\n"
-    r"The Hohmann floor is physics. The hull $T_{\mathrm{actual}}$ is engineering."
-    "\nThe distance between them is the trap-class risk.",
+    "Historical transit-time/half-life model diagnostic\n"
+    r"Archived Hohmann-floor and $T_{\mathrm{actual}}$ inputs"
+    "\nNot mission feasibility, preservation, or design guidance",
     fontsize=12,
     pad=15,
     linespacing=1.4,
@@ -437,8 +455,6 @@ ax.grid(True, which="both", alpha=0.15, linewidth=0.5)
 ax.tick_params(labelsize=10)
 
 plt.tight_layout()
-from pathlib import Path
-
 _FIG_DIR = Path(__file__).parent.parent / "figures"
 _FIG_DIR.mkdir(exist_ok=True)
 plt.savefig(str(_FIG_DIR / "commodity_phase_v2.pdf"), dpi=300, bbox_inches="tight")

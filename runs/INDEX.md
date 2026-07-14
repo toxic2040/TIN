@@ -1,6 +1,9 @@
 # Experiment Index
 
-**Last updated:** 2026-06-12 (repro/verify baseline rows added with measured run contract; historical table still needs full row-level regeneration)
+This is a historical planning and reproduction index, not a current claim
+ledger. Counts from different rows overlap and are not globally additive.
+
+**Last updated:** 2026-07-13 (claim-surface reconciliation and historical routing labels refreshed; historical table still needs full row-level regeneration)
 **Total:** 111 Python scripts under `runs/` (counted: `find runs/ -maxdepth 1 -name "*.py" | wc -l`), JSON result files as per `runs/CONFIG_MANIFEST.md`
 
 Status: **yes** = results exist | **--** = no results found | **lib** = library/not a runner
@@ -9,8 +12,11 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 
 ## Paper 1 — Classification Framework (Zenodo working-paper deposit)
 
-**Topic:** DR factorization, trap/cluster classification via gamma, and related figure/result scripts.
-**Data:** 290,000+ accounted configurations; see `runs/CONFIG_MANIFEST.md` for hash and count provenance.
+**Historical topic:** DR factorization and the now-retired trap/cluster gamma
+classification program, with its related figure/result scripts.
+**Data:** historical result-file accounting; see `runs/CONFIG_MANIFEST.md`.
+Its per-file counts are heterogeneous and do not establish a global unique
+configuration total.
 
 ### Runners
 
@@ -25,10 +31,10 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 
 | Script | Results | Description |
 |--------|---------|-------------|
-| `analysis_pair_eta.py` | `analysis_pair_eta_results.json` | Per-pair eta ansatz test on CRAWDAD traces |
+| `analysis_pair_eta.py` | `analysis_pair_eta_results.json` | Historical per-pair eta association diagnostic on CRAWDAD traces; causal/classifier interpretation retired |
 | `s_vs_decisions.py` | `s_vs_decisions_results.json` | s = eta/(1-eta) vs routing decisions power law test |
 | `validate_eta_emerg.py` | `eta_emerg_validation.json` | Emergency-mode CTMC factorization validation |
-| `verify_paper_claims.py` | — | Automated verification of ~35 quantitative claims in .tex |
+| `verify_paper_claims.py` | — | Fail-closed historical manuscript-value reproducer; PASS is not independent validation |
 | `independence_tests.py` | `independence_test_results.json` | Pooled + body-stratified MI(S_T;eta) and heteroscedasticity; 0.5452 nats on 91,540 configs, permutation null, no Simpson, U-dip in conditional mean |
 | `independence_mi_attribution.py` | `independence_mi_attribution.json` | Within-bin shuffle attribution of the MI; 20-bin convention reproduces the 2026-03-15 anchor (0.421, 77.2% retained), decile variant 65.2%, bin-count sensitivity 56-85% |
 
@@ -36,10 +42,10 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 
 | Script | Output | Description |
 |--------|--------|-------------|
-| `plot_fig1_classification.py` | `fig1_gamma_vs_p.*` | Gamma vs p_eff + gamma bar chart (8 bodies) |
-| `plot_fig2_classification.py` | `fig2_gamma_saturation.*` | Mean gamma vs contact density for CRAWDAD traces |
+| `plot_fig1_classification.py` | `fig1_gamma_vs_p.*` | Historical composite gamma figure; common-p/global-classifier interpretation retired |
+| `plot_fig2_classification.py` | `fig2_gamma_saturation.*` | Historical four-trace gamma/contact-density association; not causal |
 | `plot_fig3_classification.py` | `fig3_mars_distance_law.*` | eta vs Earth-Mars distance with log-linear fits |
-| `plot_fig4_phase_space.py` | `fig4_phase_space.*` | E[H] vs ln(Phi) phase space (trap vs cluster) |
+| `plot_fig4_phase_space.py` | `fig4_phase_space.*` | Historical geometric-corpus slope diagnostic; classifier retired |
 | `plot_math_primer.py` | `fig_three_factor_decomposition.*` etc | 4 math figures: decomposition, Lyapunov, Phi range, Wald |
 | `plot_finite_size_scaling.py` | FSS figures | 4-panel FSS suite: DR vs p, p_crit, collapse, Braess heatmap |
 
@@ -47,13 +53,14 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 
 | Script | Output | Description |
 |--------|--------|-------------|
-| `anim_t3_classification_reveal.py` | `t3_classification_reveal.gif` | Animated trap/cluster cloud reveal |
+| `anim_t3_classification_reveal.py` | `t3_classification_reveal.gif` | Historical assigned-group slope animation; classifier retired |
 
 ---
 
 ## Paper 2 — Mechanism Taxonomy (historical planning index)
 
-**Topic:** Link heterogeneity, trap classification, and topological/routing/mixed trap mechanisms.
+**Historical topic:** Link heterogeneity and the retired trap-classification
+mechanism program.
 **Historical data row:** 89,178 production + 7,026 campaign + 3,120 follow-up configs.
 
 ### Runners
@@ -66,18 +73,18 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 | `ffwd_gap_analysis.py` | `ffwd_gap_analysis_results.json` | -- | f_fwd distribution and gap at f_fwd=1 boundary |
 | `functional_forms.py` | `functional_forms_results.json` | -- | beta_myopic/beta_retry functional forms from 129k-point dataset |
 | `functional_forms_v2.py` | `functional_forms_v2_results.json` | -- | Two-branch fitting strategy (v2) |
-| `jupiter_boundary.py` | `jupiter_boundary_results.json` | -- | Jupiter as trap/cluster phase-transition boundary body |
-| `kpz_scaling_test.py` | `kpz_scaling_results.json` | -- | KPZ universality: Var(ln DR) ~ E[H]^{2/3} vs E[H]^1 |
-| `pair_gamma_mosaic.py` | `pair_gamma_mosaic_results.json` | -- | Global invariant vs per-pair mosaic test |
-| `r2_collapse.py` | `r2_collapse_results.json` | -- | Universal R^2 collapse: R^2(p,config) = f(p*exp(gamma)) |
-| `skewness_classifier.py` | `skewness_classifier_results.json` | -- | DR skewness as trap/cluster classifier without gamma fitting |
-| `venus_epoch_decomposition.py` | `venus_epoch_decomposition_results.json` | -- | Venus trap-like (conjunction) vs cluster-like (opposition) within synodic |
+| `jupiter_boundary.py` | `jupiter_boundary_results.json` | -- | Historical Jupiter/Saturn gamma-by-distance diagnostic; phase-boundary claim retired |
+| `kpz_scaling_test.py` | `kpz_scaling_results.json` | -- | Historical KPZ-scaling comparison; universality interpretation retired |
+| `pair_gamma_mosaic.py` | `pair_gamma_mosaic_results.json` | -- | Historical per-pair gamma mosaic; global-invariant/classifier interpretation retired |
+| `r2_collapse.py` | `r2_collapse_results.json` | -- | Historical mixed-convention R^2 collapse diagnostic; universal claim retired |
+| `skewness_classifier.py` | `skewness_classifier_results.json` | -- | Historical in-sample skewness comparison; independent-classifier claim retired |
+| `venus_epoch_decomposition.py` | `venus_epoch_decomposition_results.json` | -- | Historical Venus epoch/distance gamma diagnostic; classification boundary retired |
 | `beta_eff_survey.py` | `beta_eff_survey_results.json` | -- | Effective Boltzmann temperature beta_eff across multi-family configs |
 | `diamond_beta_eff.py` | `diamond_beta_eff_results.json` | -- | Beta_eff on 3 dwell-diamond configs (two-path utility gap) |
 | `dwell_diamond.py` | `dwell_diamond_results.json` | -- | Synthetic diamond: oracle path-switching under dwell decay |
 | `remaining_analysis.py` | `remaining_analysis_results.json` | -- | Layer 4 decomposition under dwell decay + delta_screen closed form |
-| `recompute_var_log_p_r2.py` | `var_log_p_canonical_results.json` | -- | Canonical R²(var_log_p, gamma) from 89K production (R²=0.903) |
-| `recompute_gamma_oracle.py` | `gamma_oracle_canonical_results.json` | yes | Canonical gamma decomposition (normal/myopic/retry) per body |
+| `recompute_var_log_p_r2.py` | `var_log_p_canonical_results.json` | -- | Historical pooled in-sample R² diagnostic from the production corpus; mechanism/law claim retired |
+| `recompute_gamma_oracle.py` | `gamma_oracle_canonical_results.json` | yes | Historical geometric-budget gamma decomposition; classifier/boundary interpretation retired |
 | `whitespace_analysis.py` | `whitespace_analysis_results.json` | -- | Layer -1 (alive/dead orthogonality) + R² structural relationship check |
 
 ### Analysis Scripts
@@ -98,8 +105,8 @@ Status: **yes** = results exist | **--** = no results found | **lib** = library/
 | Script | Description |
 |--------|-------------|
 | `plot_braess_paper.py` | DR vs synodic epoch for n=2,4,8,12 (Braess architecture dependence) |
-| `plot_gamma_chi_duality.py` | Gamma-chi duality: Var(chi_DR) vs gamma separating trap/cluster |
-| `plot_phi_paper.py` | 4 Phi figures: Phi_time scatter, histogram by n, landscape, Braess heatmap |
+| `plot_gamma_chi_duality.py` | Historical assigned-group gamma/chi diagnostic; classifier/separation claim retired |
+| `plot_phi_paper.py` | Historical loaded-row Phi diagnostics; no universal or global-count claim |
 
 ---
 
@@ -117,7 +124,7 @@ No runner scripts for Paper 3 are present in the current tree. The EPYC results 
 
 | Script | Description |
 |--------|-------------|
-| `analysis_mars_architecture.py` | Deep dive: synodic profiles, Braess, conjunction, factored delivery ratio |
+| `analysis_mars_architecture.py` | Historical deep dive: synodic profiles, Braess, conjunction, bookkeeping diagnostics |
 | `compute_s_vs_hops.py` | s vs relay depth across Moon/Mars architectures |
 | `plot_helio_primer.py` | 4 heliocentric figures: synodic DR, phase collapse, multi-body, CGR bars |
 
@@ -147,13 +154,14 @@ No runner scripts for Paper 4 are present in the current tree. The following res
 
 | Script | Results | Status | Description |
 |--------|---------|--------|-------------|
-| `q3_neff_threshold.py` | `q3_neff_threshold_results.json` | -- | Q3: N_eff threshold — absolute count vs coverage fraction |
+| `q3_neff_threshold.py` | `q3_neff_threshold_results.json` | -- | Historical N_eff threshold diagnostic; universal/design interpretation retired |
 
 ---
 
 ## ITN Whitepaper — Interplanetary Transport Networks (historical planning index)
 
-**Topic:** Possible transfers from DTN analysis to physical transport: percolation threshold, Braess effects, and fleet phasing.
+**Historical topic:** Exploratory transfers from DTN analysis to physical
+transport; no mission-feasibility or fleet-design guidance is current.
 
 ### Runners
 
@@ -166,8 +174,8 @@ No runner scripts for Paper 4 are present in the current tree. The following res
 | Script | Description |
 |--------|-------------|
 | `plot_itn_fig1_legendre_hull.py` | Legendre hull + affine parametric shortest-path structure |
-| `plot_itn_fig2_cascade.py` | Three-cascade: contact → oracle → routing pipeline |
-| `plot_itn_fig3_one_tau.py` | Single-tau slice: S_T × eta factorization at one half-life |
+| `plot_itn_fig2_cascade.py` | Historical topology schematic; classifier/resilience interpretation retired |
+| `plot_itn_fig3_one_tau.py` | Historical one-tau model slice; not a feasibility or design result |
 
 ---
 
@@ -183,13 +191,13 @@ No exploratory runner scripts are present in the current tree.
 |--------|-------------|
 | `_chunked_base.py` | **lib:** Chunked parallel oracle engine (adjacency, Dijkstra, batch metrics) |
 | `build_master_table.py` | Consolidates all result JSONs into `master_comparison.json` |
-| `build_provenance_manifest.py` | Generates PROVENANCE.json/.md linking every result to its producing script |
+| `build_provenance_manifest.py` | Inventories tracked result hashes and records evidence-based producer matches in PROVENANCE.json/.md |
 | `paper_sims.py` | Original TIN conference paper quantitative results |
 | `validation.py` | Standalone TIN DTN core validation (custody FSM, routing, fragments) |
 | `repro_v0_3_8.py` | Deterministic v0.3.8 lunar-baseline entrypoint; seed 42 is the canonical baseline. Single 28-day sim + coverage grid; `--coverage_workers N` parallelizes the coverage loop with byte-identical output (integer reduction) |
 | `verify_repro_v0_3_8_baseline.py` | C1 contract: regenerates the seed-42 baseline in a temp dir and field-compares against `results/repro_v0_3_8_baseline.json` (only `timestamp_utc` excluded); prints pass/fail, exit 0/1. Measured 2026-06-12: 6m47s wall, 45 MB peak RSS at `--coverage-workers 2` on a 16-core box — PASSED |
 | `epyc_phase1.py` | Phase 1 EPYC batch orchestrator |
-| `epyc_phase3.py` | Phase 3 EPYC batch orchestrator |
+| `epyc_phase3.py` | Historical Phase 3 batch orchestrator; downstream classifier claims retired |
 | `epyc_phase5.py` | Phase 5 EPYC batch orchestrator |
 | `epyc_phase6.py` | Phase 6 EPYC batch orchestrator |
 | `epyc_setup.sh` | EPYC server provisioning script |
@@ -199,9 +207,10 @@ No exploratory runner scripts are present in the current tree.
 
 | Script | Description |
 |--------|-------------|
-| `plot_d1_pipeline_architecture.py` | Five-stage pipeline architecture diagram |
-| `plot_d2_protocol_mapping.py` | TIN simulation → DTN protocol stack mapping |
-| `plot_d4_yaml_to_result.py` | YAML config → perc CLI → engine → output flowchart |
+| `plot_d1_pipeline_architecture.py` | Historical internal analysis flow; private stages omitted and classifier retired |
+| `plot_d2_protocol_mapping.py` | Historical DTN-to-research-layer concept map; not the public package API |
+| `plot_d4_yaml_to_result.py` | Historical generic configuration-to-output concept; not a public API |
+| `plot_layer_stack.py` | Historical closed-program layer map; retired gamma branch marked |
 
 ---
 
@@ -227,10 +236,13 @@ No exploratory runner scripts are present in the current tree.
 
 ## UQ & Coupling Experiments (2026-03-20 – 2026-03-21)
 
-**Core question:** Does the S_T × η factorization's independence assumption hold under congestion?
-**Evidence base:** v1–v4 experiments + forensic sweep across 82,515 production configs.
-**Result:** Independence was never exact — the coupling has a non-monotonic three-regime structure.
-Factored form remains operationally optimal because no single-parameter correction improves all regimes.
+**Historical question:** Did the S_T × η factorization's independence
+assumption hold under congestion?
+**Historical evidence row:** v1–v4 experiments plus a forensic sweep across
+82,515 production configurations.
+**Archived result:** the tested rows showed nonzero, non-monotonic coupling;
+no tested single-parameter correction improved every reported regime. This is
+not a current operational-optimality claim.
 
 No UQ runner scripts are present in the current tree. The forensic sweep script is in the repo:
 
@@ -256,4 +268,4 @@ These counts are from the 2026-05-07 audit and reflect the original experiment p
 | Exploratory | 5 scripts |
 | Infrastructure | 20 (17 scripts + 3 doc plotters) |
 | UQ/Coupling scripts | 10 (9 runners + 1 forensic analysis) |
-| Total configs | ~290,000+ (plus 82,515-config forensic sweep) |
+| Global unique configurations | not established; historical rows above overlap |

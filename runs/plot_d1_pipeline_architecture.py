@@ -1,7 +1,8 @@
-"""plot_d1_pipeline_architecture.py — TIN pipeline architecture diagram.
+"""Render the historical TIN research-analysis pipeline.
 
-Five-stage flow: Config → Contacts → Oracle → Efficiency → Classification.
-Each stage shows input/output and the engine module responsible.
+This diagram records a retired internal workflow, not the public ``tin``
+package API. Private analysis-module names are omitted, and the former gamma
+classifier is retained only as a visibly retired branch.
 
 Writes:
   figures/d1_pipeline_architecture.{pdf,png}
@@ -28,33 +29,47 @@ def plot():
     ax.set_ylim(-1.5, 3.0)
     ax.set_axis_off()
 
-    # Stage definitions: (x, label, module, input, output, color)
+    # Stage definitions: (x, label, scope, input, output, color)
     stages = [
-        (0.5, "Configure", "schema.py\nregistry.py", "YAML file", "PercConfig", "#3498db"),
+        (0.5, "Configure", "historical internal stage", "scenario file", "model config", "#3498db"),
         (
             2.7,
             "Generate\nContacts",
-            "contact_gen.py\nhelio_contact_gen.py",
-            "PercConfig",
+            "historical internal stage",
+            "model config",
             "Contact plan",
             "#2ecc71",
         ),
-        (4.9, "Oracle\nSweep", "oracle.py\nsweep.py", "Contact plan", "S_T, paths", "#f39c12"),
+        (
+            4.9,
+            "Path\nReference",
+            "historical analysis stage",
+            "Contact plan",
+            "S_T, paths",
+            "#f39c12",
+        ),
         (
             7.1,
-            "Efficiency\nEstimation",
-            "efficiency.py\nanalytic_s.py",
+            "Delivery\nDiagnostics",
+            "historical analysis stage",
             "Plan + paths",
             "η, Φ, E[H]",
             "#e74c3c",
         ),
-        (9.3, "Classify", "analytic_s.py\ncompute_gamma()", "η, Φ, E[H]", "γ, class", "#9b59b6"),
+        (
+            9.3,
+            "Retired\nClassifier",
+            "historical branch",
+            "η, Φ, E[H]",
+            "archived γ label",
+            "#9b59b6",
+        ),
     ]
 
     box_w = 1.6
     box_h = 1.8
 
-    for x, label, module, inp, out, color in stages:
+    for x, label, scope, inp, out, color in stages:
         # Main box
         box = FancyBboxPatch(
             (x - box_w / 2, -0.2),
@@ -73,11 +88,11 @@ def plot():
             x, 1.1, label, ha="center", va="center", fontsize=10, fontweight="bold", color=color
         )
 
-        # Module name (smaller, below label)
+        # Historical scope (smaller, below label)
         ax.text(
             x,
             0.45,
-            module,
+            scope,
             ha="center",
             va="center",
             fontsize=7,
@@ -145,7 +160,7 @@ def plot():
     ax.text(
         5.0,
         2.7,
-        "TIN Pipeline Architecture",
+        "Historical TIN Research Pipeline — Classifier Retired",
         ha="center",
         va="center",
         fontsize=13,
@@ -157,13 +172,12 @@ def plot():
     ax.text(
         5.0,
         2.35,
-        "perc classify mars_6polar.yaml",
+        "archival analysis flow — not the public tin package API",
         ha="center",
         va="center",
         fontsize=9,
         color="#888888",
         fontstyle="italic",
-        fontfamily="monospace",
     )
 
     for ext in ("pdf", "png"):

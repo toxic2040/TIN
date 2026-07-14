@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Recompute canonical R²(var_log_p, gamma) from 89K production dataset.
+"""Reproduce the historical R²(var_log_p, gamma) production-corpus summary.
 
-This script establishes the authoritative correlation statistics for Paper 2.
-It reads all production panel files, filters invalid records, and computes:
+This script retains the archived Paper 2 calculation. It reads available
+production panels, filters invalid records, and computes:
   - Pearson r and R² for var_log_p vs gamma (= -lyapunov)
   - Spearman rho
   - OLS regression coefficients
   - Sample size after filtering
 
 Output: runs/var_log_p_canonical_results.json
+
+The compatibility filename is historical. The result is a pooled in-sample
+association, not an authoritative mechanism, classifier, or current law.
 """
 
 import json
@@ -80,7 +83,7 @@ def extract_fields(records):
             continue
 
         var_log_p.append(vlp)
-        gamma.append(-lyap)  # gamma = -lyapunov (lambda <= 0, gamma >= 0)
+        gamma.append(-lyap)  # Historical sign-reversed Lyapunov diagnostic
 
     return (
         np.array(var_log_p),
@@ -127,11 +130,11 @@ def spearman_rho(x, y):
 
 
 def main():
-    print("Loading production panels...")
+    print("Loading historical production panels...")
     records = load_production()
     print(f"  Total records loaded: {len(records)}")
 
-    print("Extracting var_log_p and gamma...")
+    print("Extracting archived var_log_p and gamma diagnostic arrays...")
     vlp, gam, skipped_nan, skipped_zero = extract_fields(records)
     print(f"  Valid records: {len(vlp)}")
     print(f"  Skipped (NaN): {skipped_nan}")
@@ -146,10 +149,10 @@ def main():
     r_lyap = -r  # sign flip since gamma = -lyapunov
 
     print(f"\n{'=' * 60}")
-    print("CANONICAL var_log_p STATISTICS (89K production)")
+    print("HISTORICAL var_log_p / gamma ASSOCIATION (2026-03-11 corpus)")
     print(f"{'=' * 60}")
     print("  Dataset: production_2026_03_11")
-    print(f"  Total configs:        {len(records)}")
+    print(f"  Total loaded records: {len(records)}")
     print(f"  Valid (non-NaN, paths>0): {len(vlp)}")
     print()
     print(f"  OLS: gamma = {slope:.6f} * var_log_p + {intercept:.6f}")
@@ -168,7 +171,10 @@ def main():
 
     # Persist results
     result = {
-        "description": "Canonical var_log_p correlation from 89K production dataset",
+        "description": (
+            "Historical pooled var_log_p/gamma association from the 2026-03-11 production corpus"
+        ),
+        "claim_status": "archived in-sample diagnostic; not a classifier, mechanism, or law",
         "dataset": "production_2026_03_11",
         "total_configs": len(records),
         "valid_configs": int(len(vlp)),

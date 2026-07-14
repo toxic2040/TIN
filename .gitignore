@@ -16,6 +16,7 @@ data/traces
 outputs/
 local_results/
 runs/PROVENANCE.json
+runs/CONFIG_MANIFEST.current.json
 runs/analysis_braess_variance_results.json
 runs/crawdad_contacts.Exp*_results.json
 runs/ffwd_gap_analysis_results.json

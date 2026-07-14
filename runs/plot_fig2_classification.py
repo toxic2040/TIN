@@ -1,10 +1,11 @@
-"""plot_fig2_classification.py — Figure 2 for classification_theorem.tex.
+"""Historical four-trace gamma/rho_pair comparison.
 
 γ̄ (mean across p_eff) vs ρ_pair for four CRAWDAD traces.
 
-Key message: γ is controlled by per-pair contact density (ρ_pair), not
-network size (n).  Marker area encodes n — the visual ordering by area
-(small → large n) does NOT match the ordering by γ, which does track ρ_pair.
+This archived figure shows a descriptive association in four selected traces.
+It does not establish that rho_pair causally controls gamma, support a current
+classifier, or generalize beyond the displayed observations. Marker area
+encodes network size (n).
 
 Data source: runs/crawdad_cross_trace_analysis.json
 """
@@ -55,18 +56,18 @@ def plot():
 
     # ── Marker size proportional to n ────────────────────────────────────
     # Visual encoding: larger network = larger dot.
-    # The ordering by dot area (9→98) does NOT match ordering by γ,
-    # which drives home the "γ ≠ f(n)" point immediately.
+    # The ordering by dot area (9→98) differs from the observed gamma ordering.
+    # This is descriptive for the four displayed traces only.
     size_scale = [12 + (n**0.72) * 4.5 for n in ns]
 
     fig, ax = plt.subplots(figsize=(6.5, 5.0))
 
-    # γ = 1 theoretical ceiling
+    # Historical gamma=1 reference line; no ceiling claim is made here.
     ax.axhline(1.0, color="#bbbbbb", linewidth=0.9, linestyle="--", zorder=1)
     ax.text(
         0.635,
         1.006,
-        r"$\gamma = 1$ ceiling",
+        r"historical $\gamma = 1$ reference",
         fontsize=8.5,
         color="#999999",
         va="bottom",
@@ -99,7 +100,7 @@ def plot():
         )
 
     # ── Inset key — clean white box replacing old tan/beige ──────────────
-    # Orders by n vs by γ make the "density not size" point explicit.
+    # Preserve the observed n and gamma orderings without assigning a cause.
     n_order = sorted(range(4), key=lambda i: ns[i])
     g_order = sorted(range(4), key=lambda i: gmeans[i])
     n_seq = " < ".join(traces[i] for i in n_order)
@@ -129,9 +130,11 @@ def plot():
     )
 
     ax.set_xlabel(r"$\rho_{\mathrm{pair}}$  (mean pairwise contact density)", fontsize=11)
-    ax.set_ylabel(r"$\bar{\gamma}$  (mean across $p_{\mathrm{eff}}$)", fontsize=11)
+    ax.set_ylabel(r"archived $\bar{\gamma}$  (mean across $p_{\mathrm{eff}}$)", fontsize=11)
     ax.set_title(
-        r"$\gamma$ saturation controlled by $\rho_{\mathrm{pair}}$, not $n$",
+        "Historical four-trace association: "
+        r"$\bar{\gamma}$ and $\rho_{\mathrm{pair}}$"
+        "\n(descriptive; classifier retired)",
         fontsize=11,
         fontweight="semibold",
     )

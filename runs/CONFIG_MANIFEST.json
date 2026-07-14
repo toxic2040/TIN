@@ -1,6 +1,7 @@
 {
   "generated_by": "runs/build_config_manifest.py",
-  "description": "Public manifest of all experiment result JSONs. Result JSONs are gitignored (regenerable from runner scripts). This manifest provides SHA-256 hashes and config counts so the 290,000+ claim can be verified by regenerating any subset and comparing hashes.",
+  "description": "Best-effort historical manifest of experiment result JSONs. It records SHA-256 hashes and heterogeneous per-file counts; it does not establish that every file is shipped, regenerable, or globally configuration-distinct.",
+  "count_semantics": "n_configs may be an explicit count, results length, longest list length, or top-level dict size. summary.total_configs is the non-additive sum of those heterogeneous values.",
   "data_license": "CC-BY-4.0 (see data/LICENSE_DATA)",
   "summary": {
     "total_files": 300,

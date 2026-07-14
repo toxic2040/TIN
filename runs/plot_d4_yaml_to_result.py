@@ -1,7 +1,8 @@
-"""plot_d4_yaml_to_result.py — YAML-to-result flowchart.
+"""Historical configuration-to-output concept flowchart.
 
-Shows the user journey: YAML config file → perc CLI → engine pipeline →
-output (classification, prediction, figures).
+Shows an archived concept path from a generic configuration through analysis
+stages to recorded outputs. It does not document a public CLI, package API, or
+current classifier/predictor interface.
 
 Writes:
   figures/d4_yaml_to_result.{pdf,png}
@@ -66,22 +67,31 @@ def plot():
     ax.set_ylim(-2.5, 3.5)
     ax.set_axis_off()
 
-    # ── Row 1: User input ────────────────────────────────────────
-    _box(ax, 1.0, 2.5, 2.0, 0.9, "mars_6polar.yaml", "body, orbiters, DSN, p_eff", "#3498db")
+    # ── Row 1: Historical configuration concept ────────────────
+    _box(
+        ax,
+        1.0,
+        2.5,
+        2.0,
+        0.9,
+        "Example\nConfiguration",
+        "scenario and link assumptions",
+        "#3498db",
+    )
 
-    _arrow(ax, 2.1, 2.5, 3.4, 2.5, "load_config()")
+    _arrow(ax, 2.1, 2.5, 3.4, 2.5, "parse")
 
-    _box(ax, 4.5, 2.5, 2.0, 0.9, "perc CLI", "perc classify config.yaml", "#2c3e50")
+    _box(ax, 4.5, 2.5, 2.0, 0.9, "Historical\nRunner", "configuration to output", "#2c3e50")
 
-    # ── Row 2: Engine pipeline (horizontal) ──────────────────────
+    # ── Row 2: Archived analysis stages ─────────────────────────
     _arrow(ax, 4.5, 2.0, 4.5, 1.2)
 
     stages = [
-        (1.5, "Contact\nGeneration", "951 contacts", "#27ae60"),
-        (4.0, "Oracle\nSweep", "S_T = 0.990", "#f39c12"),
-        (6.5, "Efficiency\nEstimation", "η per pair", "#e67e22"),
-        (9.0, "Gamma\nRegression", "γ = −3.67", "#e74c3c"),
-        (11.5, "Classification", "TRAP", "#9b59b6"),
+        (1.5, "Contact-Plan\nSummary", "archived stage", "#27ae60"),
+        (4.0, "Reachability\nSummary", "archived stage", "#f39c12"),
+        (6.5, "Efficiency\nSummary", "archived stage", "#e67e22"),
+        (9.0, "Slope\nDiagnostic", "historical only", "#e74c3c"),
+        (11.5, "Retired Claim\nBranch", "not a current output", "#9b59b6"),
     ]
 
     for x, label, out, color in stages:
@@ -92,14 +102,14 @@ def plot():
         x2 = stages[i + 1][0] - 1.1
         _arrow(ax, x1, 0.5, x2, 0.5)
 
-    # Connect CLI to pipeline
+    # Connect the historical runner concept to the archived stages.
     _arrow(ax, 4.5, 2.0, 1.5, 1.1)
 
-    # ── Row 3: Outputs (fan out from classification) ─────────────
+    # ── Row 3: Historical outputs ────────────────────────────────
     outputs = [
-        (3.5, "Terminal\nOutput", "γ=−3.67, class=TRAP", "#2c3e50"),
-        (7.0, "JSON\nExport", "results.json", "#16a085"),
-        (10.5, "Sparse Law\nPredictor", "DR(d, p_ref)", "#8e44ad"),
+        (3.5, "Console\nSummary", "historical record", "#2c3e50"),
+        (7.0, "Result\nRecord", "archived output", "#16a085"),
+        (10.5, "Retired Claim\nBranch", "not a current interface", "#8e44ad"),
     ]
 
     for x, label, sub, color in outputs:
@@ -113,7 +123,7 @@ def plot():
     ax.text(
         6.0,
         3.3,
-        "From YAML to Classification in One Command",
+        "Historical Configuration-to-Output Concept — Not a Public API",
         ha="center",
         fontsize=13,
         fontweight="bold",

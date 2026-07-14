@@ -1,7 +1,9 @@
-"""plot_d2_protocol_mapping.py — TIN simulation layers vs DTN protocol stack.
+"""Render a historical research-layer-to-DTN concept map.
 
-Side-by-side comparison showing how TIN's abstractions map to the real
-DTN protocol layers.  Inspired by Burleigh's tutorial (p. 22).
+The right-hand stack is an archival research abstraction, not the public
+``tin`` package API. Private analysis modules are omitted, and the former
+gamma-classification branch is explicitly retired. Inspired by Burleigh's
+tutorial (p. 22).
 
 Writes:
   figures/d2_protocol_mapping.{pdf,png}
@@ -91,25 +93,26 @@ def plot():
         ("Application", "User data", "#8e44ad"),
     ]
 
-    # TIN Simulation Stack (right) — bottom to top
+    # Historical research stack (right) — bottom to top. These are conceptual
+    # roles, not private module names or a public-package API map.
     tin_layers = [
-        ("Contact Generation", "contact_gen.py, helio_contact_gen.py", "#27ae60"),
-        ("Oracle Routing", "oracle.py — earliest-arrival Dijkstra", "#27ae60"),
-        ("Greedy Forwarding", "routing.py — hop-by-hop with p_eff", "#e67e22"),
-        ("Efficiency Estimation", "efficiency.py — DR = S_T × η", "#e74c3c"),
-        ("Classification", "analytic_s.py — γ = d[ln Φ]/d[E[H]]", "#9b59b6"),
+        ("Contact Modeling", "historical research stage", "#27ae60"),
+        ("Path Reference", "earliest-arrival diagnostic", "#27ae60"),
+        ("Forwarding Model", "modeled routing choices", "#e67e22"),
+        ("Delivery Accounting", "DR = S_T × η identity", "#e74c3c"),
+        ("Retired Gamma Branch", "historical diagnostic; not public API", "#9b59b6"),
     ]
 
     _draw_stack(ax, 2.0, dtn_layers, "DTN Protocol Stack", "#2c3e50")
-    _draw_stack(ax, 8.0, tin_layers, "TIN Simulation Stack", "#2c3e50")
+    _draw_stack(ax, 8.0, tin_layers, "Historical TIN Research Layers", "#2c3e50")
 
     # Mapping arrows between stacks
     mappings = [
-        (0, 0, "Contacts model\nlink-layer topology"),
-        (1, 1, "Oracle = optimal\nroute computation"),
-        (2, 2, "Greedy simulates\nbundle forwarding"),
-        (3, 3, "η captures BP\nservice outcomes"),
-        (4, 4, "γ classifies\nnetwork morphology"),
+        (0, 0, "Contacts represent\nlink opportunities"),
+        (1, 1, "Path reference\ncompares routes"),
+        (2, 2, "Forwarding model\nsimulates choices"),
+        (3, 3, "Bookkeeping records\nservice outcomes"),
+        (4, 4, "Historical gamma branch\nretired"),
     ]
 
     for dtn_idx, tin_idx, label in mappings:
@@ -145,7 +148,7 @@ def plot():
     ax.text(
         5.0,
         5.5,
-        "DTN Protocol Stack  ↔  TIN Simulation Layers",
+        "Historical Research Mapping — Not the Public Package API",
         ha="center",
         fontsize=12,
         fontweight="bold",

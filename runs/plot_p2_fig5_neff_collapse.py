@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""P2 Fig 5: N_eff collapse — phase-coverage diversity as universal predictor.
+"""Historical N_eff and phase-coverage association figure.
 
 Four panels:
-  A: |delta_gamma/gamma| vs mean N_eff_src (8 bodies + 4 CRAWDAD)
-  B: Predictor comparison bar chart (Spearman |rho| for each candidate)
-  C: N_eff_src distribution per body (strip plot showing regime separation)
-  D: S_T vs N_eff_src per config (regime diagram with catastrophe threshold)
+  A: archived |delta_gamma/gamma| vs mean N_eff_src observations
+  B: descriptive Spearman correlations for four stored quantities
+  C: archived N_eff_src distribution by source group
+  D: archived S_T vs N_eff_src observations with a historical reference line
+
+The original universal-predictor and catastrophe-threshold interpretations are
+retired. The figure is not a classifier, transfer claim, or design rule.
 """
 
 import json
@@ -23,6 +26,8 @@ from tin_figure_style import BODY_COLORS, apply_style, figsize_double, save_fig
 apply_style("pre")
 
 RUNS = Path(__file__).parent
+
+print("HISTORICAL N_eff DIAGNOSTIC — UNIVERSAL PREDICTOR CLAIM RETIRED")
 
 # ── Load data ────────────────────────────────────────────────────────
 with open(RUNS / "neff_results.json") as f:
@@ -100,15 +105,15 @@ for cs in tr_data["crawdad_summary"]:
 # ── Correlations ─────────────────────────────────────────────────────
 # Body-level Spearman (n=8)
 rho_body, p_body = stats.spearmanr(body_neff, body_asym)
-print(f"Body-level: rho={rho_body:.3f}, p={p_body:.4f}")
+print(f"Historical orbital-group association: rho={rho_body:.3f}, p={p_body:.4f}")
 
 # Including CRAWDAD (n=12)
 all_neff_a = body_neff + crawdad_neff_vals
 all_asym_a = body_asym + crawdad_asym
 rho_all, p_all = stats.spearmanr(all_neff_a, all_asym_a)
-print(f"With CRAWDAD: rho={rho_all:.3f}, p={p_all:.4f}")
+print(f"Historical pooled source-group association: rho={rho_all:.3f}, p={p_all:.4f}")
 
-# ── Predictor comparison (Panel B) ───────────────────────────────────
+# ── Descriptive correlation comparison (Panel B) ────────────────────
 predictor_names = [
     "$N_{\\mathrm{eff,src}}$",
     "$N_{\\mathrm{eff,all}}$",
@@ -128,6 +133,10 @@ for key in predictor_keys:
 # ── Figure ───────────────────────────────────────────────────────────
 fig, axes = plt.subplots(2, 2, figsize=figsize_double("pre", height_ratio=0.65))
 ax_a, ax_b, ax_c, ax_d = axes.flat
+fig.suptitle(
+    "Historical $N_{\\mathrm{eff}}$ Diagnostic — Predictor and Classifier Claims Retired",
+    fontsize=10,
+)
 
 # ── Panel A: Asymmetry vs N_eff_src ──────────────────────────────────
 for name, nv, av in zip(body_names, body_neff, body_asym):
@@ -163,9 +172,9 @@ ax_a.text(
     bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#cccccc", alpha=0.9),
 )
 ax_a.legend(fontsize=5, loc="center left", framealpha=0.88, handletextpad=0.3, borderpad=0.4)
-ax_a.set_title("(a) Asymmetry vs phase diversity", fontsize=8, loc="left")
+ax_a.set_title("(a) Archived asymmetry association", fontsize=8, loc="left")
 
-# ── Panel B: Predictor comparison ────────────────────────────────────
+# ── Panel B: Descriptive correlation comparison ─────────────────────
 colors_b = ["#4477AA", "#33BBEE", "#EE7733", "#CC3311"]
 ax_b.barh(range(len(predictor_names)), rho_bars, color=colors_b, edgecolor="white", linewidth=0.5)
 ax_b.set_yticks(range(len(predictor_names)))
@@ -174,7 +183,7 @@ ax_b.set_xlabel("$|\\rho|$ with $S_T$")
 ax_b.set_xlim(0, 1)
 for i, v in enumerate(rho_bars):
     ax_b.text(v + 0.02, i, f"{v:.2f}", va="center", fontsize=6)
-ax_b.set_title("(b) Predictor comparison", fontsize=8, loc="left")
+ax_b.set_title("(b) Archived correlation comparison", fontsize=8, loc="left")
 
 # ── Panel C: N_eff_src distribution per body ─────────────────────────
 body_order = ["Jupiter", "Saturn", "Ceres", "Mars", "Venus", "Europa", "Titan", "Mercury"]
@@ -219,9 +228,9 @@ ytick_pos = [-1] + list(range(len(body_order)))
 ax_c.set_yticks(ytick_pos)
 ax_c.set_yticklabels(ytick_labels, fontsize=6)
 ax_c.set_xlabel("$N_{\\mathrm{eff,src}}$")
-ax_c.set_title("(c) Phase diversity by body", fontsize=8, loc="left")
+ax_c.set_title("(c) Archived phase diversity by body", fontsize=8, loc="left")
 
-# ── Panel D: Regime diagram (S_T vs N_eff_src) ──────────────────────
+# ── Panel D: Archived S_T association ───────────────────────────────
 for target in sorted(set(r["target"] for r in joined)):
     recs = [r for r in joined if r["target"] == target]
     neffs = [r["neff_src"] for r in recs]
@@ -232,10 +241,10 @@ for target in sorted(set(r["target"] for r in joined)):
         neffs, sts, s=10, color=color, alpha=0.5, edgecolors="none", label=bname, rasterized=True
     )
 
-# Thresholds
+# Historical reference lines; no universal threshold is claimed.
 ax_d.axvline(5, color="#CC3311", ls="--", lw=0.8, alpha=0.7)
 ax_d.axhline(0.5, color="#888888", ls=":", lw=0.6, alpha=0.5)
-ax_d.text(6, 0.08, "Catastrophe\nthreshold", fontsize=6, color="#CC3311")
+ax_d.text(6, 0.08, "Archived reference\n$N_{\\mathrm{eff}}=5$", fontsize=6, color="#CC3311")
 
 ax_d.set_xlabel("$N_{\\mathrm{eff,src}}$")
 ax_d.set_ylabel("$S_T$")
@@ -243,9 +252,9 @@ ax_d.set_ylim(-0.05, 1.05)
 ax_d.legend(
     fontsize=5, loc="lower right", framealpha=0.88, ncol=2, handletextpad=0.3, columnspacing=0.6
 )
-ax_d.set_title("(d) Regime diagram", fontsize=8, loc="left")
+ax_d.set_title("(d) Archived $S_T$ association", fontsize=8, loc="left")
 
 # ── Save ─────────────────────────────────────────────────────────────
-fig.tight_layout(pad=0.5)
+fig.tight_layout(pad=0.5, rect=[0, 0, 1, 0.95])
 save_fig(fig, "p2_neff_collapse")
 plt.close(fig)

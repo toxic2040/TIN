@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""gen_orrery.py — Heliocentric DTN Orrery.
+"""Generate a historical, modeled heliocentric DTN concept sketch.
 
 Sun-centered view of the full interplanetary DTN architecture:
 Earth + cislunar (Moon, Shackleton, 8 polar, ELFO, EM-L2 Halo),
 Mars, L4/L5 relays, polar constellation, DSN links.
-Dark-sky aesthetic.
+Dark-sky aesthetic.  Geometry and archived annotations are illustrative only;
+the figure is not a validated architecture, mission-feasibility result, or
+network-design recommendation.
 """
 
 from __future__ import annotations
@@ -354,7 +356,7 @@ def main():
 
     # ── Communication Links ────────────────────────────────────────────
 
-    # Direct Earth-Mars (dotted — can be blocked by conjunction)
+    # Illustrative dotted direct Earth-Mars path.
     draw_link(ax, (ex, ey), (mx, my), color="#ffcc80", alpha=0.20, lw=1.2, ls=":", zorder=2)
 
     # Earth → L4 relay
@@ -416,7 +418,7 @@ def main():
     ax.text(
         legend_x + 0.10,
         ly,
-        "Direct (conjunction-vulnerable)",
+        "Archived direct-path concept",
         color="#b0bec5",
         fontsize=8,
         va="center",
@@ -427,7 +429,7 @@ def main():
     ax.text(
         legend_x + 0.10,
         ly,
-        "Relay link (conjunction-proof)",
+        "Archived relay-path concept",
         color="#b0bec5",
         fontsize=8,
         va="center",
@@ -438,7 +440,7 @@ def main():
     ax.text(
         0,
         2.55,
-        "Heliocentric DTN Architecture",
+        "Historical Heliocentric DTN Concept Sketch",
         color="#eceff1",
         fontsize=16,
         ha="center",
@@ -449,7 +451,7 @@ def main():
     ax.text(
         0,
         2.38,
-        "Cislunar + Interplanetary Relay Network  |  Sparse Law Model",
+        "MODELED GEOMETRY ONLY  |  NOT MISSION FEASIBILITY OR VALIDATED DESIGN",
         color="#78909c",
         fontsize=10,
         ha="center",
@@ -457,13 +459,11 @@ def main():
         zorder=10,
     )
 
-    # The law
+    # Retained bookkeeping identity; the former universal predictor is retired.
     ax.text(
         0,
         -2.55,
-        r"$\mathrm{DR} = S_T \cdot \exp\left[ E[H] \cdot \lambda"
-        r" \cdot \left(1 - \frac{\gamma}{1 + \alpha_{\mathrm{tail}}"
-        r" \cdot p_{\mathrm{eff}}}\right) \right]$",
+        r"$\mathrm{DR} = S_T \cdot \eta$  (bookkeeping identity)",
         color="#b0bec5",
         fontsize=11,
         ha="center",
@@ -473,8 +473,7 @@ def main():
     ax.text(
         0,
         -2.75,
-        r"$\alpha_{\mathrm{tail}} \approx 0.73$"
-        "  |  one universal constant  |  one equation",
+        "Historical concept sketch  |  universal predictor retired",
         color="#546e7a",
         fontsize=8,
         ha="center",
@@ -493,11 +492,11 @@ def main():
     for tx, ty, label, color, fs in tier_info:
         ax.text(tx, ty, label, color=color, fontsize=fs, alpha=0.7, zorder=10)
 
-    # ── Key result annotation ──────────────────────────────────────────
+    # ── Archived model annotations ─────────────────────────────────────
     ax.text(
         2.0,
         2.0,
-        "Braess paradox:\n3 sats > 9 sats\nat 90% of epochs",
+        "Archived model row:\nT1 DR > T2 DR\nat 90% of tested epochs",
         color="#ffab91",
         fontsize=8,
         ha="center",
@@ -517,7 +516,7 @@ def main():
     ax.text(
         -2.0,
         2.0,
-        "L4 relay rescue:\nS_T = 0.993 at\nSEP = 1.4\u00b0",
+        "Archived model row:\nT3 S_T = 0.993 at\nSEP = 1.4\u00b0",
         color="#ce93d8",
         fontsize=8,
         ha="center",

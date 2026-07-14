@@ -1,4 +1,4 @@
-"""generate_paper_figures.py — 5 publication-quality matplotlib PDFs for the Sparse Law paper.
+"""Generate five figures retained from the historical working-paper pipeline.
 
 Outputs (all to ../figures/):
   fig5_contact_density_bound.pdf  — Contact-Density Bound (ergodic vs non-ergodic)

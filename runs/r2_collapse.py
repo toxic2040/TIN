@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""R-squared universal collapse: does R²(p, config) = f(p · e^γ)?
+"""Historical R-squared collapse diagnostic; universal claim retired.
 
 Computes R² of OLS regression ln(Φ) vs E[H] at each (config, p_eff),
 then plots R² against the dimensionless variable x = p_eff × e^γ.
 
-If curves collapse across 14 configs from 3 domains (orbital, CRAWDAD,
-vehicular), the sparse law has a universal validity boundary governed
-by a single topology parameter γ.
+The original analysis asked whether curves collapse across 14 configurations
+from three domains. Its cross-domain reference values mix conventions, and four
+orbital values are hardcoded with unavailable source rows. This script preserves
+the released diagnostic surface; it does not establish a universal boundary.
 
 Two perturbation axes measured:
   - cross_n_orb: orbital bodies, E[H] varies via constellation density
   - cross_pair:  traces, E[H] varies via source-dest pair selection
 
-Collapse across BOTH axes would be universality across perturbation
-directions, not just graph families.
+The two perturbation axes remain separate evidence classes.
 
 c₀ diagnostic: tracks the OLS intercept to check whether the collapse
 absorbs a second parameter (p-dependent boundary correction).
@@ -57,7 +57,8 @@ CLASS_MAP = {
     "cambridge": "CLUSTER",
 }
 
-# Table 3 γ values (paper-published).
+# Historical Table 3 γ values. The table mixes conventions, and the Mercury,
+# Mars, Ceres, and Titan source rows were not recovered.
 # Orbital: these are gamma_normal = raw_slope / (-mean_lambda), evaluated
 #   at p_ref ≈ 0.1184.  (Confirmed: self-computed gamma_normal for Mercury
 #   matches -0.976 ≈ -1.01.  Distant bodies have survivorship bias at this
@@ -267,14 +268,13 @@ def _load_trace_from_rows(raw_rows, config, phi_key):
 
 
 def compute_reference_gamma(all_results):
-    """γ_ref per config: use Table 3 values (paper-published).
+    """Retain the historical reference values for diagnostic reproduction.
 
     Table 3 uses a mixed convention (gamma_normal for orbital, raw slope
     for CRAWDAD) but these are the published claims.  For the collapse
     plot, we need ONE consistent number per config.  Since the CRAWDAD
-    self-computed values match Table 3 perfectly, and the orbital values
-    have survivorship bias in our phi_sweep data, Table 3 is the better
-    source for cross-domain comparison.
+    self-computed values match Table 3 closely. The orbital values do not form
+    a comparable, fully sourced cross-domain reference set.
 
     Falls back to self-computed slope at p≈0.1 for any config not in Table 3.
     """
@@ -385,7 +385,7 @@ def print_table(all_results, gamma_ref):
 
 
 def make_plot(all_results, gamma_ref):
-    """Three-panel figure: CLUSTER collapse, TRAP baseline, c₀ diagnostic."""
+    """Three-panel historical diagnostic figure."""
     try:
         import matplotlib
 
@@ -396,6 +396,7 @@ def make_plot(all_results, gamma_ref):
         return
 
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle("Historical collapse diagnostic — universal claim retired", fontsize=13)
 
     trap_configs = sorted(
         set(r["config"] for r in all_results if r["graph_class"] == "TRAP"),
@@ -552,7 +553,7 @@ def make_plot(all_results, gamma_ref):
         bbox=dict(facecolor="lightyellow", alpha=0.8, edgecolor="gray"),
     )
 
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     fig_path = _ROOT / "figures" / "r2_collapse.png"
     fig_path.parent.mkdir(exist_ok=True)
     plt.savefig(fig_path, dpi=200, bbox_inches="tight")
@@ -561,7 +562,7 @@ def make_plot(all_results, gamma_ref):
 
 def main():
     print("=" * 60)
-    print("R² Universal Collapse: R²(p, config) = f(p · e^γ)?")
+    print("HISTORICAL R² COLLAPSE DIAGNOSTIC — UNIVERSAL CLAIM RETIRED")
     print("=" * 60)
 
     print("\nLoading data...")
@@ -582,7 +583,7 @@ def main():
     # Reference γ per config (Table 3 where available, self-computed fallback)
     gamma_ref, gamma_source = compute_reference_gamma(all_results)
 
-    print("\nReference γ (Table 3 primary, self-computed fallback):")
+    print("\nHistorical reference γ (mixed Table 3 values; not a universal scale):")
     print(f"  {'Config':12s} {'γ_ref':>8s} {'source':>14s} {'class':>8s}")
     print("  " + "-" * 50)
     for config in sorted(gamma_ref, key=lambda c: gamma_ref[c]):
@@ -599,7 +600,10 @@ def main():
 
     # Save JSON
     output = {
-        "description": "R² collapse analysis: R²(p, config) vs x = p·e^γ",
+        "description": (
+            "Historical R² collapse diagnostic using mixed-convention reference gamma; "
+            "the universal-boundary claim is retired"
+        ),
         "gamma_ref": {k: round(v, 6) for k, v in gamma_ref.items()},
         "table3_gamma": TABLE3_GAMMA,
         "n_configs": n_configs,

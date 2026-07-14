@@ -1,25 +1,24 @@
-"""run_kpz_scaling_test.py — Phase 1, Experiment 1: KPZ Scaling Test.
+"""Historical fluctuation-scaling diagnostic with two reference exponents.
 
-THE decisive test for the directed percolation / DPRM isomorphism.
+This script preserves an archived comparison of fitted Var(ln eta) exponents
+with numerical references 2/3 and 1. The comparison does not establish a DPRM
+isomorphism, KPZ universality, a novel exponent, or a trap/cluster classifier.
 
-If the analogy to directed polymers in random media (DPRM) is structural,
-then the variance of ln(DR) should scale with expected hop count as:
+The historical comparison used the form:
 
     Var(ln DR) ∝ E[H]^{2β}
 
-where β = 1/3 for KPZ universality in 1+1 dimensions (so Var ∝ E[H]^{2/3}).
-
-If instead Var(ln DR) ∝ E[H]^1 (CLT scaling), the analogy is coincidental.
+The displayed 2/3 and 1 exponents are references only.
 
 This script:
   1. Loads phi_decompose_results.json (230,400 configs, 30 seeds each)
   2. Groups by (target, n_orb, p_ref, alpha) — each group has 30 seeds
   3. For each group, computes Var(ln η_sim) where η_sim = eta_normal
   4. Bins by E[H] and fits the power-law exponent
-  5. Separates trap vs. cluster class for comparison
+  5. Reports orbital and social/vehicular groups separately
 
-Data source: phi_decompose_results.json (orbital/trap class)
-             crawdad_contacts.Exp{1,2,3,6}_results.json (social/cluster class)
+Data source: phi_decompose_results.json (orbital rows)
+             crawdad_contacts.Exp{1,2,3,6}_results.json (social rows)
 
 Reads:  runs/phi_decompose_results.json, runs/crawdad_contacts.Exp*_results.json
 Writes: runs/kpz_scaling_results.json
@@ -68,7 +67,7 @@ def _power_law_fit(x, y):
 
 
 def analyze_orbital(phi_data):
-    """Analyze orbital (trap-class) configurations from phi_decompose."""
+    """Analyze the orbital rows from phi_decompose."""
     results = phi_data["results"]
 
     # Group by config key: (target, n_orb, p_ref, alpha, epoch_day)
@@ -106,7 +105,7 @@ def analyze_orbital(phi_data):
                 "var_ln_eta": float(var_ln_eta),
                 "mean_ln_eta": float(mean_ln_eta),
                 "n_seeds": len(ln_etas),
-                "class": "trap",
+                "assigned_group": "orbital",
             }
         )
 
@@ -114,7 +113,7 @@ def analyze_orbital(phi_data):
 
 
 def analyze_crawdad(crawdad_data, trace_name):
-    """Analyze CRAWDAD (cluster-class) configurations."""
+    """Analyze the CRAWDAD social-trace rows."""
     results = crawdad_data["results"]
 
     # Group by (source, dest, ttl, p_eff) — each group has seeds
@@ -150,7 +149,7 @@ def analyze_crawdad(crawdad_data, trace_name):
                 "var_ln_eta": float(var_ln_eta),
                 "mean_ln_eta": float(mean_ln_eta),
                 "n_seeds": len(ln_etas),
-                "class": "cluster",
+                "assigned_group": "social",
             }
         )
 
@@ -243,7 +242,7 @@ def compute_fluctuation_stats(stats):
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("Phase 1, Experiment 1: KPZ Scaling Test")
+    print("HISTORICAL FLUCTUATION-SCALING DIAGNOSTIC — UNIVERSALITY CLAIM RETIRED")
     print("=" * 70)
 
     # --- Load orbital data ---
@@ -300,23 +299,23 @@ def main():
                     "var_ln_eta": float(np.var(ln_etas, ddof=1)),
                     "mean_ln_eta": float(np.mean(ln_etas)),
                     "n_seeds": len(ln_etas),
-                    "class": "cluster",
+                    "assigned_group": "vehicular",
                 }
             )
         print(f"  {len(vehicular_stats):,} valid vehicular config groups")
 
-    all_cluster = crawdad_stats + vehicular_stats
+    all_social = crawdad_stats + vehicular_stats
 
     # --- Per-target orbital fits ---
     print("\n" + "=" * 70)
-    print("ORBITAL (TRAP-CLASS) SCALING ANALYSIS")
+    print("HISTORICAL ORBITAL-GROUP SCALING FITS — NO CLASSIFIER")
     print("=" * 70)
 
     targets = sorted(set(s["target"] for s in orbital_stats))
     per_target_fits = {}
     for target in targets:
         t_stats = [s for s in orbital_stats if s["target"] == target]
-        fit = bin_and_fit(t_stats, f"trap_{target}")
+        fit = bin_and_fit(t_stats, f"orbital_{target}")
         per_target_fits[target] = fit
         print(
             f"\n  {target:10s}: β_eff = {fit['exponent']:.3f}  (R² = {fit['R2']:.3f}, "
@@ -324,83 +323,85 @@ def main():
         )
 
     # Aggregate orbital
-    orbital_fit = bin_and_fit(orbital_stats, "trap_all")
+    orbital_fit = bin_and_fit(orbital_stats, "orbital_all")
     print(
-        f"\n  {'ALL TRAP':10s}: β_eff = {orbital_fit['exponent']:.3f}  "
+        f"\n  {'ALL ORBIT':10s}: β_eff = {orbital_fit['exponent']:.3f}  "
         f"(R² = {orbital_fit['R2']:.3f}, n = {orbital_fit['n_points']:,})"
     )
 
-    # --- Per-trace cluster fits ---
+    # --- Per-trace social/vehicular fits ---
     print("\n" + "=" * 70)
-    print("CLUSTER-CLASS SCALING ANALYSIS")
+    print("HISTORICAL SOCIAL/VEHICULAR-GROUP FITS — NO CLASSIFIER")
     print("=" * 70)
 
-    traces = sorted(set(s.get("trace", "unknown") for s in all_cluster))
+    traces = sorted(set(s.get("trace", "unknown") for s in all_social))
     per_trace_fits = {}
     for trace in traces:
-        t_stats = [s for s in all_cluster if s.get("trace") == trace]
-        fit = bin_and_fit(t_stats, f"cluster_{trace}")
+        t_stats = [s for s in all_social if s.get("trace") == trace]
+        fit = bin_and_fit(t_stats, f"social_{trace}")
         per_trace_fits[trace] = fit
         print(
             f"\n  {trace:10s}: β_eff = {fit['exponent']:.3f}  (R² = {fit['R2']:.3f}, "
             f"n = {fit['n_points']:,}, bins = {fit.get('n_bins_used', 0)})"
         )
 
-    # Aggregate cluster
-    cluster_fit = bin_and_fit(all_cluster, "cluster_all")
+    # Aggregate social/vehicular group
+    social_fit = bin_and_fit(all_social, "social_all")
     print(
-        f"\n  {'ALL CLUST':10s}: β_eff = {cluster_fit['exponent']:.3f}  "
-        f"(R² = {cluster_fit['R2']:.3f}, n = {cluster_fit['n_points']:,})"
+        f"\n  {'ALL SOCIAL':10s}: β_eff = {social_fit['exponent']:.3f}  "
+        f"(R² = {social_fit['R2']:.3f}, n = {social_fit['n_points']:,})"
     )
 
-    # --- KPZ Verdict ---
+    # --- Numerical reference comparison ---
     print("\n" + "=" * 70)
-    print("KPZ SCALING VERDICT")
+    print("HISTORICAL REFERENCE-EXPONENT COMPARISON — DESCRIPTIVE ONLY")
     print("=" * 70)
     print("\n  KPZ prediction:  2β = 2/3 ≈ 0.667  (β = 1/3)")
     print("  CLT prediction:  2β = 1.0           (β = 1/2)")
     print("  No scaling:      2β = 0             (β = 0)")
-    print(f"\n  Observed (trap aggregate):    2β = {orbital_fit['exponent']:.3f}")
-    print(f"  Observed (cluster aggregate): 2β = {cluster_fit['exponent']:.3f}")
+    print(f"\n  Observed (orbital aggregate): 2β = {orbital_fit['exponent']:.3f}")
+    print(f"  Observed (social aggregate):  2β = {social_fit['exponent']:.3f}")
 
-    trap_exp = orbital_fit["exponent"]
-    clust_exp = cluster_fit["exponent"]
+    orbital_exp = orbital_fit["exponent"]
+    social_exp = social_fit["exponent"]
 
-    if not math.isnan(trap_exp):
-        if abs(trap_exp - 0.667) < 0.15:
-            trap_verdict = "CONSISTENT with KPZ (2/3)"
-        elif abs(trap_exp - 1.0) < 0.15:
-            trap_verdict = "CONSISTENT with CLT (1)"
+    if not math.isnan(orbital_exp):
+        if abs(orbital_exp - 0.667) < 0.15:
+            orbital_comparison = "within 0.15 of the 2/3 reference"
+        elif abs(orbital_exp - 1.0) < 0.15:
+            orbital_comparison = "within 0.15 of the 1.0 reference"
         else:
-            trap_verdict = "NEITHER KPZ nor CLT — novel exponent?"
-        print(f"\n  Trap verdict:    {trap_verdict}")
+            orbital_comparison = "outside both 0.15 reference bands"
+        print(f"\n  Orbital-group comparison: {orbital_comparison}")
 
-    if not math.isnan(clust_exp):
-        if abs(clust_exp - 0.667) < 0.15:
-            clust_verdict = "CONSISTENT with KPZ (2/3)"
-        elif abs(clust_exp - 1.0) < 0.15:
-            clust_verdict = "CONSISTENT with CLT (1)"
+    if not math.isnan(social_exp):
+        if abs(social_exp - 0.667) < 0.15:
+            social_comparison = "within 0.15 of the 2/3 reference"
+        elif abs(social_exp - 1.0) < 0.15:
+            social_comparison = "within 0.15 of the 1.0 reference"
         else:
-            clust_verdict = "NEITHER KPZ nor CLT — novel exponent?"
-        print(f"  Cluster verdict: {clust_verdict}")
+            social_comparison = "outside both 0.15 reference bands"
+        print(f"  Social-group comparison:  {social_comparison}")
+    print("  Reference proximity is not evidence of universality or a mechanism.")
 
     # --- Save results ---
     elapsed = time.time() - t0
     output = {
         "experiment": "kpz_scaling_test",
-        "description": "Var(ln eta) vs E[H] power-law scaling test for DPRM/KPZ universality",
-        "kpz_prediction": "2*beta = 2/3 ≈ 0.667",
-        "clt_prediction": "2*beta = 1.0",
+        "description": "Historical Var(ln eta) vs E[H] power-law diagnostic",
+        "claim_status": "archived diagnostic; universality and classifier claims retired",
+        "historical_kpz_reference": "2*beta = 2/3 ≈ 0.667",
+        "clt_reference": "2*beta = 1.0",
         "elapsed_s": round(elapsed, 1),
-        "trap": {
+        "orbital_group": {
             "aggregate_fit": orbital_fit,
             "per_target_fits": per_target_fits,
             "fluctuation_stats": compute_fluctuation_stats(orbital_stats),
         },
-        "cluster": {
-            "aggregate_fit": cluster_fit,
+        "social_vehicular_group": {
+            "aggregate_fit": social_fit,
             "per_trace_fits": per_trace_fits,
-            "fluctuation_stats": compute_fluctuation_stats(all_cluster),
+            "fluctuation_stats": compute_fluctuation_stats(all_social),
         },
     }
 

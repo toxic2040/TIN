@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Diagram 3: Paper Pipeline — four trees showing what each paper
-produces and what it consumes from prior papers.
+"""Historical paper pipeline for the closed TIN claim program.
+
+Four trees show the labels each draft used for its outputs and inputs. Every
+branch is archival: no mechanism, classifier, predictor, optimality, theorem,
+or design claim is current.
 
 Same tree-connector style as the theory DAG. No arrows, no clutter.
 """
@@ -34,66 +37,66 @@ C = {
 
 PAPERS = [
     # ── Paper 1 ────────────────────────────────────────────────────
-    (0, "Paper 1: Classification Theorem", "title", "P1"),
-    (0, "Published  —  IEEE Aerospace  —  arXiv v7.3", "status", "pub"),
-    (1, "Produces:", "heading", "produces"),
+    (0, "Paper 1: Historical classification working paper", "title", "P1"),
+    (0, "Zenodo working-paper deposit  —  historical record", "status", "pub"),
+    (1, "Archived outputs and claims (not current):", "heading", "produces"),
     (2, "DR = S_T x eta  (conditional-probability identity)", "produces", ""),
-    (2, "Three-factor sparse law  DR = S_T exp(E[H] lambda) Phi", "produces", ""),
-    (2, "TRAP / CLUSTER classification  (gamma order parameter)", "produces", ""),
-    (2, "Self-averaging  (eta_OPSP matches MC, CV < 0.4%)", "produces", ""),
-    (2, "Braess paradox detection  (90% of Mars epochs degraded)", "produces", ""),
-    (2, "155K+ configs validated  (8 orbital + 4 CRAWDAD + SF Cab)", "produces", ""),
-    (1, "Consumes:", "heading", "consumes"),
+    (2, "Three-factor bookkeeping decomposition  (law framing retired)", "produces", ""),
+    (2, "TRAP / CLUSTER global classification  (retired)", "produces", ""),
+    (2, "Self-averaging result  (scoped tested regime only)", "produces", ""),
+    (2, "Braess observation  (35/39 tested Mars epochs)", "produces", ""),
+    (2, "Historical run-count arithmetic  (not a unique-config census)", "produces", ""),
+    (1, "Historical inputs:", "heading", "consumes"),
     (2, "(foundational — no prior papers)", "consumes", ""),
     (-1, "", "", ""),
     # ── Paper 2 ────────────────────────────────────────────────────
-    (0, "Paper 2: Mechanism Taxonomy", "title", "P2"),
-    (0, "Draft  —  target Physical Review E", "status", "dft"),
-    (1, "Produces:", "heading", "produces"),
-    (2, "var_log_p -> gamma  (R^2 = 0.903, slope = 21.17)", "produces", ""),
-    (2, "Oracle annihilation  (gamma_retry -> 0 on 7/8 bodies)", "produces", ""),
-    (2, "Four-layer diagnostic hierarchy  (L0 - L0.5 - L1 - L2)", "produces", ""),
-    (2, "Two-level heterogeneity mechanism  (greedy + oracle traps)", "produces", ""),
-    (2, "Venus anomaly  (dur_tail_ratio defeats oracle)", "produces", ""),
-    (2, "Layer 0.5 dominance  (344 searches, pure L1 never observed)", "produces", ""),
-    (2, "Decomposition discipline  (rule out upstream before downstream)", "produces", ""),
-    (1, "Consumes from P1:", "heading", "consumes"),
-    (2, "gamma classification", "consumes", ""),
-    (2, "Three-factor decomposition  (Phi -> gamma extraction)", "consumes", ""),
+    (0, "Paper 2: Historical mechanism-taxonomy draft", "title", "P2"),
+    (0, "Historical draft record  —  former target Physical Review E", "status", "dft"),
+    (1, "Archived outputs and claims (not current):", "heading", "produces"),
+    (2, "var_log_p / gamma pooled association  (R^2 = 0.903; law claim retired)", "produces", ""),
+    (2, "Retry-slope near-zero count  (7/8 bodies; no causal annihilation)", "produces", ""),
+    (2, "Four-layer diagnostic outline  (historical proposal)", "produces", ""),
+    (2, "Two-level heterogeneity interpretation  (mechanism claim retired)", "produces", ""),
+    (2, "Venus retry-slope comparison  (descriptive only)", "produces", ""),
+    (2, "Layer 0.5 search summary  (dominance claim retired)", "produces", ""),
+    (2, "Historical decomposition checklist", "produces", ""),
+    (1, "Historical inputs from P1:", "heading", "consumes"),
+    (2, "retired gamma classification (historical input)", "consumes", ""),
+    (2, "Three-factor decomposition  (archived Phi/gamma extraction)", "consumes", ""),
     (-1, "", "", ""),
     # ── Paper 3 ────────────────────────────────────────────────────
-    (0, "Paper 3: Relay Architectures", "title", "P3"),
-    (0, "Draft  —  target IEEE Aerospace", "status", "dft"),
-    (1, "Produces:", "heading", "produces"),
-    (2, "Percolation thresholds per orbit family  (NRHO n_c=5, polar n_c=1)", "produces", ""),
-    (2, "Braess selection rule  (90/1386 configs show paradox)", "produces", ""),
-    (2, "NRHO parity resonance  (even constellations 1.30x better)", "produces", ""),
-    (2, "Heritage fleet 35% suboptimality  (0.52 vs 0.71 optimal)", "produces", ""),
-    (2, "Topology dominates band  (S_T invariant UHF through optical)", "produces", ""),
-    (2, "Mixed architectures eliminate Braess  (Phi = 1.00)", "produces", ""),
-    (2, "Pipeline conditions C1-C4  (simulation-free screening)", "produces", ""),
-    (1, "Consumes from P1:", "heading", "consumes"),
-    (2, "S_T monotonicity theorem", "consumes", ""),
-    (2, "Braess detection framework", "consumes", ""),
-    (1, "Consumes from P2:", "heading", "consumes"),
-    (2, "N_eff catastrophe predictor", "consumes", ""),
-    (2, "var_log_p trap screening", "consumes", ""),
+    (0, "Paper 3: Historical relay-architecture draft", "title", "P3"),
+    (0, "Historical draft record  —  former target IEEE Aerospace", "status", "dft"),
+    (1, "Archived outputs and claims (not current):", "heading", "produces"),
+    (2, "Critical-fleet reference counts  (threshold claim retired)", "produces", ""),
+    (2, "Braess-labeled rows: 90/1386  (selection-rule claim retired)", "produces", ""),
+    (2, "Even/odd NRHO comparison: 1.30x  (fleet rule retired)", "produces", ""),
+    (2, "Heritage-fleet model comparison: 0.52 vs 0.71  (no optimality claim)", "produces", ""),
+    (2, "S_T band comparison  (dominance/invariance claims retired)", "produces", ""),
+    (2, "Mixed-architecture tested rows: Phi = 1.00  (no elimination claim)", "produces", ""),
+    (2, "C1-C4 historical checklist  (not operational screening)", "produces", ""),
+    (1, "Historical inputs from P1:", "heading", "consumes"),
+    (2, "Archived S_T monotonicity claim  (not a current theorem)", "consumes", ""),
+    (2, "Archived Braess diagnostic", "consumes", ""),
+    (1, "Historical inputs from P2:", "heading", "consumes"),
+    (2, "Retired N_eff catastrophe-predictor claim", "consumes", ""),
+    (2, "Retired var_log_p trap-screening claim", "consumes", ""),
     (-1, "", "", ""),
     # ── Paper 4 ────────────────────────────────────────────────────
-    (0, "Paper 4: TASEP Phase Structure", "title", "P4"),
-    (0, "Draft  —  target J. Comp. Phys.", "status", "dft"),
-    (1, "Produces:", "heading", "produces"),
-    (2, "J_beta = 0.242 +/- 0.001  (saturation invariance, 1.1% spread)", "produces", ""),
-    (2, "Three-phase structure  (LD, HD, MC observed in DTN)", "produces", ""),
-    (2, "Golden-mean hypothesis FALSIFIED  (rho = -0.50, p = 0.39)", "produces", ""),
-    (2, "Altitude primacy  (rho = +0.66, p = 0.003)", "produces", ""),
-    (2, "Mars pre-jamming  (no LD phase, boots into HD)", "produces", ""),
-    (2, "Eccentricity as design lever  (ELFO +50% K_eff bonus)", "produces", ""),
-    (1, "Consumes from P1:", "heading", "consumes"),
-    (2, "Three-factor decomposition", "consumes", ""),
+    (0, "Paper 4: Historical TASEP-phase draft", "title", "P4"),
+    (0, "Historical draft record  —  former target J. Comp. Phys.", "status", "dft"),
+    (1, "Archived outputs and claims (not current):", "heading", "produces"),
+    (2, "J_beta fit: 0.242 +/- 0.001  (invariance claim retired)", "produces", ""),
+    (2, "LD / HD / MC labels in archived rows  (descriptive only)", "produces", ""),
+    (2, "Golden-mean tested negative: rho = -0.50, p = 0.39", "produces", ""),
+    (2, "Altitude correlation: rho = +0.66, p = 0.003  (no causal primacy)", "produces", ""),
+    (2, "No LD-labeled Mars rows in the archived sample", "produces", ""),
+    (2, "ELFO K_eff comparison: +50%  (design-lever claim retired)", "produces", ""),
+    (1, "Historical inputs from P1:", "heading", "consumes"),
+    (2, "Three-factor bookkeeping decomposition", "consumes", ""),
     (2, "eta + routing efficiency definition", "consumes", ""),
-    (1, "Consumes from P2:", "heading", "consumes"),
-    (2, "Trap mechanism  (var_log_p explains per-lane ceiling)", "consumes", ""),
+    (1, "Historical inputs from P2:", "heading", "consumes"),
+    (2, "var_log_p association  (mechanism and ceiling claims retired)", "consumes", ""),
 ]
 
 
@@ -104,19 +107,35 @@ def draw():
     connector_x_off = 0.18
 
     n_rows = len(PAPERS)
-    fig_h = max(n_rows * y_step + 1.5, 6)
+    fig_h = max(n_rows * y_step + 2.0, 6)
     fig, ax = plt.subplots(figsize=(11, fig_h))
     ax.set_xlim(0, 11)
-    ax.set_ylim(0, n_rows * y_step + 1.0)
+    ax.set_ylim(0, n_rows * y_step + 1.4)
     ax.invert_yaxis()
     ax.axis("off")
 
     # Title
     ax.text(
-        5.5, 0.15, "TIN Paper Pipeline", ha="center", va="center", fontsize=13, fontweight="bold"
+        5.5,
+        0.15,
+        "TIN Historical Paper Pipeline — Claim Program Closed",
+        ha="center",
+        va="center",
+        fontsize=13,
+        fontweight="bold",
+    )
+    ax.text(
+        5.5,
+        0.42,
+        "Archived draft labels only — no mechanism, classifier, predictor, optimality, or design claim is current",
+        ha="center",
+        va="center",
+        fontsize=7,
+        color="#666666",
+        fontstyle="italic",
     )
 
-    y = 0.65
+    y = 0.82
     trunk_lines = {}
 
     for i, (indent, label, ntype, extra) in enumerate(PAPERS):
@@ -211,8 +230,8 @@ def draw():
         ("s", C["P2"], "Paper 2"),
         ("s", C["P3"], "Paper 3"),
         ("s", C["P4"], "Paper 4"),
-        ("o", C["produces"], "Produces"),
-        ("o", C["consumes"], "Consumes"),
+        ("o", C["produces"], "Archived output / claim"),
+        ("o", C["consumes"], "Historical dependency"),
     ]
     lx = 1.0
     for marker, color, label in items:

@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Independence tests for S_T and eta — pooled, stratified, and heteroscedastic.
+"""Historical S_T / eta association diagnostics on the 2026-03-11 rows.
 
 Three analyses in one pass:
   1. Mutual information I(S_T; eta) — pooled across all configs
   2. Conditional MI I(S_T; eta | body) — stratified within each body
-  3. Var(eta) vs S_T — heteroscedasticity check (self-averaging failure)
+  3. Var(eta) vs S_T — descriptive heteroscedasticity check
 
-Addresses Simpson's paradox risk (pooled MI near zero hiding within-body
-dependence) and finite-size trap (Var(eta) inflating at low S_T where
-self-averaging is weakest).
+The pooled, body-stratified, and S_T-bin summaries are scoped to the loaded
+production and campaign rows and to the binning conventions below.  They do not
+establish universal independence, self-averaging failure, a catastrophe regime,
+or a validity boundary for the factorized bookkeeping identity.
 
 Sources: runs/epyc_results/production_2026_03_11/ + campaign_2026_03_11/
 Output:  runs/independence_test_results.json
@@ -97,7 +98,8 @@ def main():
     t0 = time.time()
 
     print("=" * 72)
-    print("INDEPENDENCE TESTS: S_T vs eta")
+    print("HISTORICAL S_T / eta ASSOCIATION DIAGNOSTICS")
+    print("LOADED 2026-03-11 ROWS ONLY — NO UNIVERSAL OR THEORY-VALIDITY CLAIM")
     print("=" * 72)
 
     configs = load_production_data()
@@ -126,7 +128,7 @@ def main():
     print(f"{'=' * 72}")
 
     mi, h_st, h_eta, h_joint = mutual_information_binned(st_arr, eta_arr)
-    # Normalized MI: fraction of marginal entropy explained
+    # Normalized MI ratios against each marginal entropy.
     nmi_st = mi / h_st if h_st > 0 else 0
     nmi_eta = mi / h_eta if h_eta > 0 else 0
 
@@ -135,8 +137,8 @@ def main():
     print(f"  H(eta)     = {h_eta:.4f} nats")
     print(f"  H(S_T,eta) = {h_joint:.4f} nats")
     print(f"  I(S_T;eta) = {mi:.4f} nats")
-    print(f"  I / H(S_T) = {nmi_st:.4f}  (fraction of S_T entropy explained by eta)")
-    print(f"  I / H(eta) = {nmi_eta:.4f}  (fraction of eta entropy explained by S_T)")
+    print(f"  I / H(S_T) = {nmi_st:.4f}  (normalized MI for the loaded rows)")
+    print(f"  I / H(eta) = {nmi_eta:.4f}  (normalized MI for the loaded rows)")
 
     # For comparison: what would random pairing give?
     # Permutation test
@@ -226,17 +228,18 @@ def main():
     print(f"  Pooled MI:                       {mi:.4f} nats")
 
     if avg_cond_mi > mi * 1.5 and avg_cond_mi > 0.01:
-        print("  WARNING: Simpson's paradox detected — conditional MI >> pooled MI")
+        print("  Loaded-row warning: conditional MI exceeds pooled MI by this convention")
     elif avg_cond_mi > mi * 1.2:
-        print("  CAUTION: Some within-body dependence masked by pooling")
+        print("  Loaded-row caution: some within-body association is masked by pooling")
     else:
-        print("  OK: No Simpson's paradox — pooled and conditional MI are comparable")
+        print("  Loaded-row result: pooled and conditional MI are comparable by this convention")
 
     # ═══════════════════════════════════════════════════════════════
     # TEST 2c: HETEROSCEDASTICITY — Var(eta) vs S_T
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 72}")
-    print("TEST 2c: HETEROSCEDASTICITY — Var(eta) vs S_T")
+    print("TEST 2c: HISTORICAL LOADED-ROW VARIANCE COMPARISON")
+    print("DESCRIPTIVE S_T BINS ONLY — NO SELF-AVERAGING OR FAILURE BOUNDARY")
     print(f"{'=' * 72}")
 
     # Bin S_T into deciles and compute Var(eta) in each bin
@@ -288,7 +291,13 @@ def main():
             }
         )
 
-    # Test for trend: Spearman of (mean_st_bin, var_eta_bin)
+    variance_ratio_summary = {
+        "status": "not_computed",
+        "scope": "loaded S_T bins under the thresholds encoded in this script",
+        "claim_status": "descriptive only; no universal self-averaging or theory-validity inference",
+    }
+
+    # Descriptive trend: Spearman of (mean_st_bin, var_eta_bin)
     if len(het_bins) >= 4:
         bin_sts = np.array([b["mean_st"] for b in het_bins])
         bin_vars = np.array([b["var_eta"] for b in het_bins])
@@ -310,24 +319,37 @@ def main():
             low_var = np.mean([b["var_eta"] for b in low_st])
             high_var = np.mean([b["var_eta"] for b in high_st])
             ratio = low_var / high_var if high_var > 0 else float("inf")
-            print(f"\n  Low S_T (<0.3) mean Var(eta): {low_var:.6f}")
-            print(f"  High S_T (>0.7) mean Var(eta): {high_var:.6f}")
-            print(f"  Ratio: {ratio:.2f}x")
+            print(f"\n  Loaded low-S_T bins (<0.3) mean Var(eta): {low_var:.6f}")
+            print(f"  Loaded high-S_T bins (>0.7) mean Var(eta): {high_var:.6f}")
+            print(f"  Descriptive variance ratio: {ratio:.2f}x")
+
+            variance_ratio_summary = {
+                "status": "computed",
+                "low_st_cut": 0.3,
+                "high_st_cut": 0.7,
+                "low_bin_mean_var_eta": round(float(low_var), 6),
+                "high_bin_mean_var_eta": round(float(high_var), 6),
+                "ratio": round(float(ratio), 6) if math.isfinite(ratio) else None,
+                "scope": "loaded S_T bins under the thresholds encoded in this script",
+                "claim_status": (
+                    "descriptive only; no universal self-averaging or theory-validity inference"
+                ),
+            }
 
             if ratio > 3:
-                print(f"  HETEROSCEDASTIC: Var(eta) inflates {ratio:.1f}x at low S_T")
-                print("  -> Self-averaging fails in catastrophe regime")
-                print("  -> Factored theory valid for S_T > 0.3, unreliable below")
+                print(f"  Loaded-row heteroscedasticity: variance ratio = {ratio:.1f}x")
+                print("  This does not establish universal self-averaging failure.")
+                print("  No theory-validity boundary follows from the S_T bin cutoffs.")
             elif ratio > 1.5:
-                print(f"  MILD heteroscedasticity ({ratio:.1f}x) — flag but not fatal")
+                print(f"  Loaded-row variance difference: {ratio:.1f}x by these bin cutoffs")
             else:
-                print(f"  HOMOSCEDASTIC: Var(eta) stable across S_T range ({ratio:.1f}x)")
+                print(f"  Loaded-row variance ratio across tested S_T bins: {ratio:.1f}x")
 
     # ═══════════════════════════════════════════════════════════════
     # SYNTHESIS
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 72}")
-    print("SYNTHESIS")
+    print("HISTORICAL LOADED-ROW SUMMARY")
     print(f"{'=' * 72}")
 
     print(f"""
@@ -339,7 +361,15 @@ def main():
 
     # Save
     output = {
-        "description": "Independence tests: S_T vs eta — pooled MI, stratified MI, heteroscedasticity",
+        "description": (
+            "Historical loaded-row S_T/eta association diagnostics: pooled MI, "
+            "body-stratified MI, and descriptive heteroscedasticity"
+        ),
+        "claim_status": (
+            "scoped to loaded 2026-03-11 rows and encoded binning conventions; "
+            "no universal independence, self-averaging, catastrophe-regime, or "
+            "theory-validity claim"
+        ),
         "n_valid": len(valid),
         "pooled": {
             "mi_nats": round(mi, 6),
@@ -355,6 +385,7 @@ def main():
         "stratified": body_results,
         "conditional_mi_weighted": round(avg_cond_mi, 6),
         "heteroscedasticity": het_bins,
+        "variance_ratio_summary": variance_ratio_summary,
         "wall_time_s": round(time.time() - t0, 1),
     }
 

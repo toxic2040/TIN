@@ -1,26 +1,13 @@
 #!/usr/bin/env python3
-"""
-Q3: N_eff threshold derivation — Is the catastrophe threshold
-an absolute count or a coverage fraction?
+"""Reproduce a historical synthetic N_eff / low-S_T diagnostic.
 
-Run toy model at multiple B values (phase-bin counts) and test:
-  - If N_eff_crit / B = constant → coverage fraction
-  - If N_eff_crit = constant   → absolute threshold
+The toy model sweeps phase-bin count ``B`` and fits the midpoint of the stored
+``S_T < 0.5`` reporting label.  The former catastrophe-threshold and universal
+predictor interpretations are retired.  The fitted midpoint is not a network
+classifier, design limit, mission requirement, or operational failure boundary.
 
-From the envelope framework: each phase bin is an independent channel.
-Catastrophe is driven by n_src (source contact count), which determines
-N_eff independent of B when n_src is small. Prediction: absolute threshold.
-
-Also tests whether the threshold can be derived in closed form from
-the binomial coverage model.
-
-Approach:
-  1. Generate synthetic contact plans with controlled phase distributions
-  2. At each B value, compute N_eff and S_T
-  3. Find the catastrophe threshold via logistic regression
-  4. Test N_eff_crit vs B
-
-  5. Also recompute from existing time-reversal data at multiple B
+The closed-form expressions below are consequences of the script's Poisson and
+independent-bin assumptions; they are not established for observed networks.
 """
 
 import json
@@ -114,18 +101,19 @@ def synthetic_network_st(n_src, n_total, B, n_hops, concentration, n_inject=1000
         "s_t": float(s_t),
         "n_occupied_src": n_occupied_src,
         "n_empty_src": n_empty_src,
-        "catastrophe": s_t < 0.5,
+        "low_st_label": s_t < 0.5,
         "gini": float(1 - neff_src / B) if B > 0 else 0,
     }
 
 
-def logistic_threshold(neff_vals, catastrophe_flags, target_p=0.5):
-    """Fit logistic regression and find threshold at P(catastrophe)=target_p.
+def logistic_threshold(neff_vals, low_st_flags, target_p=0.5):
+    """Fit the in-sample midpoint of the stored low-S_T reporting label.
 
-    Returns threshold N_eff, or None if fit fails.
+    Returns the fitted N_eff midpoint and label agreement, or ``None`` if the
+    fit fails.  This is a descriptive synthetic-model statistic.
     """
     x = np.array(neff_vals, dtype=float)
-    y = np.array(catastrophe_flags, dtype=float)
+    y = np.array(low_st_flags, dtype=float)
 
     if len(set(y)) < 2:
         return None, None
@@ -158,14 +146,14 @@ def logistic_threshold(neff_vals, catastrophe_flags, target_p=0.5):
         a -= da
         b -= db
 
-    # Threshold: P=target_p → a + b*x = log(target_p/(1-target_p))
+    # Fitted midpoint: P=target_p → a + b*x = log(target_p/(1-target_p))
     logit_target = math.log(target_p / (1 - target_p))
     if abs(b) < 1e-15:
         return None, None
 
     threshold = (logit_target - a) / b
 
-    # AUC (simple: fraction correctly separated)
+    # In-sample agreement with the stored binary label.
     pred = 1 / (1 + np.exp(-(a + b * x)))
     pred_class = pred > 0.5
     accuracy = np.mean(pred_class == y)
@@ -174,7 +162,7 @@ def logistic_threshold(neff_vals, catastrophe_flags, target_p=0.5):
 
 
 # ═══════════════════════════════════════════════════════════════════
-# ANALYTICAL PREDICTION — Binomial coverage model
+# ARCHIVED ANALYTICAL MODEL — Binomial coverage
 # ═══════════════════════════════════════════════════════════════════
 
 
@@ -201,15 +189,15 @@ def binomial_coverage_neff(n_src, B):
 
 def main():
     print("=" * 70)
-    print("  Q3: N_eff THRESHOLD DERIVATION")
-    print("  Is the catastrophe threshold absolute or fractional?")
+    print("  HISTORICAL N_eff / LOW-S_T TOY-MODEL DIAGNOSTIC")
+    print("  UNIVERSAL PREDICTOR AND DESIGN-THRESHOLD CLAIMS RETIRED")
     print("=" * 70)
 
     # ═══════════════════════════════════════════════════════════════
-    # PART 1: ANALYTICAL PREDICTION — Harmonic mean
+    # PART 1: ARCHIVED ANALYTICAL MODEL — Harmonic mean
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 70}")
-    print("  PART 1: ANALYTICAL PREDICTION")
+    print("  PART 1: ARCHIVED POISSON-BIN MODEL")
     print(f"{'=' * 70}")
 
     print("""
@@ -224,13 +212,14 @@ def main():
     n_src >> B:  N_eff ≈ B         (bins saturate)
     n_src = B:   N_eff = B/2       (half-saturation)
 
-  For catastrophe (n_src = 1-3):
+  For the sparse examples n_src = 1-3:
     n_src=1:  N_eff = B/(B+1) ≈ 1  for all B >> 1
     n_src=2:  N_eff = 2B/(B+2) ≈ 2  for all B >> 1
     n_src=3:  N_eff = 3B/(B+3) ≈ 3  for all B >> 1
 
-  PREDICTION: N_eff_crit is an ABSOLUTE threshold (≈ n_src at the boundary),
-  independent of B for B >> n_src_crit.
+  Within this model, the fitted sparse-regime midpoint approaches n_src and is
+  approximately B-insensitive when B >> n_src.  This is not a universal or
+  operational threshold.
   """)
 
     # Show the harmonic mean across B values
@@ -252,11 +241,11 @@ def main():
     # PART 2: TOY MODEL — Sweep n_src and B
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 70}")
-    print("  PART 2: TOY MODEL — N_eff_crit vs B")
+    print("  PART 2: FITTED LOW-S_T MIDPOINT vs B")
     print(f"{'=' * 70}")
 
     # For each B, generate many configurations with varying n_src
-    # and concentration, then find the catastrophe threshold
+    # and concentration, then fit the stored low-S_T label midpoint
 
     n_hops = 5  # 5-hop chain
     n_total_base = 500
@@ -266,7 +255,7 @@ def main():
     thresholds = {}
     for B in B_values:
         all_neff = []
-        all_catastrophe = []
+        all_low_st = []
 
         for n_src in n_srcs:
             for ci, conc in enumerate(concentrations):
@@ -281,19 +270,19 @@ def main():
                         seed=seed,
                     )
                     all_neff.append(result["neff_src"])
-                    all_catastrophe.append(result["catastrophe"])
+                    all_low_st.append(result["low_st_label"])
 
-        threshold, accuracy = logistic_threshold(all_neff, all_catastrophe)
+        threshold, accuracy = logistic_threshold(all_neff, all_low_st)
         thresholds[B] = {
             "threshold": threshold,
             "accuracy": accuracy,
             "n_configs": len(all_neff),
-            "n_catastrophe": sum(all_catastrophe),
+            "n_low_st": sum(all_low_st),
         }
 
     print(
         f"\n  {'B':>4s} | {'N_eff_crit':>10s} | {'N_eff/B':>8s} | "
-        f"{'Accuracy':>8s} | {'n_configs':>9s} | {'n_cat':>6s}"
+        f"{'Agree':>8s} | {'n_configs':>9s} | {'n_low':>6s}"
     )
     print(f"  {'-' * 60}")
     for B in B_values:
@@ -302,16 +291,16 @@ def main():
             ratio = t["threshold"] / B
             print(
                 f"  {B:4d} | {t['threshold']:10.3f} | {ratio:8.4f} | "
-                f"{t['accuracy']:8.1%} | {t['n_configs']:9d} | {t['n_catastrophe']:6d}"
+                f"{t['accuracy']:8.1%} | {t['n_configs']:9d} | {t['n_low_st']:6d}"
             )
         else:
             print(f"  {B:4d} | {'N/A':>10s}")
 
     # ═══════════════════════════════════════════════════════════════
-    # PART 3: SCALING TEST — Is N_eff_crit constant?
+    # PART 3: DESCRIPTIVE SCALING CHECK
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 70}")
-    print("  PART 3: SCALING TEST")
+    print("  PART 3: DESCRIPTIVE MIDPOINT SCALING")
     print(f"{'=' * 70}")
 
     valid_thresholds = [
@@ -329,7 +318,7 @@ def main():
         # Test 2: Is ratio constant?
         ratio_cv = np.std(ratio_arr) / np.mean(ratio_arr)
 
-        print("\n  Absolute threshold test:")
+        print("\n  Fitted midpoint across B:")
         print(f"    Mean N_eff_crit = {np.mean(thresh_arr):.3f}")
         print(f"    Std  N_eff_crit = {np.std(thresh_arr):.3f}")
         print(
@@ -337,7 +326,7 @@ def main():
             f"({'LOW → constant ✓' if thresh_cv < 0.2 else 'HIGH → varies ✗'})"
         )
 
-        print("\n  Coverage fraction test:")
+        print("\n  Midpoint/B comparison:")
         print(f"    Mean N_eff/B    = {np.mean(ratio_arr):.4f}")
         print(f"    Std  N_eff/B    = {np.std(ratio_arr):.4f}")
         print(
@@ -350,17 +339,17 @@ def main():
             corr = np.corrcoef(B_arr, thresh_arr)[0, 1]
             print(f"\n  Correlation(B, N_eff_crit) = {corr:.4f}")
             if abs(corr) > 0.9:
-                print("    Strong correlation → N_eff_crit scales with B (coverage fraction)")
+                print("    Strong in-sample association between B and the fitted midpoint")
             elif abs(corr) < 0.3:
-                print("    Weak correlation → N_eff_crit is approximately constant (absolute)")
+                print("    Weak in-sample association between B and the fitted midpoint")
             else:
-                print("    Moderate correlation → mixed regime")
+                print("    Moderate in-sample association between B and the fitted midpoint")
 
     # ═══════════════════════════════════════════════════════════════
-    # PART 4: CLOSED-FORM DERIVATION
+    # PART 4: MODEL ALGEBRA
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 70}")
-    print("  PART 4: CLOSED-FORM DERIVATION")
+    print("  PART 4: ALGEBRA UNDER THE ARCHIVED MODEL ASSUMPTIONS")
     print(f"{'=' * 70}")
 
     print(f"""
@@ -368,8 +357,8 @@ def main():
 
     N_eff(n_src, B) = n_src * B / (n_src + B)
 
-  The catastrophe condition S_T < 0.5 requires that more than half
-  the phase bins have no source contacts. Under Poisson placement:
+  The stored S_T < 0.5 label can be related to occupied bins only within this
+  simplified independent-bin approximation. Under Poisson placement:
 
     P(bin empty) = exp(-n_src/B)
     Fraction occupied: f = 1 - exp(-n_src/B)
@@ -395,30 +384,26 @@ def main():
   For n_hops = 5, B = 36: N_eff_crit = {(-math.log(1 - 0.5**0.2)) * 36 / (-math.log(1 - 0.5**0.2) + 1):.2f}
   For n_hops = 7, B = 36: N_eff_crit = {(-math.log(1 - 0.5 ** (1 / 7))) * 36 / (-math.log(1 - 0.5 ** (1 / 7)) + 1):.2f}
 
-  KEY INSIGHT: N_eff_crit = mu * B / (mu + 1) IS proportional to B
-  when the catastrophe depends on fractional coverage (f < f_crit).
+  In this model, N_eff_crit = mu * B / (mu + 1) is proportional to B when the
+  stored low-S_T label follows the assumed fractional-coverage rule.
 
-  BUT: when n_src << B (the catastrophe regime), N_eff ≈ n_src.
-  The threshold becomes n_src_crit, which is topology-dependent
-  (depends on n_hops) but B-independent.
+  When n_src << B, N_eff ≈ n_src.  The corresponding fitted midpoint is then
+  approximately B-insensitive within the same synthetic construction.
 
-  RESOLUTION: There are TWO thresholds:
-    1. Support threshold: n_src_crit (absolute, B-independent)
-       Controls whether the network CAN function.
-    2. Coverage threshold: N_eff_crit (proportional to B)
-       Controls HOW WELL it functions once n_src > n_src_crit.
+  The archived calculation therefore contains two descriptive scales:
+    1. A sparse-contact scale in n_src.
+    2. A fractional-coverage scale proportional to B.
 
-  When n_src < n_src_crit, the network is dead regardless of B.
-  When n_src > n_src_crit but N_eff < coverage threshold, it's degraded.
-  The empirical N_eff_crit ≈ 1.52 at B=36 is the SUPPORT threshold,
-  not the coverage threshold.
+  Neither scale is established as a failure boundary, classifier, or design
+  requirement.  The historical N_eff_crit ≈ 1.52 value at B=36 is retained only
+  as an in-sample fitted midpoint for the stored rows.
   """)
 
     # ═══════════════════════════════════════════════════════════════
-    # PART 5: VERIFY AGAINST EXISTING DATA
+    # PART 5: COMPARE WITH STORED ROWS
     # ═══════════════════════════════════════════════════════════════
     print(f"\n{'=' * 70}")
-    print("  PART 5: VERIFY AGAINST EXISTING DATA")
+    print("  PART 5: DESCRIPTIVE COMPARISON WITH STORED ROWS")
     print(f"{'=' * 70}")
 
     # Load existing time-reversal + N_eff data
@@ -464,7 +449,7 @@ def main():
                             "n_orb": n_orb,
                             "s_t": s_t_fwd,
                             "neff_src": neff_entry.get("neff_src", 0),
-                            "catastrophe": s_t_fwd < 0.5,
+                            "low_st_label": s_t_fwd < 0.5,
                         }
                     )
 
@@ -473,17 +458,17 @@ def main():
 
             # Logistic threshold from real data
             neff_vals = [c["neff_src"] for c in configs]
-            cat_flags = [c["catastrophe"] for c in configs]
-            real_threshold, real_accuracy = logistic_threshold(neff_vals, cat_flags)
+            low_st_flags = [c["low_st_label"] for c in configs]
+            real_threshold, real_accuracy = logistic_threshold(neff_vals, low_st_flags)
 
             if real_threshold is not None:
-                print(f"  Real data threshold (B=36): N_eff_crit = {real_threshold:.3f}")
-                print(f"  Accuracy: {real_accuracy:.1%}")
+                print(f"  Stored-row fitted midpoint (B=36): N_eff = {real_threshold:.3f}")
+                print(f"  In-sample label agreement: {real_accuracy:.1%}")
             else:
                 print("  Could not fit logistic (insufficient class separation)")
         else:
             print("  Could not match configs between files (format mismatch)")
-            print("  This is OK — the toy model results above are the primary test")
+            print("  The synthetic calculation above remains an archived model diagnostic")
     else:
         print("  Data files not found — using toy model results only")
 
@@ -495,33 +480,35 @@ def main():
     print(f"{'=' * 70}")
 
     print("""
-  Q3 ANSWER: The catastrophe threshold has TWO components:
+  HISTORICAL MODEL SUMMARY — NO CURRENT THRESHOLD CLAIM:
 
-  1. SUPPORT THRESHOLD (absolute, B-independent):
-     n_src_crit — the minimum number of source contacts needed
-     for the network to function at all. This is what the empirical
-     N_eff_crit ≈ 1.52 measures. Since N_eff ≈ n_src for small n_src,
-     this threshold is approximately constant across B.
+  1. SPARSE-CONTACT SCALE (approximately B-independent in this toy model):
+     Since N_eff ≈ n_src for small n_src, the fitted low-S_T midpoint can be
+     approximately constant across the tested B values.
 
-  2. COVERAGE THRESHOLD (proportional to B):
+  2. FRACTIONAL-COVERAGE SCALE (proportional to B in this toy model):
      N_eff_cov = mu_crit × B / (mu_crit + 1)
      where mu_crit = -ln(1 - f_crit^(1/n_hops)).
-     This controls how well the network functions once it has enough
-     support. It scales linearly with B.
+     This follows from the assumed independent Poisson-bin construction.
 
   The harmonic mean formula N_eff = n_src × B / (n_src + B) bridges
   both regimes:
      - n_src << B: N_eff ≈ n_src (support-limited, B-independent)
      - n_src >> B: N_eff ≈ B     (coverage-limited, B-proportional)
 
-  CLOSED FORM: N_eff_crit(B) = n_src_crit × B / (n_src_crit + B)
-  where n_src_crit depends on topology (n_hops) but not on B.
+  Archived model expression: N_eff_crit(B) = n_src_crit × B / (n_src_crit + B).
+  It is not a universal predictor, classifier, or operational design rule.
   """)
 
     # ═══════════════════════════════════════════════════════════════
     # SAVE
     # ═══════════════════════════════════════════════════════════════
     output = {
+        "description": "Historical synthetic N_eff / low-S_T midpoint diagnostic",
+        "claim_status": (
+            "catastrophe-threshold, universal-predictor, classifier, and design claims retired"
+        ),
+        "label_semantics": "low_st_label means S_T < 0.5 in this script only",
         "thresholds_by_B": {str(B): t for B, t in thresholds.items()},
         "harmonic_mean_examples": {
             str(B): {str(n): binomial_coverage_neff(n, B) for n in [1, 2, 3, 5, 10, 20, 36, 72]}

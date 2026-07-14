@@ -1,12 +1,14 @@
-"""run_pair_gamma_mosaic.py — Per-pair gamma mosaic analysis.
+"""Historical per-pair gamma-distribution diagnostic.
 
-Tests whether the trap/cluster classification is a global invariant
-or decomposes into a local mosaic at the (source, dest) pair level.
+This reproduces an archived pair-level sign and distribution-shape analysis.
+The former trap/cluster, global-invariant, and local-classification readings are
+retired.  Gamma is retained only as an outcome-derived descriptive quantity.
 
 For each pair, computes:
     gamma_pair = ln(phi_pair) / (E_H_pair * (-lambda_pair))
 
-Then analyzes P(gamma_pair) for bimodality, gap structure, and sign census.
+It summarizes P(gamma_pair) through bimodality, gap structure, and sign counts;
+none of those summaries is a classifier or a cross-domain decision rule.
 
 Reads:
     crawdad_contacts.Exp{1,2,3,6}_results.json
@@ -190,13 +192,13 @@ def _analyze_distribution(gamma_vals, label):
         idx = int(np.argmax(diffs))
         gap_straddles_zero = bool(sv[idx] < 0 < sv[idx + 1])
 
-    # Verdict
+    # Descriptive distribution-shape label.
     if bc > 5 / 9 and gap_straddles_zero:
-        verdict = "BIMODAL"
+        verdict = "BIMODAL_DESCRIPTIVE"
     elif std_g > 0 and abs(mean_g) / std_g > 2 and n_neg <= 1 and n_pos >= n - 2:
-        verdict = "UNIMODAL_CLUSTER"
+        verdict = "UNIMODAL_POSITIVE"
     elif std_g > 0 and abs(mean_g) / std_g > 2 and n_pos <= 1 and n_neg >= n - 2:
-        verdict = "UNIMODAL_TRAP"
+        verdict = "UNIMODAL_NEGATIVE"
     elif n_neg > 0 and n_pos > 0 and not gap_straddles_zero:
         verdict = "MIXED_NO_GAP"
     else:
@@ -227,7 +229,8 @@ def _analyze_distribution(gamma_vals, label):
 
 def main():
     print()
-    print("  Pair-Level Gamma Mosaic Analysis")
+    print("  HISTORICAL PAIR-LEVEL GAMMA-DISTRIBUTION DIAGNOSTIC")
+    print("  GLOBAL INVARIANT AND TRAP/CLUSTER CLASSIFIER CLAIMS RETIRED")
     print("  " + "=" * 55)
     print()
 
@@ -266,7 +269,7 @@ def main():
     print("  Per-Trace Distribution Analysis")
     print("  " + "-" * 55)
     hdr = f"  {'Trace':<12s} {'p_eff':>5s} {'n':>4s} {'mean':>7s} {'std':>6s} "
-    hdr += f"{'n+':>3s} {'n-':>3s} {'gap':>6s} {'BC':>5s} {'verdict':<18s}"
+    hdr += f"{'n+':>3s} {'n-':>3s} {'gap':>6s} {'BC':>5s} {'shape':<18s}"
     print(hdr)
 
     trace_results = defaultdict(dict)
@@ -320,18 +323,17 @@ def main():
         row += f"{stats['verdict']}"
         print(row)
 
-    # --- Cross-trace pooled: all cluster-class traces ---
+    # --- Cross-trace pooled: all loaded traces ---
     print()
-    print("  Cross-Trace Pooled (cluster class: Exp1-3, Exp6, Cambridge, LEO)")
+    print("  Cross-Trace Pooled (all loaded trace families; descriptive only)")
     print("  " + "-" * 55)
 
-    cluster_gammas = []
+    pooled_gammas = []
     for pg in all_pair_gammas:
-        # All loaded traces are cluster-class
-        cluster_gammas.append(pg["gamma_pair"])
+        pooled_gammas.append(pg["gamma_pair"])
 
-    if cluster_gammas:
-        stats = _analyze_distribution(cluster_gammas, "all_cluster")
+    if pooled_gammas:
+        stats = _analyze_distribution(pooled_gammas, "all_loaded")
         print(f"  n={stats['n_pairs']}  mean={stats['mean']:+.3f}  std={stats['std']:.3f}")
         print(f"  range=[{stats['min']:+.3f}, {stats['max']:+.3f}]")
         print(f"  n+={stats['n_positive']}  n-={stats['n_negative']}  n~0={stats['n_near_zero']}")
@@ -339,7 +341,7 @@ def main():
             f"  BC={stats['bimodality_coeff']:.3f}  max_gap={stats['max_gap']:.3f} at {stats['max_gap_location']:+.3f}"
         )
         print(f"  gap_straddles_zero={stats['gap_straddles_zero']}")
-        print(f"  VERDICT: {stats['verdict']}")
+        print(f"  Descriptive shape label: {stats['verdict']}")
     else:
         stats = None
 
@@ -397,8 +399,13 @@ def main():
 
     # --- Save ---
     output = {
+        "description": "Historical per-pair gamma sign and distribution-shape diagnostic",
+        "claim_status": "global-invariant and trap/cluster classifier interpretations retired",
+        "label_semantics": "verdict values describe in-sample distribution shape only",
         "per_trace_per_p": per_trace_stats,
         "per_trace_pooled": pooled_results,
+        # Compatibility key retained for historical consumers; its value now
+        # summarizes every loaded trace without assigning a source-domain class.
         "cross_trace_cluster": stats,
         "pair_gammas": all_pair_gammas,
     }

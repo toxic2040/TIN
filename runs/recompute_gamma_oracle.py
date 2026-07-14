@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Recompute gamma_retry (oracle reclassification) from phi_decompose data.
+"""Reproduce the historical normal/myopic/retry gamma-slope table.
 
-Paper 2 claims Mercury gamma_oracle = +0.228 and delta_policy = +1.042.
-These were computed interactively on 2026-03-09 but never persisted.
+The archived Paper 2 notes reported Mercury gamma_retry = +0.228 and
+delta_policy = +1.042.  This script repeats the OLS calculation from the loaded
+``phi_decompose`` rows.
 
-This script recomputes gamma_retry = d ln(phi_retry) / d E[H] for all
-bodies using OLS regression, establishing the canonical values.
+The output filename is retained for compatibility.  The values are historical,
+corpus-conditional slopes, not canonical constants, a reclassification result,
+or an authoritative classifier boundary.
 
 Also computes gamma_myopic and delta_policy = gamma_myopic - gamma_retry.
 
@@ -38,6 +40,9 @@ def ols_gamma(ehs, ln_phis):
 
 
 def main():
+    print("HISTORICAL NORMAL/MYOPIC/RETRY GAMMA-SLOPE REPRODUCTION")
+    print("CANONICAL, RECLASSIFICATION, AND CLASSIFIER CLAIMS RETIRED")
+
     # Load phi_decompose data (153 MB)
     path = RUNS_DIR / "phi_decompose_results.json"
     print(f"Loading {path.name}...")
@@ -134,13 +139,17 @@ def main():
         )
 
     output = {
-        "description": "Canonical gamma decomposition (normal/myopic/retry) per body",
+        "description": "Historical normal/myopic/retry gamma-slope reproduction per body",
+        "claim_status": (
+            "corpus-conditional diagnostic; not canonical, authoritative, or a classifier"
+        ),
         "source": "phi_decompose_results.json",
         "total_records": len(records),
         "skipped": skipped,
         "bodies": results,
     }
 
+    # Compatibility filename retained for the historical plot consumer.
     outpath = RUNS_DIR / "gamma_oracle_canonical_results.json"
     with open(outpath, "w") as f:
         json.dump(output, f, indent=2)

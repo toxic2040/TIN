@@ -1,13 +1,17 @@
-"""analysis_mars_architecture.py — Deep dive into Earth-Mars architecture data.
+"""Historical diagnostics for archived Earth-Mars architecture model rows.
+
+The calculations below preserve the original row comparisons. Printed text is
+descriptive only: it does not establish a causal routing mechanism, architecture
+optimum, mission benefit, or design rule.
 
 Extracts:
   1. Synodic profiles (DR, S_T, η vs epoch) per tier
-  2. Braess effect quantification (T1 vs T2)
-  3. Conjunction zone analysis (blackout duration, relay rescue)
-  4. Sparse law decomposition (η = chain × Φ at each epoch)
-  5. γ classification per tier
+  2. T1/T2 DR comparison historically labeled as a Braess effect
+  3. Low-separation row comparison and zero-S_T counts
+  4. Bookkeeping decomposition diagnostics
+  5. Historical γ-proxy diagnostic per tier (not a classifier)
   6. Distance-η regression (ln η vs d_AU)
-  7. Relay benefit: Δη from L4/L5 at each epoch
+  7. Tier-to-tier Δη values from L4/L5 at each epoch
 """
 
 import json
@@ -36,7 +40,7 @@ def main():
 
     print()
     print("=" * 80)
-    print("  MARS ARCHITECTURE — DEEP ANALYSIS")
+    print("  HISTORICAL MARS ARCHITECTURE MODEL DIAGNOSTICS — DESCRIPTIVE ONLY")
     print("=" * 80)
 
     # ─────────────────────────────────────────────────────────────────
@@ -45,7 +49,7 @@ def main():
     print("\n┌─ 1. TIER SUMMARY ──────────────────────────────────────────────────┐")
     print(
         f"  {'Tier':>4} {'DR_mean':>8} {'DR_std':>8} {'DR_min':>8} {'DR_max':>8} "
-        f"{'η_mean':>8} {'S_T_mean':>8} {'Blackout':>8}"
+        f"{'η_mean':>8} {'S_T_mean':>8} {'S_T=0':>8}"
     )
     print(f"  {'─' * 72}")
     for t in tiers:
@@ -60,9 +64,9 @@ def main():
         )
 
     # ─────────────────────────────────────────────────────────────────
-    # 2. Braess effect: T1 vs T2 head-to-head
+    # 2. T1/T2 head-to-head comparison
     # ─────────────────────────────────────────────────────────────────
-    print("\n┌─ 2. BRAESS EFFECT (T1 vs T2) ──────────────────────────────────────┐")
+    print("\n┌─ 2. HISTORICAL T1/T2 DR COMPARISON ───────────────────────────────┐")
     t1_wins = 0
     t2_wins = 0
     braess_deltas = []
@@ -75,8 +79,8 @@ def main():
             t2_wins += 1
 
     n_epochs = len(tier_data[1])
-    print(f"  T1 beats T2: {t1_wins}/{n_epochs} epochs ({100 * t1_wins / n_epochs:.0f}%)")
-    print(f"  T2 beats T1: {t2_wins}/{n_epochs} epochs ({100 * t2_wins / n_epochs:.0f}%)")
+    print(f"  T1 DR > T2 DR: {t1_wins}/{n_epochs} epochs ({100 * t1_wins / n_epochs:.0f}%)")
+    print(f"  T2 DR > T1 DR: {t2_wins}/{n_epochs} epochs ({100 * t2_wins / n_epochs:.0f}%)")
     print(f"  Mean ΔDR (T2−T1): {np.mean(braess_deltas):+.4f}")
     print(
         f"  At opposition (day 0): T1={tier_data[1][0]['DR']:.4f}  T2={tier_data[2][0]['DR']:.4f}"
@@ -87,20 +91,21 @@ def main():
     st_t2 = [r["S_T"] for r in tier_data[2]]
     print("\n  S_T comparison:")
     print(f"    T1 mean S_T = {np.mean(st_t1):.4f}   T2 mean S_T = {np.mean(st_t2):.4f}")
-    print("    T2 has BETTER reachability but WORSE delivery → η is the culprit")
+    print("    The loaded T2 rows have higher mean S_T and lower mean DR than T1.")
 
     eta_t1 = [r["eta"] for r in tier_data[1] if r["eta"] > 0]
     eta_t2 = [r["eta"] for r in tier_data[2] if r["eta"] > 0]
     print(f"    T1 mean η = {np.mean(eta_t1):.4f}   T2 mean η = {np.mean(eta_t2):.4f}")
     if np.mean(eta_t2) < np.mean(eta_t1):
         print(
-            f"    → Braess confirmed: more nodes DECREASE routing efficiency by {100 * (1 - np.mean(eta_t2) / np.mean(eta_t1)):.1f}%"
+            f"    Mean η(T2) is {100 * (1 - np.mean(eta_t2) / np.mean(eta_t1)):.1f}% lower than mean η(T1)."
         )
+        print("    This bookkeeping comparison does not identify a causal mechanism.")
 
     # ─────────────────────────────────────────────────────────────────
     # 3. Conjunction analysis
     # ─────────────────────────────────────────────────────────────────
-    print("\n┌─ 3. CONJUNCTION ZONE ──────────────────────────────────────────────┐")
+    print("\n┌─ 3. HISTORICAL LOW-SEPARATION ROWS ───────────────────────────────┐")
     for sep_thresh in [20, 10, 5]:
         conj = {t: [r for r in tier_data[t] if r["sep_deg"] < sep_thresh] for t in tiers}
         print(f"\n  SEP < {sep_thresh}°:")
@@ -113,7 +118,7 @@ def main():
             bl = sum(1 for s in sts if s == 0)
             print(
                 f"    T{t}: {len(conj[t])} epochs, DR_mean={np.mean(drs):.4f}, "
-                f"S_T_mean={np.mean(sts):.4f}, blackouts={bl}"
+                f"S_T_mean={np.mean(sts):.4f}, zero-S_T rows={bl}"
             )
 
     # Minimum SEP epoch detail
@@ -152,9 +157,9 @@ def main():
         print(f"  {t:>4} {coef[0]:>8.3f} {coef[1]:>8.3f} {r2:>8.3f} {rho:>8.3f}")
 
     # ─────────────────────────────────────────────────────────────────
-    # 5. Relay benefit: Δη at each epoch
+    # 5. Tier-to-tier Δη at each epoch
     # ─────────────────────────────────────────────────────────────────
-    print("\n┌─ 5. RELAY BENEFIT ─────────────────────────────────────────────────┐")
+    print("\n┌─ 5. HISTORICAL TIER-TO-TIER η DIFFERENCES ────────────────────────┐")
     print("  Δη = η_relay_tier − η_T2 (baseline with same n_sats)")
     print(
         f"\n  {'Day':>5} {'SEP':>5} {'d_AU':>6} {'η_T2':>7} {'η_T3':>7} {'Δη_T3':>7} {'η_T4':>7} {'Δη_T4':>7}"
@@ -179,15 +184,15 @@ def main():
                 f"{r4['eta']:>7.4f} {d4:>+7.4f}"
             )
 
-    print(f"\n  L4 relay mean Δη: {np.mean(delta_t3_all):+.4f}")
-    print(f"  L4+L5 relay mean Δη: {np.mean(delta_t4_all):+.4f}")
-    print(f"  L4 benefit positive at {sum(1 for d in delta_t3_all if d > 0)}/{n_epochs} epochs")
-    print(f"  L4+L5 benefit positive at {sum(1 for d in delta_t4_all if d > 0)}/{n_epochs} epochs")
+    print(f"\n  T3−T2 mean Δη: {np.mean(delta_t3_all):+.4f}")
+    print(f"  T4−T2 mean Δη: {np.mean(delta_t4_all):+.4f}")
+    print(f"  T3−T2 Δη > 0 at {sum(1 for d in delta_t3_all if d > 0)}/{n_epochs} epochs")
+    print(f"  T4−T2 Δη > 0 at {sum(1 for d in delta_t4_all if d > 0)}/{n_epochs} epochs")
 
     # ─────────────────────────────────────────────────────────────────
-    # 6. γ estimation per tier (Φ-based)
+    # 6. Historical morphology proxy per tier
     # ─────────────────────────────────────────────────────────────────
-    print("\n┌─ 6. γ CLASSIFICATION ──────────────────────────────────────────────┐")
+    print("\n┌─ 6. HISTORICAL MORPHOLOGY PROXY (NOT A CLASSIFIER) ───────────────┐")
     print("  For T1→T2 (same p, more nodes): Φ = η / exp(E[H]·λ)")
     print("  γ = ∂ln(Φ)/∂E[H] / (−λ)")
     print()
@@ -252,47 +257,48 @@ def main():
         )
 
     # ─────────────────────────────────────────────────────────────────
-    # 9. Key findings summary
+    # 9. Archived descriptive summary
     # ─────────────────────────────────────────────────────────────────
     print("\n" + "=" * 80)
-    print("  KEY FINDINGS")
+    print("  ARCHIVED DESCRIPTIVE SUMMARY — NO CAUSAL OR DESIGN CLAIMS")
     print("=" * 80)
 
     # Braess
     t1_mean = np.mean([r["DR"] for r in tier_data[1]])
     t2_mean = np.mean([r["DR"] for r in tier_data[2]])
     braess_pct = 100 * (1 - t2_mean / t1_mean) if t1_mean > 0 else 0
-    print(f"\n  1. BRAESS PARADOX: T2 (9 sats) delivers {braess_pct:.1f}% LESS than T1 (3 sats)")
+    print(f"\n  1. T1/T2 ROW COMPARISON: mean T2 DR is {braess_pct:.1f}% lower than mean T1 DR")
     print(f"     T1 mean DR = {t1_mean:.4f}  |  T2 mean DR = {t2_mean:.4f}")
-    print(f"     T1 wins {t1_wins}/{n_epochs} epochs — more nodes hurts greedy routing")
+    print(f"     T1 DR > T2 DR in {t1_wins}/{n_epochs} loaded epochs")
 
-    # Relay rescue
+    # Low-separation zero-S_T comparison
     conj_t1_bl = sum(1 for r in tier_data[1] if r["S_T"] == 0)
     conj_t3_bl = sum(1 for r in tier_data[3] if r["S_T"] == 0)
-    print(f"\n  2. RELAY RESCUE: L4 relays eliminate {conj_t1_bl} conjunction blackouts")
+    print(f"\n  2. ZERO-S_T COUNTS: T1 has {conj_t1_bl}; T3 has {conj_t3_bl} in the loaded rows")
     min_sep_r3 = [r for r in tier_data[3] if r["epoch_day"] == min_sep_day][0]
     min_sep_r4 = [r for r in tier_data[4] if r["epoch_day"] == min_sep_day][0]
     print(
         f"     At SEP={min_sep_r3['sep_deg']:.1f}°: T3 DR={min_sep_r3['DR']:.4f}, T4 DR={min_sep_r4['DR']:.4f}"
     )
 
-    # η bottleneck
+    # T4 bookkeeping means
     t4_active = [r for r in tier_data[4] if r["eta"] > 0]
     st4 = np.mean([r["S_T"] for r in t4_active])
     eta4 = np.mean([r["eta"] for r in t4_active])
-    print("\n  3. η BOTTLENECK: Even Tier 4 (full architecture):")
-    print(f"     S_T = {st4:.4f} (reachability solved)")
-    print(f"     η  = {eta4:.4f} (routing efficiency = ceiling)")
-    print(f"     Gap: {100 * (st4 - eta4) / st4:.1f}% of reachable bundles lost to routing")
+    print("\n  3. T4 BOOKKEEPING MEANS:")
+    print(f"     mean S_T = {st4:.4f}")
+    print(f"     mean η   = {eta4:.4f}")
+    print(f"     normalized difference: {100 * (st4 - eta4) / st4:.1f}%")
+    print("     The difference is descriptive and is not assigned to a routing cause.")
 
-    # Best/worst epochs
+    # Maximum/minimum loaded epochs
     best = max(tier_data[4], key=lambda r: r["DR"])
     worst = min(tier_data[4], key=lambda r: r["DR"])
     print(
-        f"\n  4. BEST EPOCH (T4): day {best['epoch_day']}, DR={best['DR']:.4f}, d={best['dist_au']:.2f} AU"
+        f"\n  4. MAXIMUM LOADED T4 DR: day {best['epoch_day']}, DR={best['DR']:.4f}, d={best['dist_au']:.2f} AU"
     )
     print(
-        f"     WORST EPOCH (T4): day {worst['epoch_day']}, DR={worst['DR']:.4f}, d={worst['dist_au']:.2f} AU"
+        f"     MINIMUM LOADED T4 DR: day {worst['epoch_day']}, DR={worst['DR']:.4f}, d={worst['dist_au']:.2f} AU"
     )
     print(f"     Dynamic range: {best['DR'] / max(worst['DR'], 1e-6):.1f}×")
 

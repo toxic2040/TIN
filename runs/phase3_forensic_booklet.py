@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Phase 3 Forensic Analysis — Visual Booklet (PDF)"""
+"""Historical Phase 3 diagnostic booklet; all claim interpretations are retired.
+
+The booklet preserves the archived arrays and calculations as descriptive
+tables. It does not present a classifier, predictor, causal mechanism,
+universality result, or self-averaging conclusion.
+"""
 
 import json
+from collections import defaultdict
 
 import matplotlib
 import numpy as np
 
 matplotlib.use("Agg")
-import os
-from collections import defaultdict
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
@@ -60,7 +64,8 @@ def main():
         title_text = (
             "PHASE 3 FORENSIC ANALYSIS\n"
             "────────────────────────────────────\n"
-            "TIN Classification Theorem — Data Booklet\n"
+            "TIN HISTORICAL GAMMA DIAGNOSTIC — DATA BOOKLET\n"
+            "GLOBAL CLASSIFICATION CLAIM RETIRED\n"
             "7–8 March 2026  ·  192-core EPYC  ·  13.1 min\n"
         )
         ax.text(
@@ -76,27 +81,27 @@ def main():
         )
 
         summary = (
-            "EXPERIMENT A: Routing Independence\n"
+            "EXPERIMENT A: Archived routing-policy slope table\n"
             "  5 CRAWDAD traces × 4 policies × 4 p_eff = 80 gamma values\n"
             "  79/80 positive (98.75%)\n"
             "  Sole outlier: Cambridge no_retry p=0.5, γ = −0.086 (R² = 0.002)\n"
             "\n"
             "EXPERIMENT B: Vehicular GPS (SF Cab)\n"
             "  200 nodes, 197,938 contacts, 24h trace\n"
-            "  Classification: CLUSTER (unanimous, all 4 p_eff)\n"
+            "  Historical assigned label: CLUSTER (all 4 tested p_eff)\n"
             "  γ range: +0.94 to +1.00\n"
             "\n"
-            "KEY FINDINGS\n"
-            "  1. Cambridge sign flip is noise (R² = 0.002)\n"
-            "  2. no_retry has systematic survivorship bias\n"
-            "  3. Oracle preserves topological signal under heavy erasure\n"
-            "  4. γ trends toward 1.0 with network size\n"
-            "  5. Φ > 1 in 100% of CLUSTER configs (all policies)\n"
-            "  6. η_lyap perfectly deterministic (zero seed variance)\n"
-            "  7. SF Cab: Φ spans 7 orders of magnitude\n"
-            "  8. Exp3: greedy beats oracle at high E[H] (multi-copy)\n"
-            "  9. Self-averaging FAILS at long paths (CV grows with E[H])\n"
-            " 10. Encounter rate best predicts |γ| (r = +0.91)\n"
+            "ARCHIVED OBSERVATIONS — DESCRIPTIVE ONLY\n"
+            "  1. Cambridge no_retry p=0.5 has γ = −0.086 and R² = 0.002\n"
+            "  2. no_retry retains fewer active rows at low p_eff in this table\n"
+            "  3. Oracle-policy R² values differ from the other displayed policies\n"
+            "  4. Six displayed trace means are compared with network size\n"
+            "  5. Φ > 1 in rows historically assigned to the CLUSTER group\n"
+            "  6. η_lyap has zero recorded seed variance in the loaded rows\n"
+            "  7. SF Cab Φ spans 7 orders of magnitude in one displayed slice\n"
+            "  8. Selected Exp3 rows have η_greedy > η_oracle\n"
+            "  9. CV(η_greedy) is plotted against E[H]; no general law is inferred\n"
+            " 10. The displayed encounter-rate association is r = +0.91\n"
         )
         ax.text(
             0.08,
@@ -115,7 +120,10 @@ def main():
         # PAGE 2: Gamma heatmap (config × policy × p_eff)
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 2, figsize=(11, 7))
-        fig.suptitle("GAMMA VALUES: sign(γ) is routing-invariant", y=0.96)
+        fig.suptitle(
+            "HISTORICAL GAMMA TABLE: 79/80 positive in five tested traces — classifier retired",
+            y=0.96,
+        )
 
         # Left: gamma matrix
         ax = axes[0]
@@ -180,7 +188,7 @@ def main():
         # PAGE 3: R² quality heatmap
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 7))
-        fig.suptitle("FIT QUALITY: R² of ln(Φ) ~ E[H]", y=0.96)
+        fig.suptitle("HISTORICAL FIT QUALITY: R² of ln(Φ) ~ E[H] — descriptive OLS", y=0.96)
 
         r2_mat = []
         r2_labels = []
@@ -247,10 +255,10 @@ def main():
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 4: Survivorship bias — active fraction heatmap
+        # PAGE 4: Active-row fraction heatmap
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 7))
-        fig.suptitle("SURVIVORSHIP BIAS: Active points / 300 by policy × p_eff", y=0.96)
+        fig.suptitle("HISTORICAL ACTIVE-ROW COUNTS: points / 300 by policy × p_eff", y=0.96)
 
         surv_mat = []
         surv_labels = []
@@ -285,7 +293,7 @@ def main():
         for i in range(1, 5):
             ax.axhline(i * 4 - 0.5, color="white", linewidth=2)
         plt.colorbar(im, ax=ax, shrink=0.6, label="fraction active")
-        ax.set_title("no_retry loses 70–97% of data at p=0.05", fontsize=9)
+        ax.set_title("no_retry retains 3–30% of rows at p=0.05 in the displayed table", fontsize=9)
 
         fig.tight_layout(rect=[0, 0, 1, 0.93])
         pdf.savefig(fig)
@@ -295,7 +303,7 @@ def main():
         # PAGE 5: Gamma vs network size + encounter rate
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 2, figsize=(11, 5.5))
-        fig.suptitle("WHAT PREDICTS |γ|?", y=0.97)
+        fig.suptitle("HISTORICAL POOLED ASSOCIATIONS WITH |γ| — no predictor claim", y=0.97)
 
         trace_info = [
             ("Exp1", 9, 2.0),
@@ -326,7 +334,7 @@ def main():
             ax.annotate(f" {name}", (n, g), fontsize=8, va="center")
         ax.set_xscale("log")
         ax.set_xlabel("Network size N (log scale)")
-        ax.set_ylabel("Mean γ (oracle)")
+        ax.set_ylabel("Mean archived γ slope (oracle policy)")
         ax.set_title(f"γ vs N    r = {np.corrcoef(np.log(ns), gammas_oracle)[0, 1]:+.3f}")
         ax.axhline(0, color="gray", linestyle="--", alpha=0.3)
         ax.set_ylim(0.5, 1.05)
@@ -339,7 +347,7 @@ def main():
             ax.annotate(f" {name}", (c, g), fontsize=8, va="center")
         ax.set_xscale("log")
         ax.set_xlabel("Contacts / node / hour (log scale)")
-        ax.set_ylabel("Mean γ (oracle)")
+        ax.set_ylabel("Mean archived γ slope (oracle policy)")
         r_cpnh = np.corrcoef(np.log(cpnhs), gammas_oracle)[0, 1]
         ax.set_title(f"γ vs encounter rate    r = {r_cpnh:+.3f}")
         ax.axhline(0, color="gray", linestyle="--", alpha=0.3)
@@ -354,7 +362,10 @@ def main():
         # PAGE 6: Vehicular ln(Φ) vs E[H] scatter
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(2, 2, figsize=(11, 8.5))
-        fig.suptitle("SF CAB: ln(Φ) vs E[H] — the exponential relationship", y=0.97)
+        fig.suptitle(
+            "HISTORICAL SF CAB: ln(Φ) vs E[H] — displayed linear fits, not a law",
+            y=0.97,
+        )
 
         for idx, p in enumerate(P_EFFS_F):
             ax = axes[idx // 2][idx % 2]
@@ -389,7 +400,7 @@ def main():
         # PAGE 7: Vehicular Phi distributions (log scale)
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 5.5))
-        fig.suptitle("SF CAB: Φ distributions by p_eff (log₁₀ scale)", y=0.97)
+        fig.suptitle("HISTORICAL SF CAB: Φ distributions by p_eff (log₁₀ scale)", y=0.97)
 
         for p in P_EFFS_F:
             subset = [r for r in vg["results"] if r["p_eff"] == p and r.get("phi_greedy", 0) > 0]
@@ -408,17 +419,17 @@ def main():
         ax.set_ylabel("count")
         ax.legend(fontsize=9)
         ax.grid(alpha=0.3)
-        ax.set_title("7 orders of magnitude at p=0.05, compresses to ~1.5 at p=0.5")
+        ax.set_title("Displayed log-range: 7 orders at p=0.05 and ~1.5 at p=0.5")
 
         fig.tight_layout(rect=[0, 0, 1, 0.93])
         pdf.savefig(fig)
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 8: Oracle anomaly — R² by policy across p_eff
+        # PAGE 8: R² by policy across p_eff
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 5, figsize=(11, 4.5), sharey=True)
-        fig.suptitle("ORACLE ANOMALY: R² holds at high p_eff while others collapse", y=0.99)
+        fig.suptitle("HISTORICAL R² COMPARISON BY POLICY — no oracle mechanism inferred", y=0.99)
 
         for ci, cfg in enumerate(CONFIGS):
             ax = axes[ci]
@@ -477,10 +488,10 @@ def main():
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 9: Greedy vs Oracle — the Exp3 anomaly
+        # PAGE 9: Greedy vs Oracle — archived Exp3 comparison
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 2, figsize=(11, 5.5))
-        fig.suptitle("EXP3 ANOMALY: Greedy beats Oracle at high E[H]", y=0.97)
+        fig.suptitle("HISTORICAL EXP3 POLICY COMPARISON — descriptive η ratios", y=0.97)
 
         # Left: scatter of eta_oracle vs eta_greedy at p=0.3
         ax = axes[0]
@@ -500,7 +511,7 @@ def main():
         ax.plot([0, 1], [0, 1], "k--", alpha=0.5, label="oracle = greedy")
         ax.set_xlabel("η_greedy")
         ax.set_ylabel("η_oracle")
-        ax.set_title("p_eff = 0.3, all configs")
+        ax.set_title("p_eff = 0.3, five displayed config groups")
         ax.legend(fontsize=7)
         ax.set_xlim(0, 0.85)
         ax.set_ylim(0, 0.85)
@@ -528,18 +539,21 @@ def main():
         ax.legend(fontsize=8)
         ax.set_ylim(0, 2.5)
         ax.grid(alpha=0.3)
-        ax.annotate("greedy wins", (3.0, 0.3), fontsize=9, color="red", fontweight="bold")
-        ax.annotate("oracle wins", (3.0, 1.8), fontsize=9, color="green", fontweight="bold")
+        ax.annotate("η_oracle / η_greedy < 1", (3.0, 0.3), fontsize=9, color="red")
+        ax.annotate("η_oracle / η_greedy > 1", (3.0, 1.8), fontsize=9, color="green")
 
         fig.tight_layout(rect=[0, 0, 1, 0.93])
         pdf.savefig(fig)
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 10: Gamma stability — CV across p_eff
+        # PAGE 10: Gamma CV across p_eff
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 5.5))
-        fig.suptitle("GAMMA STABILITY: CV(γ) across p_eff by config × policy", y=0.97)
+        fig.suptitle(
+            "HISTORICAL GAMMA CV across p_eff by config × policy — classifier retired",
+            y=0.97,
+        )
 
         x_pos = 0
         x_ticks = []
@@ -569,8 +583,8 @@ def main():
         ax.set_xticks(x_ticks)
         ax.set_xticklabels(x_labels, fontsize=6, rotation=45)
         ax.set_ylabel("CV(γ)")
-        ax.axhline(0.1, color="green", linestyle="--", alpha=0.4, label="CV=0.10 (stable)")
-        ax.axhline(0.5, color="red", linestyle="--", alpha=0.4, label="CV=0.50 (unstable)")
+        ax.axhline(0.1, color="green", linestyle="--", alpha=0.4, label="CV=0.10 reference")
+        ax.axhline(0.5, color="red", linestyle="--", alpha=0.4, label="CV=0.50 reference")
         ax.legend(fontsize=8)
         ax.grid(alpha=0.3, axis="y")
 
@@ -594,10 +608,13 @@ def main():
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 11: Self-averaging failure — CV(η) vs E[H]
+        # PAGE 11: CV(η) vs E[H]
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 2, figsize=(11, 5.5))
-        fig.suptitle("SELF-AVERAGING FAILURE: CV(η_greedy) increases with E[H]", y=0.97)
+        fig.suptitle(
+            "HISTORICAL CV(η_greedy) vs E[H] — no self-averaging conclusion",
+            y=0.97,
+        )
 
         # Left: vehicular
         ax = axes[0]
@@ -669,10 +686,10 @@ def main():
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 12: Policy hierarchy — mean η by policy
+        # PAGE 12: Mean η by policy
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 5.5))
-        fig.suptitle("POLICY HIERARCHY at p_eff = 0.3", y=0.97)
+        fig.suptitle("HISTORICAL MEAN η BY POLICY at p_eff = 0.3 — descriptive", y=0.97)
 
         x = np.arange(len(CONFIGS))
         width = 0.2
@@ -705,7 +722,7 @@ def main():
 
         # Annotate Exp3
         ax.annotate(
-            "greedy > oracle\n(multi-copy)",
+            "selected Exp3 mean:\ngreedy > oracle",
             xy=(2, 0.46),
             fontsize=8,
             color="red",
@@ -721,7 +738,7 @@ def main():
         # PAGE 13: Cross-policy Phi correlation heatmaps
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(2, 3, figsize=(11, 7))
-        fig.suptitle("CROSS-POLICY Φ CORRELATION (log scale, p=0.3)", y=0.97)
+        fig.suptitle("HISTORICAL CROSS-POLICY Φ CORRELATIONS (log scale, p=0.3)", y=0.97)
 
         phi_keys = ["phi_greedy", "phi_noretry", "phi_oracle", "phi_random"]
         pol_short = ["greedy", "no_retry", "oracle", "random"]
@@ -768,7 +785,7 @@ def main():
         axes[1][2].text(
             0.5,
             0.5,
-            "greedy-oracle\ncorrelation > 0.90\nin all configs\n\n"
+            "greedy-oracle\ncorrelation > 0.90\nin five displayed\nconfig groups\n\n"
             "no_retry-random\ncorrelation as low\nas 0.08 (Exp1)\nand 0.12 (Cambridge)",
             transform=axes[1][2].transAxes,
             ha="center",
@@ -786,7 +803,7 @@ def main():
         # PAGE 14: Vehicular — Φ vs E[H] by source node
         # ════════════════════════════════════════════════════════════════
         fig, ax = plt.subplots(figsize=(11, 5.5))
-        fig.suptitle("SF CAB: Φ vs E[H] coloured by source node (p=0.3)", y=0.97)
+        fig.suptitle("HISTORICAL SF CAB: Φ vs E[H] by source node (p=0.3)", y=0.97)
 
         sub = [r for r in vg["results"] if r["p_eff"] == 0.3 and r.get("phi_greedy", 0) > 0]
 
@@ -811,17 +828,20 @@ def main():
         ax.set_ylabel("log₁₀(Φ)")
         ax.legend(fontsize=7, ncol=2, title="source node")
         ax.grid(alpha=0.3)
-        ax.set_title("Each source node traces a clean exponential — no outlier sources")
+        ax.set_title("Displayed source-node trajectories; no mechanism or law inferred")
 
         fig.tight_layout(rect=[0, 0, 1, 0.93])
         pdf.savefig(fig)
         plt.close(fig)
 
         # ════════════════════════════════════════════════════════════════
-        # PAGE 15: no_retry collapse — gamma vs p_eff by config
+        # PAGE 15: no_retry/oracle gamma vs p_eff by config
         # ════════════════════════════════════════════════════════════════
         fig, axes = plt.subplots(1, 2, figsize=(11, 5))
-        fig.suptitle("no_retry COLLAPSE vs oracle STABILITY", y=0.97)
+        fig.suptitle(
+            "HISTORICAL no_retry / oracle γ CURVES — classifier and stability claims retired",
+            y=0.97,
+        )
 
         for panel, pol in enumerate(["no_retry", "oracle"]):
             ax = axes[panel]
@@ -843,7 +863,7 @@ def main():
         plt.close(fig)
 
     print(f"Booklet written to {OUT}")
-    print("  15 pages, all Phase 3 forensic findings visualized")
+    print("  15 historical diagnostic pages written; classifier and mechanism claims retired")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Diagram 2: Layer Stack Architecture.
+"""Render the historical layer map for the closed TIN claim program.
 
 Tree-connector style matching the theory DAG and paper pipeline.
-Each layer is a trunk with its controls, paper coverage, and
-honest negatives as branches.
+Each layer is a trunk with archival claim branches, paper coverage, and honest
+negatives. It is not a current architecture, validation ledger, or design-rule
+catalogue; the former gamma classifier is explicitly retired.
 """
 
 import matplotlib
@@ -41,7 +42,7 @@ C = {
 LAYERS = [
     # ── Layer -1 ───────────────────────────────────────────────────
     (0, "Layer -1: Percolation Foundation", "title", "L-1"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Temporal reachability S_T", "controls", ""),
     (2, "Phase transitions in network connectivity", "controls", ""),
     (2, "Percolation threshold detection", "controls", ""),
@@ -49,7 +50,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 0 ────────────────────────────────────────────────────
     (0, "Layer 0: Commodity Physics", "title", "L0"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Decay models  (exponential, Weibull, Arrhenius)", "controls", ""),
     (2, "One-tau sustainability threshold  (Ax1+Ax3+Ax5 only)", "controls", ""),
     (2, "Effective graph pruning  (commodity-dependent topology)", "controls", ""),
@@ -57,7 +58,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 0.5 ──────────────────────────────────────────────────
     (0, "Layer 0.5: Coverage & Geometric Support", "title", "L0.5"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "N_eff_src universal predictor  (AUC = 1.0)", "controls", ""),
     (2, "Catastrophe thresholds  (n_src >= 2 at every node)", "controls", ""),
     (2, "ALL S_T collapses trace here  (dominant layer)", "controls", ""),
@@ -67,7 +68,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 1 ────────────────────────────────────────────────────
     (0, "Layer 1: Temporal Composition", "title", "L1"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Time-respecting path existence", "controls", ""),
     (2, "Phase-class structure  (RAAN coloring)", "controls", ""),
     (2, "Contact graph reachability", "controls", ""),
@@ -75,8 +76,8 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 2 ────────────────────────────────────────────────────
     (0, "Layer 2: Routing Policy & Myopia", "title", "L2"),
-    (1, "Controls:", "heading", "controls"),
-    (2, "TRAP vs CLUSTER classification  (gamma order parameter)", "controls", ""),
+    (1, "Historical branches:", "heading", "controls"),
+    (2, "TRAP vs CLUSTER gamma classifier  (retired)", "negative", ""),
     (2, "var_log_p mechanism  (R^2 = 0.903, structural law)", "controls", ""),
     (2, "Greedy vs oracle behaviour  (foresight dominance)", "controls", ""),
     (2, "Dead-end routing failures", "controls", ""),
@@ -86,7 +87,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 3 ────────────────────────────────────────────────────
     (0, "Layer 3: Within-Path Covariance", "title", "L3"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Hop count <-> link quality interaction", "controls", ""),
     (2, "Foresight dominance  (DP beats greedy 9x)", "controls", ""),
     (2, "Oracle annihilation  (gamma_retry -> 0 on 7/8 bodies)", "controls", ""),
@@ -96,7 +97,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 4 ────────────────────────────────────────────────────
     (0, "Layer 4: Multicommodity & Binding Constraint", "title", "L4"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Convex hull  (affine parametric shortest paths)", "controls", ""),
     (2, "Commodity-dependent effective graphs  (hull facets)", "controls", ""),
     (2, "Softmax temperature from margin  (beta ~ 1/sigma)", "controls", ""),
@@ -105,7 +106,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 4.5 ──────────────────────────────────────────────────
     (0, "Layer 4.5: Self-Consistency & Feedback", "title", "L4.5"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Pipeline stability conditions C1-C4", "controls", ""),
     (2, "Cascade percolation threshold  (m_v >= 2 required)", "controls", ""),
     (2, "Finite-campaign sustainability  (Bernoulli reserve model)", "controls", ""),
@@ -115,7 +116,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 5 ────────────────────────────────────────────────────
     (0, "Layer 5: Extended First-Principles", "title", "L5"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Irreversibility premium  (regret scales 330x at Jupiter)", "controls", ""),
     (2, "Bidirectional DR  (crew safety, return path binding)", "controls", ""),
     (2, "Cascade-adjusted resilience  (buffer sizing)", "controls", ""),
@@ -123,7 +124,7 @@ LAYERS = [
     (-1, "", "", ""),
     # ── Layer 5.5 ──────────────────────────────────────────────────
     (0, "Layer 5.5: Statistical Mechanics Lens", "title", "L5.5"),
-    (1, "Controls:", "heading", "controls"),
+    (1, "Historical branches:", "heading", "controls"),
     (2, "Partition function correspondence  (structural, not physical)", "controls", ""),
     (2, "Free energy landscape  (V_beta = (1/beta) log Z)", "controls", ""),
     (2, "Fluctuation-dissipation test  (UNTESTED, make-or-break)", "controls", ""),
@@ -156,7 +157,7 @@ def draw():
     ax.text(
         5.5,
         0.15,
-        "TIN Layer Architecture",
+        "TIN Historical Research Layer Map — Claim Program Closed",
         ha="center",
         va="center",
         fontsize=13,
@@ -165,7 +166,7 @@ def draw():
     ax.text(
         5.5,
         0.42,
-        "increasing abstraction top to bottom",
+        "archival branches only — not current design rules or validation",
         ha="center",
         va="center",
         fontsize=7,
@@ -262,7 +263,7 @@ def draw():
     # ── Legend ──────────────────────────────────────────────────────
     ly = y + 0.15
     items = [
-        ("o", C["controls"], "Controls"),
+        ("o", C["controls"], "Historical claim branch"),
         ("X", C["negative"], "Negative result"),
     ]
     lx = 1.0

@@ -1,7 +1,7 @@
-"""run_venus_epoch_decomposition.py — Phase 1, Experiment 2: Venus Epoch Decomposition.
+"""Historical Venus epoch and distance-bin gamma diagnostic.
 
-Tests whether Venus is a mixture of trap-like (conjunction) and cluster-like
-(opposition) regimes within a single synodic cycle.
+This script reproduces an archived comparison of Venus model outputs across
+synodic-angle and distance bins.
 
 Bins Venus synodic sweep data by Sun-Earth-Probe angle (SEP):
   - Opposition:   SEP ≥ 120°
@@ -10,8 +10,9 @@ Bins Venus synodic sweep data by Sun-Earth-Probe angle (SEP):
 
 Computes γ = ∂ln(Φ)/∂E[H] for each bin independently.
 
-Prediction: γ_opposition > 0 (cluster-like), γ_conjunction ≪ 0 (deep trap).
-If confirmed, Venus is a natural phase-transition laboratory.
+The former trap/cluster and phase-transition interpretations are retired.
+Fitted-slope sign changes are descriptive properties of the loaded rows, not a
+classifier, mechanism change, or mission-design result.
 
 Also extends the analysis to all 8 orbital targets for comparison.
 
@@ -249,7 +250,8 @@ def analyze_multi_body_by_sep(mb_data):
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("Phase 1, Experiment 2: Venus Epoch Decomposition")
+    print("HISTORICAL VENUS EPOCH/DISTANCE-BIN GAMMA DIAGNOSTIC")
+    print("CLASSIFICATION-BOUNDARY INTERPRETATION RETIRED")
     print("=" * 70)
 
     # --- phi_decompose analysis (all 8 targets, distance-binned gamma) ---
@@ -313,9 +315,9 @@ def main():
                         f"blackout = {pinfo['n_blackout']}"
                     )
 
-    # --- Key finding: does Venus sign-switch? ---
+    # --- Descriptive zero-sign check in the loaded distance bins ---
     print("\n" + "=" * 70)
-    print("KEY FINDING: VENUS SIGN-SWITCHING TEST")
+    print("HISTORICAL VENUS ZERO-SIGN CHECK — NOT A CLASSIFIER")
     print("=" * 70)
 
     venus_phi = phi_analysis.get("venus", {})
@@ -325,16 +327,19 @@ def main():
     if near.get("gamma") is not None and far.get("gamma") is not None:
         g_near = near["gamma"]
         g_far = far["gamma"]
-        print(f"\n  Venus near  (opposition-like): γ = {g_near:+.3f}")
-        print(f"  Venus far   (conjunction-like): γ = {g_far:+.3f}")
+        print(f"\n  Venus near-distance tercile: γ = {g_near:+.3f}")
+        print(f"  Venus far-distance tercile:  γ = {g_far:+.3f}")
         if not math.isnan(g_near) and not math.isnan(g_far):
             if g_near > 0 and g_far < 0:
-                print("\n  *** SIGN SWITCH CONFIRMED ***")
-                print("  Venus crosses the classification boundary within its synodic cycle.")
+                print("\n  Descriptive fitted-slope sign change in the tested bins.")
+                print("  This does not establish a classification or phase boundary.")
             elif g_near * g_far > 0:
-                print(f"\n  No sign switch (both {'positive' if g_near > 0 else 'negative'})")
+                print(
+                    f"\n  Both fitted slopes are {'positive' if g_near > 0 else 'negative'} "
+                    "in the tested bins."
+                )
             else:
-                print(f"\n  Partial: near γ = {g_near:+.3f}, far γ = {g_far:+.3f}")
+                print(f"\n  Loaded-bin slopes: near γ = {g_near:+.3f}, far γ = {g_far:+.3f}")
     else:
         print("\n  Insufficient data for Venus epoch decomposition.")
 
@@ -342,7 +347,10 @@ def main():
     elapsed = time.time() - t0
     output = {
         "experiment": "venus_epoch_decomposition",
-        "description": "γ by synodic phase for all orbital targets, Venus focus",
+        "claim_status": (
+            "historical modeled diagnostic; trap/cluster and phase-boundary interpretations retired"
+        ),
+        "description": "Archived gamma summaries by distance and synodic-angle bin",
         "elapsed_s": round(elapsed, 1),
         "phi_decompose_analysis": phi_analysis,
         "venus_synodic_by_sep": venus_synodic,

@@ -1,29 +1,45 @@
-# Configuration Manifest
+# Result Artifact Manifest
 
-How we arrive at "290,000+ configurations." Result JSONs are gitignored
-(regenerable from runners), so this manifest provides the public accounting.
+This is a historical hash and accounting snapshot, not proof of a globally
+unique configuration total. Result artifacts have mixed availability and
+producer status in the current public checkout.
 
 ## Machine-Readable Manifest
 
-**`runs/CONFIG_MANIFEST.json`** — 300 result files, each with:
-- SHA-256 hash (verify after regeneration)
-- Config count
+**`runs/CONFIG_MANIFEST.json`** contains 300 historical entries with:
+- stored SHA-256 hash for historical artifact-integrity checks
+- a best-effort per-file `n_configs` field
 - File size
 - Structure description
 
-Built with `python runs/build_config_manifest.py`.
+The count heuristic uses, in order, an explicit count field, `results`
+length, the longest list, or top-level dictionary size. Depending on the file,
+that value can mean configurations, result rows, list elements, or keys.
 
-**Totals:** 963,456 raw records across 300 files, 473 MB.
+The stored heuristic sum is **963,456** across 300 entries / 472.9 MiB. It is
+neither a uniform raw-row count nor an additive count of distinct
+configurations. The earlier `290,000+` and `425,000–483,000 unique`
+framings are not established by this manifest and are retired.
 
-**After deduplication:** ~425,000–483,000 unique configurations.
-The raw total double-counts through summary/metadata files (~202K),
-shard-parent duplicates (~35K), phi-family containment (~240K), and
-re-run duplicates (~6K). The "290,000+" claim is a conservative lower
-bound, well supported after deduplication.
+At the 2026-07-13 reconciliation checkout, 34 of the 300 listed paths exist
+under `runs/`; all 34 match their stored SHA-256 values. `PROVENANCE.md`
+separately summarizes tracked JSON result artifacts under `runs/`. Path
+absence here does not invalidate an archived artifact, but it does preclude
+claiming that every listed file is shipped or currently regenerable.
 
-## By Source
+The safe current-checkout generator recursively inventories all 308 present
+Git-tracked result JSONs below `runs/`, including 273 under `runs/results/`.
+It excludes `CONFIG_MANIFEST.json`, `CONFIG_MANIFEST.current.json`, and
+`PROVENANCE.json` so metadata is not counted as experiment output. The current
+heterogeneous heuristic sum is 200,255 across 97.1 MiB. Of these files, 34
+overlap the historical snapshot and 274 belong only to the current population.
 
-| Source | Configs | Runner / Location |
+## Historical source groups
+
+These rows are retained for historical navigation. They overlap and must not
+be summed as a distinct-configuration census.
+
+| Source | Historical row/key count | Runner / Location |
 |--------|--------:|-------------------|
 | Paper 1 revalidation (phi, CRAWDAD, vehicular) | 460,800 | `run_phi_decompose_*.py`, `run_crawdad_*.py`, `run_vehicular_*.py` |
 | Production EPYC sweep (11 Mar) | 89,178 | `runs/epyc_results/production_2026_03_11/` |
@@ -34,41 +50,55 @@ bound, well supported after deduplication.
 | Follow-up A/B/C | 3,120 | `run_followup_*.py` |
 | Phase 5 EPYC (12 Mar) | ~1,900 | `runs/epyc_results/phase5_2026_03_12/` |
 | UQ coupling v1-v4 (21 Mar) | ~1,600 | `run_uq_congestion*.py`, `run_uq_architectural_v3.py` |
-| All other experiments | ~5,000 | See CONFIG_MANIFEST.json for full breakdown |
+| All other experiments | ~5,000 | See CONFIG_MANIFEST.json for file-level entries |
 
 ## Verification
 
-1. Regenerate non-archived result JSONs by running the corresponding `run_*.py` script.
-2. Compare SHA-256 hash against `CONFIG_MANIFEST.json`.
-3. Provenance tracking: `runs/PROVENANCE.md` summarizes current-script matches,
-   archived artifacts, and unmatched tracked JSONs. `runs/PROVENANCE.json` is
-   generated locally by `runs/build_provenance_manifest.py`.
+1. For a listed file that is present, compare its SHA-256 hash against
+   `CONFIG_MANIFEST.json`.
+2. Build a current-checkout snapshot with `python runs/build_config_manifest.py`;
+   the ignored output is `runs/CONFIG_MANIFEST.current.json`. The committed
+   historical snapshot is not overwritten by default. Without git metadata,
+   the builder falls back to the same recursive on-disk scope.
+3. Regenerate a result only where `PROVENANCE.md` or a named runner supplies an exact
+   producer contract; filename similarity alone is not provenance.
+4. `runs/PROVENANCE.md` separates current-script matches, archived artifacts,
+   and unmatched tracked JSONs. `runs/PROVENANCE.json` is generated locally
+   by `runs/build_provenance_manifest.py`.
 
-Archived artifact exception: `load_sweep_v2_results.json` and
-`period_sweep_results.json` are committed for public figure reproduction, but
-their producing runners are not present in current public `main`. Verify these
-two files by SHA-256 unless source runners are deliberately restored.
+Archived artifact example: `load_sweep_v2_results.json` and
+`period_sweep_results.json` are retained for public figure reproduction, but
+their producing runners are not present in this checkout. Verify these two
+files by SHA-256.
 
-## Key Invariants
+## Current check boundaries
 
-| Claim | Value | How to verify |
-|-------|-------|---------------|
-| Factorization residual | <= 1.11e-16 | `verify_paper_claims.py` check #2 (per-config records only; aggregated figure-data files may exceed this due to Jensen's inequality on averaged S_T and η) |
-| Self-averaging CV | < 0.4% | `verify_paper_claims.py` check #4 |
-| Test suite | 89 passed | `pytest tests/ -x -q` |
+- The package test suite is run with `pytest tests/ -x -q`; no fixed test
+  count is treated as an invariant.
+- `verify_paper_claims.py` is a historical manuscript-value reproducer.
+  Aggregate checks that require complete input families fail closed as
+  `SKIP`; wholly unavailable claim families are omitted and listed as not
+  checkable. A `PASS` is not independent scientific validation.
+- The factorization residual is an accounting-identity/counter-consistency
+  check, not empirical evidence.
+- The historical self-averaging result is scoped to its tested uniform-channel,
+  sparse/unique-oracle-path regime; it is not a global invariant.
 
 ### Retired claim: gamma gap
 
-The former "Gamma gap >= 1.95" invariant was retired on 2026-06-25 after a
-primary-data recomputation: the published gap mixed normalization conventions,
-the source rows behind four orbital values could not be recovered, and under a
-comparable normalization the gap is ~0.75 with overlapping route slopes — no
-classification threshold survives. Check #7 in `verify_paper_claims.py`
-(claim T1-004) still reproduces the published arithmetic from the released
-`bootstrap_ci_results.json`; treat it as a reproduction check on the
-historical computation, not a validated invariant. The TIN research program
-closed on 2026-06-26; this repository is maintained as a simulator and
-reproducibility surface.
+The former "Gamma gap >= 1.95" invariant is retired. The historical calculation
+mixed normalization conventions, and four published orbital values were
+hardcoded without recoverable source rows. Under a port of the documented
+orbital method, Titan re-derives as **+0.113** rather than the published
+**−0.10**; the sign-based classification audit also used sign-derived labels
+and was circular. No replacement cross-domain scalar or global threshold is
+claimed.
+
+`verify_paper_claims.py` claim `T1-004` reproduces only the historical
+arithmetic when a local `bootstrap_ci_results.json` is supplied; that file
+is absent from the stock public checkout, so the row is omitted and listed as
+not checkable there. The TIN research program closed on 2026-06-26; this
+repository is maintained as a simulator and historical reproducibility surface.
 
 ## Data License
 

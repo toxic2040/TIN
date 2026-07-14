@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Commodity Phase Diagram: feasibility boundaries in (transit time, τ_half) space.
+"""Historical transit-time and commodity half-life model diagram.
 
-The first commodity-resolved feasibility map of the solar system.
-Combines the one-tau rule (ITN §8.2) with Hohmann transfer times to derive
-which commodities can traverse which routes via self-sustaining pipeline.
+This archived figure combines two-body Hohmann transfer-time floors with simple
+exponential- and step-decay reference lines. It does not establish mission
+feasibility, self-sustaining logistics, preservation requirements, or design
+guidance.
 
-Two boundaries on the (T_transit, τ_half) plane:
+Two model references are shown on the (T_transit, τ_half) plane:
 
   1. Exponential decay (cryogenics): τ_half > T × ln(2)
-     Below this, no self-sustaining resupply pipeline exists.
-     Derived from the steady-state reserve recurrence (§8.2).
+     This is the archived recurrence-model reference.
 
   2. Step-function decay (perishables/crew): τ_shelf > T
-     Below this, cargo arrives dead — no pipeline helps.
+     This is a one-leg shelf-life reference under the encoded step model.
 
-Body-pair transit times are Hohmann minimums (minimum-energy transfer).
-Faster transfers are possible at higher Δv cost.
+Body-pair times are idealized Hohmann floors and omit launch windows,
+scheduling, storage, operations, and higher-fidelity trajectory constraints.
 """
 
 import matplotlib
@@ -79,7 +79,7 @@ transfers["EMJ relay (floor)"] = transfers["Earth\u2013Mars"] + transfers["Mars\
 transfers = dict(sorted(transfers.items(), key=lambda x: x[1]))
 
 # Print table
-print("Hohmann transfer times:")
+print("Historical model Hohmann transfer-time floors:")
 print(f"  {'Pair':<25s} {'T (days)':>10s}  {'T (years)':>10s}")
 print("  " + "-" * 48)
 for pair, t in transfers.items():
@@ -114,15 +114,13 @@ fig, ax = plt.subplots(figsize=figsize_double("pre", height_ratio=0.55))
 
 T_range = np.logspace(np.log10(1), np.log10(5000), 500)
 
-# ── Feasibility regions ──────────────────────────────────────────────
-# Below exponential boundary: infeasible for all
-# Between exp and step boundaries: exponential can sustain, step cannot
-# Above step boundary: feasible for all
+# ── Historical model-reference regions ──────────────────────────────
+# These regions visualize the two encoded decay relations only.
 
 tau_exp = T_range * LN2  # exponential pipeline boundary
 tau_step = T_range  # step-function survival boundary
 
-# Infeasible region (below exponential line)
+# Region below the exponential-decay model line
 ax.fill_between(
     T_range,
     0.3,
@@ -133,7 +131,7 @@ ax.fill_between(
     label=None,
 )
 
-# Marginal region (between exp and step lines)
+# Region between the two model lines
 ax.fill_between(
     T_range,
     tau_exp,
@@ -152,7 +150,7 @@ ax.plot(
     color="#CC3311",
     lw=1.4,
     zorder=5,
-    label=r"Pipeline: $\tau_{1/2} = T \ln 2$",
+    label=r"Archived exponential-decay reference: $\tau_{1/2} = T \ln 2$",
 )
 ax.plot(
     T_range,
@@ -161,14 +159,14 @@ ax.plot(
     color="#888888",
     lw=1.0,
     zorder=5,
-    label=r"Survival: $\tau_\mathrm{shelf} = T$",
+    label=r"Archived step-decay reference: $\tau_\mathrm{shelf} = T$",
 )
 
 # ── Region labels ─────────────────────────────────────────────────────
 ax.text(
     3.0,
     1500,
-    "\\textit{feasible}",
+    "\\textit{above both model lines}",
     fontsize=7,
     color="#009988",
     ha="left",
@@ -178,7 +176,7 @@ ax.text(
 ax.text(
     30,
     1.2,
-    "\\textit{infeasible}",
+    "\\textit{below both model lines}",
     fontsize=7,
     color="#CC3311",
     ha="center",
@@ -188,7 +186,7 @@ ax.text(
 ax.text(
     3.5,
     2.0,
-    "\\textit{exp.~OK,}",
+    "\\textit{between}",
     fontsize=5.5,
     color="#EE7733",
     ha="left",
@@ -198,7 +196,7 @@ ax.text(
 ax.text(
     3.5,
     1.3,
-    "\\textit{step~fails}",
+    "\\textit{model lines}",
     fontsize=5.5,
     color="#EE7733",
     ha="left",
@@ -250,11 +248,11 @@ for name, tau, color, dtype in COMMODITIES:
         va="bottom",
     )
 
-# ── Key data points from the theory ──────────────────────────────────
-# EMJ worked example (§7.3)
+# ── Archived model rows ──────────────────────────────────────────────
+# EMJ worked-example parameters (§7.3)
 t_ej = transfers["Earth\u2013Jupiter"]
 
-# Jupiter + hardware: feasible (DR = 0.418, η = 0.914)
+# Jupiter + hardware model row (DR = 0.418, η = 0.914)
 ax.plot(
     t_ej,
     5000,
@@ -267,7 +265,7 @@ ax.plot(
     clip_on=False,
 )
 ax.annotate(
-    r"HW: DR\,=\,0.42",
+    r"HW model: DR\,=\,0.42",
     xy=(t_ej, 5000),
     xytext=(t_ej * 0.55, 4200),
     fontsize=5,
@@ -276,7 +274,7 @@ ax.annotate(
     arrowprops=dict(arrowstyle="-", color="#4477AA", lw=0.4),
 )
 
-# Jupiter + LH2: infeasible pipeline (DR = 0.027)
+# Jupiter + LH2 model row (DR = 0.027)
 ax.plot(
     t_ej,
     180,
@@ -288,7 +286,7 @@ ax.plot(
     zorder=8,
 )
 ax.annotate(
-    r"LH$_2$: DR\,=\,0.027",
+    r"LH$_2$ model: DR\,=\,0.027",
     xy=(t_ej, 180),
     xytext=(t_ej * 1.55, 100),
     fontsize=5,
@@ -297,7 +295,7 @@ ax.annotate(
     arrowprops=dict(arrowstyle="-", color="#CC3311", lw=0.4),
 )
 
-# Mars + LH2: marginal (τ_half/ln2 ≈ 260d, T_Hohmann ≈ 259d — right at boundary)
+# Mars + LH2 reference-line comparison
 t_em = transfers["Earth\u2013Mars"]
 ax.plot(
     t_em,
@@ -310,7 +308,7 @@ ax.plot(
     zorder=8,
 )
 ax.annotate(
-    r"LH$_2$ to Mars: $\xi \approx 1.0$",
+    r"LH$_2$ model row: $\xi \approx 1.0$",
     xy=(t_em, 180),
     xytext=(t_em * 0.30, 220),
     fontsize=5,
@@ -319,8 +317,8 @@ ax.annotate(
     arrowprops=dict(arrowstyle="-", color="#EE7733", lw=0.4),
 )
 
-# ── One-tau marker on the EMJ line ────────────────────────────────────
-# The one-tau crossing: where τ_half = T × ln(2) on the Jupiter line
+# ── One-tau reference on the EMJ line ────────────────────────────────
+# Point where τ_half = T × ln(2) on the Jupiter line
 tau_crit_ej = t_ej * LN2
 ax.plot(
     t_ej,
@@ -332,7 +330,7 @@ ax.plot(
     zorder=9,
 )
 ax.annotate(
-    r"$\xi = 1$ threshold",
+    r"$\xi = 1$ model reference",
     xy=(t_ej, tau_crit_ej),
     xytext=(t_ej * 0.50, 850),
     fontsize=5,
@@ -346,8 +344,9 @@ ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(1, 5000)
 ax.set_ylim(0.5, 6000)
-ax.set_xlabel("Minimum transit time $T_\\mathrm{Hohmann}$ (days)")
+ax.set_xlabel("Two-body Hohmann transfer-time floor $T_\\mathrm{Hohmann}$ (days)")
 ax.set_ylabel("Commodity half-life $\\tau_{1/2}$ (days)")
+ax.set_title("Historical transit/half-life model diagnostic — not mission feasibility guidance")
 
 # Secondary x-axis in years
 ax2 = ax.twiny()

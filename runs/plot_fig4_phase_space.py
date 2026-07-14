@@ -1,11 +1,12 @@
-"""plot_fig4_phase_space.py — Phase space of the classification theorem.
+"""Historical phase-space diagnostic for the geometric orbital corpus.
 
 Single-panel scatter: E[H] vs ln(Phi) for all source-dest pairs at
-reference p_eff ~ 0.1.  Orbital (trap) points slope downward; social
-(cluster) points slope upward.  The sign of the slope IS gamma.
+reference p_eff ~ 0.1. The assigned orbital and Bluetooth groups are not an
+independent classifier, and this alternate orbital corpus did not produce the
+published composite table.
 
 Data sources:
-  runs/phi_decompose_results.json       — 8 orbital targets (230k configs)
+  runs/phi_decompose_results.json       — 8 orbital targets (geometric corpus)
   runs/crawdad_contacts.Exp{1,2,3,6}_results.json — 4 CRAWDAD traces
 
 Writes:
@@ -124,7 +125,7 @@ def plot():
         color=TRAP_RED,
         linewidth=2.8,
         linestyle="-",
-        label=rf"Orbital — trap ($\gamma = {c_trap[0]:+.2f}$)",
+        label=rf"Assigned orbital group ($\gamma = {c_trap[0]:+.2f}$)",
         zorder=4,
     )
 
@@ -138,7 +139,7 @@ def plot():
         color=CLUSTER_BLUE,
         linewidth=2.8,
         linestyle="-",
-        label=rf"Social — cluster ($\gamma = {c_clust[0]:+.2f}$)",
+        label=rf"Tested Bluetooth group ($\gamma = {c_clust[0]:+.2f}$)",
         zorder=4,
     )
 
@@ -146,7 +147,7 @@ def plot():
     # Trap label — positioned near middle of trap data range
     trap_xmid = np.median(eh_trap)
     ax.annotate(
-        r"$\gamma < 0$",
+        r"orbital fit: $\gamma < 0$",
         xy=(trap_xmid + 0.6, np.polyval(c_trap, trap_xmid + 0.6)),
         xytext=(trap_xmid + 1.2, np.polyval(c_trap, trap_xmid) + 2.0),
         fontsize=11,
@@ -160,7 +161,7 @@ def plot():
     # Cluster label — positioned near middle of cluster data range
     clust_xmid = np.median(eh_clust)
     ax.annotate(
-        r"$\gamma > 0$",
+        r"Bluetooth fit: $\gamma > 0$",
         xy=(clust_xmid + 0.8, np.polyval(c_clust, clust_xmid + 0.8)),
         xytext=(clust_xmid + 1.4, np.polyval(c_clust, clust_xmid) - 2.5),
         fontsize=11,
@@ -176,7 +177,7 @@ def plot():
     ax.text(
         0.98,
         0.02,
-        f"$n = {n_total:,}$ pairs at $p_{{\\mathrm{{eff}}}} \\approx 0.1$",
+        f"$n = {n_total:,}$ contributing rows near $p_{{\\mathrm{{eff}}}} = 0.1$",
         transform=ax.transAxes,
         fontsize=8.5,
         color="#777777",
@@ -191,6 +192,7 @@ def plot():
     ax.set_ylim(-4.5, 15.0)
     ax.grid(True, alpha=0.2)
     ax.legend(loc="upper left", framealpha=0.9, fontsize=10)
+    ax.set_title("Historical geometric-corpus diagnostic — global classifier retired")
 
     # ── Save ─────────────────────────────────────────────────────────
     for ext in ("pdf", "png"):

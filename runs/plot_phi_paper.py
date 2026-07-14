@@ -1,9 +1,13 @@
-"""plot_phi_paper.py — Four figures for the Φ paper.
+"""Historical Phi diagnostic figures from the archived sweep rows.
 
-1. Φ_time vs Φ_rel scatter: one panel per target, identity line
-2. Φ histogram by n: showing diversity-to-trap shift
-3. Φ vs p_eff colored by target: the policy distortion landscape
-4. Braess boundary heatmap: fraction with Φ>1 in (n, p_ref) space
+1. Phi_time vs Phi_rel scatter: one panel per target, identity line
+2. Phi histogram by constellation size
+3. Phi vs p_eff colored by target
+4. Loaded-row fraction with Phi>1 in (n, p_ref) space
+
+The figures reproduce descriptive model outputs. They do not establish a
+universal inequality, trap/diversity mechanism, or Braess-classification
+boundary.
 
 Reads:  runs/phi_sweep_results.json
 Writes: figures/fig_phi_time_vs_rel.pdf
@@ -110,7 +114,10 @@ def plot_phi_time_vs_rel(data, results):
 
     fig.supxlabel(r"$\Phi_{\mathrm{time}}$ (time-optimal oracle)", fontsize=11)
     fig.supylabel(r"$\Phi_{\mathrm{rel}}$ (reliability-optimal oracle)", fontsize=11)
-    fig.suptitle(r"$\Phi_{\mathrm{rel}} \leq \Phi_{\mathrm{time}}$ universally", fontsize=13)
+    fig.suptitle(
+        "Historical loaded-row comparison of $\\Phi_{\\mathrm{rel}}$ and $\\Phi_{\\mathrm{time}}$",
+        fontsize=13,
+    )
     fig.tight_layout(rect=[0.02, 0.04, 1, 0.95])
 
     out = _FIG / "fig_phi_time_vs_rel.pdf"
@@ -148,7 +155,7 @@ def plot_phi_histogram_by_n(data, results):
     ax.axvline(1.0, ls="--", color="0.4", lw=1.5)
     ax.set_xlabel(r"$\Phi_{\mathrm{time}}$")
     ax.set_ylabel("Density")
-    ax.set_title(r"$\Phi$ distribution shifts from diversity to trap with $n$")
+    ax.set_title(r"Historical $\Phi_{\mathrm{time}}$ distributions by constellation size")
     ax.legend(frameon=True, fancybox=False, edgecolor="0.7")
     ax.grid(True, alpha=0.2)
 
@@ -195,11 +202,11 @@ def plot_phi_vs_peff(data, results):
     ax.axhline(1.0, ls="--", color="0.35", lw=1.2, zorder=3)
     ax.text(4e-4, 1.06, r"$\Phi = 1$  (no distortion)", fontsize=7.5, color="0.45", va="bottom")
 
-    # Φ range note
+    # Loaded-row accounting note
     ax.text(
         0.97,
         0.97,
-        r"$\Phi \in [0.3,\,8593]$ across 154k+ configs",
+        f"Loaded active rows: {len(results):,}",
         transform=ax.transAxes,
         fontsize=7.5,
         ha="right",
@@ -211,7 +218,7 @@ def plot_phi_vs_peff(data, results):
     ax.set_xscale("log")
     ax.set_xlabel(r"$p_{\mathrm{eff}}$ (effective link probability)")
     ax.set_ylabel(r"$\Phi_{\mathrm{time}}$")
-    ax.set_title(r"Policy distortion factor vs link quality")
+    ax.set_title(r"Historical $\Phi_{\mathrm{time}}$ values vs link quality")
     ax.legend(frameon=True, fancybox=False, edgecolor="0.7", ncol=2, fontsize=8, handlelength=1.6)
     ax.grid(True, alpha=0.25)
     ax.set_ylim(0, 8)
@@ -223,7 +230,7 @@ def plot_phi_vs_peff(data, results):
 
 
 # -----------------------------------------------------------------------
-# Plot 4: Braess boundary heatmap — fraction Φ>1 in (n, p_ref) space
+# Plot 4: loaded-row fraction Phi>1 in (n, p_ref) space
 # -----------------------------------------------------------------------
 def plot_braess_boundary(data, results):
     ns = sorted(set(r["n_orb"] for r in results))
@@ -250,7 +257,7 @@ def plot_braess_boundary(data, results):
         shading="nearest",
     )
     cb = fig.colorbar(im, ax=ax)
-    cb.set_label(r"Fraction with $\Phi > 1$ (diversity-dominated)")
+    cb.set_label(r"Loaded-row fraction with $\Phi_{\mathrm{time}} > 1$")
 
     ax.set_xticks(range(len(ns)))
     ax.set_xticklabels([str(n) for n in ns])
@@ -264,7 +271,7 @@ def plot_braess_boundary(data, results):
     ax.set_yticklabels([f"{p_refs[i]:.2f}" for i in ytick_idx])
     ax.set_ylabel(r"$p_{\mathrm{ref}}$")
 
-    ax.set_title(r"Braess boundary in $(n, p_{\mathrm{ref}})$ space")
+    ax.set_title(r"Historical loaded-row fraction by $(n, p_{\mathrm{ref}})$ bin")
 
     # Add Φ=1 contour annotation
     ax.contour(
@@ -285,7 +292,7 @@ def plot_braess_boundary(data, results):
 # -----------------------------------------------------------------------
 def main():
     print()
-    print("Generating Phi paper figures...")
+    print("Generating historical Phi diagnostic figures...")
     data, results = load()
     plot_phi_time_vs_rel(data, results)
     plot_phi_histogram_by_n(data, results)

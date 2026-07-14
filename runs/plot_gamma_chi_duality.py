@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Gamma–chi duality plot: Var(chi_DR) vs gamma across all domains.
+"""Historical gamma–chi diagnostic: Var(chi_DR) vs gamma.
 
-Shows that vulnerability variance separates by class:
-  - Trap configs: hub-concentrated fragility (high or heterogeneous Var(chi))
-  - Cluster configs: uniformly distributed vulnerability (tight Var(chi) band)
+This plot preserves an archived comparison under historically assigned
+trap/cluster groups. It is not a current classifier, cross-domain threshold, or
+proof that gamma separates mechanisms. Gamma is retained as a descriptive,
+outcome-derived slope.
 
 Each trace traces a trajectory through (gamma, Var(chi)) space as p_eff varies.
 Cluster traces: median Var(chi) across (s,d) pairs with IQR whiskers.
@@ -121,15 +122,15 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
     """Single-panel trajectory plot."""
     fig, ax = plt.subplots(figsize=(8, 5.5))
 
-    # ── Gap band ──
-    ax.axvspan(-0.19, 0.74, color="#e0e0e0", alpha=0.35, zorder=0, label="_nolegend_")
+    # Historical zero-sign reference; the former classifier gap is retired.
     ax.axvline(0, color="#bbb", ls=":", lw=0.6, zorder=1)
     ax.text(
-        0.275,
-        1.8,
-        r"$\Delta\gamma \geq 0.93$",
+        0.02,
+        0.97,
+        "Historical diagnostic\nclassifier retired",
+        transform=ax.transAxes,
         fontsize=8,
-        ha="center",
+        ha="left",
         va="top",
         color="#888",
         style="italic",
@@ -249,7 +250,7 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
                 markeredgecolor="white",
                 markersize=7,
                 lw=1.2,
-                label=f"{short} ({cls})",
+                label=f"{short} (archived {cls} group)",
             )
         )
 
@@ -275,7 +276,7 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
         handles=legend_handles,
         fontsize=6.5,
         loc="upper right",
-        title="Trace (class)",
+        title="Trace (historical group)",
         title_fontsize=7,
         framealpha=0.85,
         handletextpad=0.4,
@@ -296,7 +297,7 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
     )
 
     ax.set_yscale("log")
-    ax.set_xlabel(r"$\gamma$ (classification index)", fontsize=11)
+    ax.set_xlabel(r"$\gamma$ (descriptive archived slope)", fontsize=11)
     ax.set_ylabel(r"Var($\chi_{\mathrm{DR}}$)  [node vulnerability spread]", fontsize=11)
     ax.set_xlim(-0.75, 1.85)
     ax.set_ylim(2e-3, 2.0)
@@ -320,7 +321,7 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
     ax.text(
         0.288,
         0.50,
-        "Trap/cluster median ratio:\n"
+        "Historical group median ratio:\n"
         r"$2.7\times$ at $p{=}0.1$"
         "\n"
         r"$137\times$ at $p{=}0.5$",
@@ -336,6 +337,7 @@ def _plot(trajectories, outpath="figures/fig_gamma_chi_duality.pdf"):
         },
         zorder=7,
     )
+    ax.set_title("Historical gamma–chi diagnostic — trap/cluster classifier retired", fontsize=10)
 
     plt.tight_layout()
     plt.savefig(outpath, dpi=300, bbox_inches="tight")
@@ -347,7 +349,7 @@ def main():
     trajectories = _load_trace_trajectories()
 
     # Summary table
-    print("\n=== Gamma–Chi Duality: Trace Trajectories ===\n")
+    print("\n=== Historical Gamma–Chi Diagnostic: Trace Trajectories ===\n")
     print(
         f"{'Trace':25s}  {'Class':8s}  {'p_eff':>5s}  {'gamma':>7s}  {'Var(chi)':>9s}  {'IQR':>15s}  {'n':>3s}"
     )
@@ -361,8 +363,8 @@ def main():
                 f"{t['gamma']:+7.3f}  {t['var_chi_median']:9.4f}  {iqr:>15s}  {t['n_pairs']:3d}"
             )
 
-    # Class separation at each p_eff
-    print("\n=== Class Separation by p_eff ===\n")
+    # Descriptive comparison of the archived assigned groups at each p_eff.
+    print("\n=== Archived Assigned-Group Comparison by p_eff ===\n")
     for p in [0.1, 0.3, 0.5]:
         trap_vals = []
         cluster_vals = []
@@ -376,8 +378,8 @@ def main():
         if trap_vals and cluster_vals:
             ratio = np.median(trap_vals) / np.median(cluster_vals)
             print(
-                f"  p={p}: trap median={np.median(trap_vals):.4f}, "
-                f"cluster median={np.median(cluster_vals):.4f}, "
+                f"  p={p}: archived trap-group median={np.median(trap_vals):.4f}, "
+                f"archived cluster-group median={np.median(cluster_vals):.4f}, "
                 f"ratio={ratio:.1f}×"
             )
 

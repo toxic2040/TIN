@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Verify quantitative claims in classification_theorem.tex against source data.
+"""Reproduce historical classification_theorem.tex values from available artifacts.
 
 Usage:
     python runs/verify_paper_claims.py           # Tier 1 only (headline claims)
     python runs/verify_paper_claims.py --full    # All tiers (~35 checks)
 
-Each claim maps a paper statement to a data file and computation.
+Each check maps a paper statement to a data file and computation. A PASS means
+that the loaded artifact reproduces the historical manuscript value; it is not
+independent validation of the claim. Aggregate checks that require complete
+source families fail closed as SKIP rather than producing partial or vacuous
+results. Claim families with no available source artifact may be omitted and
+are listed in the final not-checkable summary.
 """
 
 from __future__ import annotations
@@ -105,32 +110,53 @@ def tier1_claims() -> list[Claim]:
     claims = []
 
     # --- 1. Total simulation runs > 155,000 ---
-    total = 0
-    # Heliocentric orbital
-    n_helio = 0
     phi = load("phi_decompose_results.json")
-    if phi:
-        n_helio = phi.get("n_configs", 0)
-        total += n_helio
-    # CRAWDAD
-    n_crawdad = 0
-    for exp in ["Exp1", "Exp2", "Exp3", "Exp6"]:
-        cd = load(f"crawdad_contacts.{exp}_results.json")
-        if cd:
-            n_crawdad += cd.get("n_configs", 0)
-    total += n_crawdad
-    # Vehicular
+    crawdad = {
+        exp: load(f"crawdad_contacts.{exp}_results.json")
+        for exp in ["Exp1", "Exp2", "Exp3", "Exp6"]
+    }
     veh = load("vehicular_gamma_results.json")
-    n_veh = veh.get("n_results", 0) if veh else 0
-    total += n_veh
-    # Mars relay
     syn = load("synodic_sweep_results.json")
-    if syn and "time_series" in syn:
-        ts = syn["time_series"]
-        n_mars = len(ts) * 5 if isinstance(ts, list) else 0  # 4 tiers × 39 epochs × 5 seeds
+
+    total_sources = {
+        "phi_decompose_results.json": phi,
+        **{f"crawdad_contacts.{exp}_results.json": data for exp, data in crawdad.items()},
+        "vehicular_gamma_results.json": veh,
+        "synodic_sweep_results.json": syn,
+    }
+    missing_total = sorted(name for name, data in total_sources.items() if data is None)
+    time_series = syn.get("time_series") if isinstance(syn, dict) else None
+    if not isinstance(time_series, list):
+        missing_total.append("synodic_sweep_results.json:time_series")
+
+    count_specs = {
+        "phi_decompose_results.json": (phi, "n_configs"),
+        **{
+            f"crawdad_contacts.{exp}_results.json": (data, "n_configs")
+            for exp, data in crawdad.items()
+        },
+        "vehicular_gamma_results.json": (veh, "n_results"),
+    }
+    source_counts: dict[str, int] = {}
+    for name, (data, field) in count_specs.items():
+        if data is None:
+            continue
+        value = data.get(field) if isinstance(data, dict) else None
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            missing_total.append(f"{name}:{field}")
+            continue
+        source_counts[name] = value
+
+    if not missing_total:
+        n_helio = source_counts["phi_decompose_results.json"]
+        n_crawdad = sum(source_counts[f"crawdad_contacts.{exp}_results.json"] for exp in crawdad)
+        n_veh = source_counts["vehicular_gamma_results.json"]
+        n_mars = len(time_series)
+        total = n_helio + n_crawdad + n_veh + n_mars
+        total_note = f"helio={n_helio}, crawdad={n_crawdad}, veh={n_veh}, mars={n_mars}"
     else:
-        n_mars = 780
-    total += n_mars
+        total = None
+        total_note = f"missing required source components: {', '.join(sorted(set(missing_total)))}"
 
     claims.append(
         check(
@@ -139,11 +165,11 @@ def tier1_claims() -> list[Claim]:
                 tier=1,
                 section="Abstract",
                 line=71,
-                description="Total simulation runs > 155,000",
-                expected=(155000, 999999),
+                description="Historical manuscript total simulation runs > 155,000",
+                expected=(155001, float("inf")),
                 actual=total,
                 tolerance=0.0,
-                note=f"helio={n_helio}, crawdad={n_crawdad}, veh={n_veh}, mars={n_mars}",
+                note=total_note,
             )
         )
     )
@@ -179,7 +205,7 @@ def tier1_claims() -> list[Claim]:
             )
         )
 
-    # --- 3. Classification gap >= 1.95 ---
+    # --- 3. Historical published classification-gap arithmetic ---
     bootstrap = load("bootstrap_ci_results.json")
     if bootstrap:
         results = bootstrap["results"]
@@ -196,7 +222,7 @@ def tier1_claims() -> list[Claim]:
                         tier=1,
                         section="Conjecture",
                         line=723,
-                        description="Classification gap >= 1.95",
+                        description="Historical published gap arithmetic >= 1.95 (retired)",
                         expected=(1.95, 10.0),
                         actual=gap,
                         note=f"Titan={titan_gamma}, Exp2={exp2_gamma}",
@@ -266,10 +292,11 @@ def tier1_claims() -> list[Claim]:
             )
         )
 
-    # --- 6. Sign consistency at p_eff=0.1 (verifiable subset of the 49) ---
+    # --- 6. Historical sign-table reproduction ---
     # The full 49 count requires the exact curated p_eff subset from the
     # gamma pipeline, which isn't stored in a single file.
-    # We verify: all 8 orbital bodies negative, all 5 social/vehicular positive.
+    # The eight orbital values are a historical composite with no established
+    # common p_eff. The social traces and SF Cab values are supported at p_eff=0.1.
     if bootstrap and veh:
         trap_ok = 0
         cluster_ok = 0
@@ -303,10 +330,14 @@ def tier1_claims() -> list[Claim]:
                     tier=1,
                     section="Conjecture",
                     line=545,
-                    description="Sign consistency: 8/8 trap neg, 5/5 cluster pos at p=0.1",
+                    description=(
+                        "Historical sign table: 8/8 composite orbital neg, "
+                        "5/5 social/vehicular pos at p=0.1"
+                    ),
                     expected=0,
                     actual=len(sign_violations),
-                    note=f"trap_ok={trap_ok}/8, cluster_ok={cluster_ok}/5"
+                    note="Historical domain labels are not independent of gamma; "
+                    f"trap_ok={trap_ok}/8, cluster_ok={cluster_ok}/5"
                     + (f", violations={sign_violations}" if sign_violations else ""),
                 )
             )
@@ -318,7 +349,7 @@ def tier1_claims() -> list[Claim]:
                 tier=1,
                 section="Conjecture",
                 line=545,
-                description="49 body/trace-p_eff combos (20T+29C) — MANUAL VERIFY",
+                description="Historical 49 body/trace-p_eff rows — MANUAL REPRODUCTION",
                 expected=49,
                 actual=None,
                 passed=None,
@@ -326,32 +357,46 @@ def tier1_claims() -> list[Claim]:
             )
         )
 
-    # --- 7. Full-corpus gamma_morph sign-overlap check ---
-    # The paper claims zero sign overlap at the reference p_eff = 0.1.
-    # T1-009 checks 13 curated combos via stored gamma values.
-    # This check recomputes gamma_morph from raw Phi data across the
-    # full corpus at the reference p_eff (± 0.02), verifying the
-    # sign-class assignment for every individual config.
-    TRAP_BODIES = {"mercury", "venus", "mars", "ceres", "europa", "jupiter", "saturn", "titan"}
+    # --- 7. Scoped domain-labeled group-slope reproduction ---
+    # This is not an independent classifier or overlap test. It assigns expected
+    # signs by domain, fits one slope per eligible group, and counts contributing
+    # rows. The orbital input is the alternate geometric phi_decompose corpus,
+    # not the producer of the published composite orbital table.
+    expected_orbital_groups = {
+        "ceres",
+        "europa",
+        "jupiter",
+        "mars",
+        "mercury",
+        "saturn",
+        "titan",
+        "venus",
+    }
+    expected_crawdad_groups = {"Exp1", "Exp2", "Exp3", "Exp6"}
     P_REF = 0.1
     P_TOL = 0.02  # reference p_eff window
 
-    sign_ok_configs = 0
-    sign_fail_configs = 0
+    sign_ok_rows = 0
+    sign_fail_rows = 0
     sign_fail_groups: list[str] = []
-    groups_tested = 0
+    evaluated_orbital_groups: set[str] = set()
+    evaluated_crawdad_groups: set[str] = set()
 
-    # Orbital bodies from phi_decompose (expected TRAP: slope < 0)
-    if phi and "results" in phi:
+    gamma_sources_complete = phi is not None and all(data is not None for data in crawdad.values())
+
+    # Orbital bodies from phi_decompose (domain-assigned expected slope < 0)
+    if gamma_sources_complete and isinstance(phi, dict) and isinstance(phi.get("results"), list):
         from collections import defaultdict
 
         by_target: dict[str, list[tuple[float, float]]] = defaultdict(list)
         for r in phi["results"]:
-            target = r.get("target", "")
+            target = str(r.get("target", "")).lower()
             p = r.get("p_eff", 0)
             phi_n = r.get("phi_normal", 0)
             eh = r.get("E_H", 0)
-            if not (phi_n and phi_n > 0 and eh > 0 and target):
+            if target not in expected_orbital_groups:
+                continue
+            if not (phi_n and phi_n > 0 and eh > 0):
                 continue
             if abs(p - P_REF) > P_TOL:
                 continue
@@ -360,25 +405,22 @@ def tier1_claims() -> list[Claim]:
         for target, pts in by_target.items():
             if len(pts) < 10:
                 continue
-            groups_tested += 1
             ehs = np.array([x[0] for x in pts])
             lps = np.array([x[1] for x in pts])
             if np.std(ehs) < 0.01:
                 continue
             slope = np.polyfit(ehs, lps, 1)[0]
-            expected_neg = target in TRAP_BODIES
-            if expected_neg and slope < 0:
-                sign_ok_configs += len(pts)
-            elif not expected_neg and slope > 0:
-                sign_ok_configs += len(pts)
+            evaluated_orbital_groups.add(target)
+            if slope < 0:
+                sign_ok_rows += len(pts)
             else:
-                sign_fail_configs += len(pts)
+                sign_fail_rows += len(pts)
                 sign_fail_groups.append(f"{target}@p={P_REF}:slope={slope:+.4f}")
 
-    # CRAWDAD traces (expected CLUSTER: slope > 0)
+    # CRAWDAD traces (domain-assigned expected slope > 0)
     for exp in ["Exp1", "Exp2", "Exp3", "Exp6"]:
-        cd = load(f"crawdad_contacts.{exp}_results.json")
-        if not cd or "results" not in cd:
+        cd = crawdad[exp] if gamma_sources_complete else None
+        if not isinstance(cd, dict) or not isinstance(cd.get("results"), list):
             continue
         pts_exp: list[tuple[float, float]] = []
         for r in cd["results"]:
@@ -392,19 +434,57 @@ def tier1_claims() -> list[Claim]:
             pts_exp.append((eh, np.log(phi_n)))
         if len(pts_exp) < 10:
             continue
-        groups_tested += 1
         ehs = np.array([x[0] for x in pts_exp])
         lps = np.array([x[1] for x in pts_exp])
         if np.std(ehs) < 0.01:
             continue
         slope = np.polyfit(ehs, lps, 1)[0]
+        evaluated_crawdad_groups.add(exp)
         if slope > 0:
-            sign_ok_configs += len(pts_exp)
+            sign_ok_rows += len(pts_exp)
         else:
-            sign_fail_configs += len(pts_exp)
+            sign_fail_rows += len(pts_exp)
             sign_fail_groups.append(f"{exp}@p={P_REF}:slope={slope:+.4f}")
 
-    total_checked = sign_ok_configs + sign_fail_configs
+    total_checked = sign_ok_rows + sign_fail_rows
+    groups_tested = len(evaluated_orbital_groups) + len(evaluated_crawdad_groups)
+    missing_orbital_groups = sorted(expected_orbital_groups - evaluated_orbital_groups)
+    missing_crawdad_groups = sorted(expected_crawdad_groups - evaluated_crawdad_groups)
+    if (
+        gamma_sources_complete
+        and not missing_orbital_groups
+        and not missing_crawdad_groups
+        and total_checked > 0
+    ):
+        t1_011_actual = sign_fail_rows
+        t1_011_note = (
+            "Scoped diagnostic only; domain labels are assigned, not independent. "
+            f"ok_rows={sign_ok_rows}, fail_rows={sign_fail_rows}"
+            + (f", violations={sign_fail_groups[:10]}" if sign_fail_groups else "")
+        )
+    else:
+        t1_011_actual = None
+        missing_gamma_files = [
+            "phi_decompose_results.json" if phi is None else None,
+            *[
+                f"crawdad_contacts.{exp}_results.json"
+                for exp, data in crawdad.items()
+                if data is None
+            ],
+        ]
+        missing_gamma_files = [name for name in missing_gamma_files if name]
+        if missing_gamma_files:
+            t1_011_note = "missing required source components: " + ", ".join(missing_gamma_files)
+        elif missing_orbital_groups or missing_crawdad_groups:
+            missing_parts = []
+            if missing_orbital_groups:
+                missing_parts.append("orbital=" + ",".join(missing_orbital_groups))
+            if missing_crawdad_groups:
+                missing_parts.append("crawdad=" + ",".join(missing_crawdad_groups))
+            t1_011_note = "missing required eligible groups: " + "; ".join(missing_parts)
+        else:
+            t1_011_note = "no eligible rows/groups; scoped diagnostic not evaluated"
+
     claims.append(
         check(
             Claim(
@@ -412,13 +492,13 @@ def tier1_claims() -> list[Claim]:
                 tier=1,
                 section="Conjecture",
                 line=545,
-                description=f"Full-corpus gamma_morph sign overlap = 0 "
-                f"at p_eff={P_REF} "
-                f"({total_checked} configs, {groups_tested} groups)",
+                description=(
+                    f"Scoped domain-labeled group-slope reproduction at p_eff={P_REF} "
+                    f"({total_checked} contributing rows, {groups_tested} groups)"
+                ),
                 expected=0,
-                actual=sign_fail_configs,
-                note=f"ok={sign_ok_configs}, fail={sign_fail_configs}"
-                + (f", violations={sign_fail_groups[:10]}" if sign_fail_groups else ""),
+                actual=t1_011_actual,
+                note=t1_011_note,
             )
         )
     )
@@ -434,11 +514,11 @@ def tier1_claims() -> list[Claim]:
 def tier2_claims() -> list[Claim]:
     claims = []
 
-    # --- Table 3: gamma values at p_eff=0.1 (13 entries) ---
+    # --- Historical Table 3 composite gamma values ---
     bootstrap = load("bootstrap_ci_results.json")
     veh = load("vehicular_gamma_results.json")
 
-    paper_gamma_table3 = {
+    historical_orbital_gamma = {
         "Ceres": -1.20,
         "Jupiter": -1.14,
         "Mercury": -1.01,
@@ -447,15 +527,22 @@ def tier2_claims() -> list[Claim]:
         "Mars": -0.40,
         "Venus": -0.21,
         "Titan": -0.10,
+    }
+    social_gamma_p01 = {
         "Exp1": +1.89,
         "Exp2": +1.85,
         "Exp3": +2.22,
         "Exp6": +2.07,
     }
+    historical_gamma_table3 = {**historical_orbital_gamma, **social_gamma_p01}
     if bootstrap:
         results = bootstrap["results"]
-        for body, expected_gamma in paper_gamma_table3.items():
+        for body, expected_gamma in historical_gamma_table3.items():
             actual_gamma = results.get(body, {}).get("gamma_paper")
+            if body in historical_orbital_gamma:
+                description = f"Historical Table 3 composite gamma: {body} = {expected_gamma}"
+            else:
+                description = f"Historical Table 3 gamma at p_eff=0.1: {body} = {expected_gamma}"
             claims.append(
                 check(
                     Claim(
@@ -463,7 +550,7 @@ def tier2_claims() -> list[Claim]:
                         tier=2,
                         section="Table 3",
                         line=777,
-                        description=f"Table 3 gamma: {body} = {expected_gamma}",
+                        description=description,
                         expected=expected_gamma,
                         actual=actual_gamma,
                     )
@@ -480,7 +567,7 @@ def tier2_claims() -> list[Claim]:
                     tier=2,
                     section="Table 3",
                     line=787,
-                    description="Table 3 gamma: SF Cab = +2.29",
+                    description="Historical Table 3 gamma at p_eff=0.1: SF Cab = +2.29",
                     expected=2.29,
                     actual=round(sf_gamma, 2) if sf_gamma else None,
                 )
@@ -621,8 +708,8 @@ def tier2_claims() -> list[Claim]:
         )
 
     # --- Bootstrap CIs (Venus, Exp2, Exp3, SF Cab) ---
-    if bootstrap:
-        results = bootstrap["results"]
+    if bootstrap is not None:
+        results = bootstrap.get("results", {}) if isinstance(bootstrap, dict) else {}
         ci_checks = {
             "Venus": {"lo": -0.41, "hi": 0.17, "key": "Venus"},
             "Exp2": {"lo": 1.81, "hi": 1.88, "key": "Exp2"},
@@ -630,66 +717,68 @@ def tier2_claims() -> list[Claim]:
         }
         for name, spec in ci_checks.items():
             info = results.get(spec["key"], {})
-            ci_lo = info.get("ci_lower")
-            ci_hi = info.get("ci_upper")
-            if ci_lo is not None:
-                claims.append(
-                    check(
-                        Claim(
-                            id=f"T2-CI-{name}-lo",
-                            tier=2,
-                            section="Validation",
-                            line=762,
-                            description=f"Bootstrap CI lower {name} = {spec['lo']}",
-                            expected=spec["lo"],
-                            actual=round(ci_lo, 2),
-                            tolerance=0.03,
-                        )
-                    )
+            ci_lo = info.get("ci_lower") if isinstance(info, dict) else None
+            ci_hi = info.get("ci_upper") if isinstance(info, dict) else None
+            for bound, expected, value in (
+                ("lo", spec["lo"], ci_lo),
+                ("hi", spec["hi"], ci_hi),
+            ):
+                actual = (
+                    round(value, 2)
+                    if isinstance(value, (int, float)) and not isinstance(value, bool)
+                    else None
                 )
-            if ci_hi is not None:
                 claims.append(
                     check(
                         Claim(
-                            id=f"T2-CI-{name}-hi",
+                            id=f"T2-CI-{name}-{bound}",
                             tier=2,
                             section="Validation",
                             line=762,
-                            description=f"Bootstrap CI upper {name} = {spec['hi']}",
-                            expected=spec["hi"],
-                            actual=round(ci_hi, 2),
+                            description=(
+                                f"Bootstrap CI {'lower' if bound == 'lo' else 'upper'} "
+                                f"{name} = {expected}"
+                            ),
+                            expected=expected,
+                            actual=actual,
                             tolerance=0.03,
+                            note=(
+                                "present bootstrap source lacks the required numeric CI field"
+                                if actual is None
+                                else ""
+                            ),
                         )
                     )
                 )
         # SF Cab CI
         sf_ci = results.get("SF Cab", {})
-        if sf_ci:
-            claims.append(
-                check(
-                    Claim(
-                        id="T2-CI-SFCab-lo",
-                        tier=2,
-                        section="Validation",
-                        line=763,
-                        description="Bootstrap CI lower SF Cab = 2.19",
-                        expected=2.19,
-                        actual=round(sf_ci.get("ci_lower", 0), 2),
-                        tolerance=0.03,
-                    )
-                )
+        for bound, expected in (("lo", 2.19), ("hi", 2.38)):
+            key = "ci_lower" if bound == "lo" else "ci_upper"
+            value = sf_ci.get(key) if isinstance(sf_ci, dict) else None
+            actual = (
+                round(value, 2)
+                if isinstance(value, (int, float)) and not isinstance(value, bool)
+                else None
             )
             claims.append(
                 check(
                     Claim(
-                        id="T2-CI-SFCab-hi",
+                        id=f"T2-CI-SFCab-{bound}",
                         tier=2,
                         section="Validation",
                         line=763,
-                        description="Bootstrap CI upper SF Cab = 2.38",
-                        expected=2.38,
-                        actual=round(sf_ci.get("ci_upper", 0), 2),
+                        description=(
+                            f"Bootstrap CI {'lower' if bound == 'lo' else 'upper'} "
+                            f"SF Cab = {expected}"
+                        ),
+                        expected=expected,
+                        actual=actual,
                         tolerance=0.03,
+                        note=(
+                            "present bootstrap source lacks the required numeric CI field"
+                            if actual is None
+                            else ""
+                        ),
                     )
                 )
             )
@@ -748,40 +837,76 @@ def tier2_claims() -> list[Claim]:
 
     # --- Achievability gap: Moon 35.5x at p_eff=0.3 ---
     achiev = load("achievability_results.json")
-    if achiev:
-        moon = achiev.get("moon", {})
-        p_rows = moon.get("p_eff_rows", [])
-        for row in p_rows:
-            if abs(row["p_eff"] - 0.3) < 0.01:
-                claims.append(
-                    check(
-                        Claim(
-                            id="T2-Achiev-Moon03",
-                            tier=2,
-                            section="Discussion",
-                            line=1097,
-                            description="Moon achievability gap at p_eff=0.3 = 35.5x",
-                            expected=35.5,
-                            actual=round(row["phi_ratio"], 1),
-                            tolerance=0.02,
-                        )
-                    )
+    if achiev is not None:
+        moon = achiev.get("moon", {}) if isinstance(achiev, dict) else {}
+        p_rows = moon.get("p_eff_rows", []) if isinstance(moon, dict) else []
+        p_rows = p_rows if isinstance(p_rows, list) else []
+        moon_row = next(
+            (
+                row
+                for row in p_rows
+                if isinstance(row, dict)
+                and isinstance(row.get("p_eff"), (int, float))
+                and not isinstance(row.get("p_eff"), bool)
+                and abs(row["p_eff"] - 0.3) < 0.01
+            ),
+            None,
+        )
+        phi_ratio = moon_row.get("phi_ratio") if moon_row else None
+        eta_greedy = moon_row.get("eta_greedy") if moon_row else None
+        eta_optimal = moon_row.get("eta_optimal") if moon_row else None
+        gap_actual = (
+            round(phi_ratio, 1)
+            if isinstance(phi_ratio, (int, float)) and not isinstance(phi_ratio, bool)
+            else None
+        )
+        pct_actual = (
+            round(eta_greedy / eta_optimal, 3)
+            if isinstance(eta_greedy, (int, float))
+            and not isinstance(eta_greedy, bool)
+            and isinstance(eta_optimal, (int, float))
+            and not isinstance(eta_optimal, bool)
+            and eta_optimal != 0
+            else None
+        )
+        claims.append(
+            check(
+                Claim(
+                    id="T2-Achiev-Moon03",
+                    tier=2,
+                    section="Discussion",
+                    line=1097,
+                    description="Moon achievability gap at p_eff=0.3 = 35.5x",
+                    expected=35.5,
+                    actual=gap_actual,
+                    tolerance=0.02,
+                    note=(
+                        "present achievability source lacks the required Moon p_eff=0.3 row or phi_ratio"
+                        if gap_actual is None
+                        else ""
+                    ),
                 )
-                claims.append(
-                    check(
-                        Claim(
-                            id="T2-Achiev-Moon03-pct",
-                            tier=2,
-                            section="Discussion",
-                            line=1097,
-                            description="Moon greedy captures 2.8% of capacity",
-                            expected=0.028,
-                            actual=round(row["eta_greedy"] / row["eta_optimal"], 3),
-                            tolerance=0.05,
-                        )
-                    )
+            )
+        )
+        claims.append(
+            check(
+                Claim(
+                    id="T2-Achiev-Moon03-pct",
+                    tier=2,
+                    section="Discussion",
+                    line=1097,
+                    description="Moon greedy captures 2.8% of capacity",
+                    expected=0.028,
+                    actual=pct_actual,
+                    tolerance=0.05,
+                    note=(
+                        "present achievability source lacks the required Moon p_eff=0.3 efficiency fields"
+                        if pct_actual is None
+                        else ""
+                    ),
                 )
-                break
+            )
+        )
 
     # --- Appendix: CRAWDAD raw gamma by p_eff ---
     paper_raw_gamma = {
@@ -792,23 +917,33 @@ def tier2_claims() -> list[Claim]:
     }
     for exp, p_gammas in paper_raw_gamma.items():
         cd = load(f"crawdad_contacts.{exp}_results.json")
-        if not cd:
+        if cd is None:
             continue
-        results = cd.get("results", [])
+        results = cd.get("results", []) if isinstance(cd, dict) else []
+        results = results if isinstance(results, list) else []
         for p_eff, expected_gamma in p_gammas.items():
             # Compute gamma = OLS slope of ln(phi_normal) vs E_H at this p_eff
             pts = [
                 r
                 for r in results
-                if abs(r.get("p_eff", 0) - p_eff) < 0.001
+                if isinstance(r, dict)
+                and isinstance(r.get("p_eff"), (int, float))
+                and abs(r.get("p_eff", 0) - p_eff) < 0.001
                 and r.get("phi_normal", 0) > 0
                 and r.get("E_H", 0) > 0
             ]
+            actual_gamma = None
+            note = ""
             if len(pts) < 3:
-                continue
-            E_H = np.array([p["E_H"] for p in pts])
-            ln_phi = np.array([np.log(p["phi_normal"]) for p in pts])
-            slope, _, _, _, _ = stats.linregress(E_H, ln_phi)
+                note = f"present source has {len(pts)} eligible rows; at least 3 are required"
+            else:
+                E_H = np.array([p["E_H"] for p in pts])
+                ln_phi = np.array([np.log(p["phi_normal"]) for p in pts])
+                if np.ptp(E_H) == 0:
+                    note = "present source has no E_H variation for the requested p_eff"
+                else:
+                    slope, _, _, _, _ = stats.linregress(E_H, ln_phi)
+                    actual_gamma = round(float(slope), 2)
             claims.append(
                 check(
                     Claim(
@@ -818,8 +953,9 @@ def tier2_claims() -> list[Claim]:
                         line=1604,
                         description=f"Raw gamma {exp} p_eff={p_eff}: {expected_gamma}",
                         expected=expected_gamma,
-                        actual=round(float(slope), 2),
+                        actual=actual_gamma,
                         tolerance=0.02,
+                        note=note,
                     )
                 )
             )
@@ -840,7 +976,7 @@ def main():
     os.chdir(ROOT)
 
     print("=" * 72)
-    print("  PAPER CLAIM VERIFICATION — classification_theorem.tex")
+    print("  HISTORICAL MANUSCRIPT VALUE REPRODUCTION — classification_theorem.tex")
     print("=" * 72)
 
     claims = tier1_claims()
@@ -874,12 +1010,17 @@ def main():
     print(f"  {tiers_run}: {len(claims)} claims checked")
     print(f"  PASS: {n_pass}  |  FAIL: {n_fail}  |  SKIP: {n_skip}")
     if _missing:
-        print(f"  Not checkable here: claim families gated on {len(_missing)} "
-              f"absent result file(s): {', '.join(sorted(_missing))}")
+        print(
+            f"  Not checkable here: claim families gated on {len(_missing)} "
+            f"absent result file(s): {', '.join(sorted(_missing))}"
+        )
     if n_fail > 0:
-        print(f"\n  *** {n_fail} CLAIM(S) FAILED — INVESTIGATE BEFORE SUBMISSION ***")
+        print(f"\n  *** {n_fail} VALUE MISMATCH(ES) — INVESTIGATE SOURCE OR MANUSCRIPT ***")
+    elif n_pass == 0:
+        print("\n  No manuscript values were evaluated; all listed checks were skipped.")
     else:
-        print("\n  All verified claims match source data.")
+        print("\n  All evaluated manuscript values match the available artifacts.")
+        print("  PASS denotes reproduction, not independent validation.")
     print("-" * 72)
 
     return 1 if n_fail > 0 else 0

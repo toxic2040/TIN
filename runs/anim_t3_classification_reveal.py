@@ -1,7 +1,8 @@
-"""anim_t3_classification_reveal.py — Classification conjecture reveal animation.
+"""Historical geometric-corpus gamma diagnostic animation.
 
-The conjecture assembles itself: orbital targets appear one by one (trap cloud),
-then CRAWDAD traces (cluster cloud), then regression lines reveal the gap.
+Orbital targets and CRAWDAD traces appear with their fitted slopes. The source
+corpora and assigned domain groups do not constitute an independent classifier;
+the former global classification claim is retired.
 
 Outputs:
   figures/t3_classification_reveal.gif
@@ -92,6 +93,14 @@ def animate():
     social = _load_social()
 
     fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    fig.text(
+        0.5,
+        0.01,
+        "HISTORICAL GEOMETRIC-CORPUS DIAGNOSTIC — GLOBAL CLASSIFIER RETIRED",
+        ha="center",
+        fontsize=7,
+        color="#666666",
+    )
 
     ax.set_xlabel(r"Expected hop count $E[H]$", fontsize=12)
     ax.set_ylabel(r"$\ln\,\Phi$", fontsize=13)
@@ -167,7 +176,7 @@ def animate():
             )
             line_artists.append(line)
             ax.set_title(
-                rf"Trap class: $\gamma = {c_trap[0]:+.2f}$",
+                rf"Assigned orbital group fit: $\gamma = {c_trap[0]:+.2f}$",
                 fontsize=11,
                 color=LINE_RED,
             )
@@ -216,7 +225,7 @@ def animate():
             )
             line_artists.append(line)
             ax.set_title(
-                rf"Cluster class: $\gamma = {c_clust[0]:+.2f}$",
+                rf"Tested Bluetooth group fit: $\gamma = {c_clust[0]:+.2f}$",
                 fontsize=11,
                 color=LINE_BLUE,
             )
@@ -224,7 +233,7 @@ def animate():
         elif frame == 15:
             # Final labels
             ax.annotate(
-                r"$\gamma < 0$" + "\n(trap)",
+                r"$\gamma < 0$" + "\n(orbital fit)",
                 xy=(4.0, np.polyval(c_trap, 4.0)),
                 xytext=(5.5, np.polyval(c_trap, 4.0) + 2.0),
                 fontsize=12,
@@ -235,7 +244,7 @@ def animate():
                 zorder=5,
             )
             ax.annotate(
-                r"$\gamma > 0$" + "\n(cluster)",
+                r"$\gamma > 0$" + "\n(Bluetooth fit)",
                 xy=(4.5, np.polyval(c_clust, 4.5)),
                 xytext=(5.8, np.polyval(c_clust, 4.5) - 3.0),
                 fontsize=12,
@@ -247,7 +256,7 @@ def animate():
             )
             n_total = len(all_trap_eh) + len(all_clust_eh)
             ax.set_title(
-                rf"Classification theorem: $\mathrm{{sign}}(\gamma)$ separates all {n_total:,} pairs",
+                rf"Historical assigned-group diagnostic: {n_total:,} contributing rows",
                 fontsize=11,
                 fontweight="semibold",
             )
@@ -277,6 +286,14 @@ def animate():
 
     # GIF (separate pass — fresh figure)
     fig2, ax2 = plt.subplots(1, 1, figsize=(8, 6))
+    fig2.text(
+        0.5,
+        0.01,
+        "HISTORICAL GEOMETRIC-CORPUS DIAGNOSTIC — GLOBAL CLASSIFIER RETIRED",
+        ha="center",
+        fontsize=7,
+        color="#666666",
+    )
     ax2.set_xlabel(r"Expected hop count $E[H]$", fontsize=12)
     ax2.set_ylabel(r"$\ln\,\Phi$", fontsize=13)
     ax2.set_xlim(0.8, 7.2)
@@ -306,7 +323,11 @@ def animate():
         elif frame == 8:
             x_fit = np.linspace(all_trap_eh.min() - 0.1, all_trap_eh.max() + 0.1, 100)
             ax2.plot(x_fit, np.polyval(c_trap, x_fit), color=LINE_RED, linewidth=2.5, zorder=4)
-            ax2.set_title(rf"Trap class: $\gamma = {c_trap[0]:+.2f}$", fontsize=11, color=LINE_RED)
+            ax2.set_title(
+                rf"Assigned orbital group fit: $\gamma = {c_trap[0]:+.2f}$",
+                fontsize=11,
+                color=LINE_RED,
+            )
         elif frame == 9:
             ax2.set_title("Now adding social/opportunistic networks...", fontsize=11)
         elif 10 <= frame <= 13:
@@ -331,11 +352,13 @@ def animate():
             x_fit = np.linspace(all_clust_eh.min() - 0.1, all_clust_eh.max() + 0.1, 100)
             ax2.plot(x_fit, np.polyval(c_clust, x_fit), color=LINE_BLUE, linewidth=2.5, zorder=4)
             ax2.set_title(
-                rf"Cluster class: $\gamma = {c_clust[0]:+.2f}$", fontsize=11, color=LINE_BLUE
+                rf"Tested Bluetooth group fit: $\gamma = {c_clust[0]:+.2f}$",
+                fontsize=11,
+                color=LINE_BLUE,
             )
         elif frame == 15:
             ax2.annotate(
-                r"$\gamma < 0$" + "\n(trap)",
+                r"$\gamma < 0$" + "\n(orbital fit)",
                 xy=(4.0, np.polyval(c_trap, 4.0)),
                 xytext=(5.5, np.polyval(c_trap, 4.0) + 2.0),
                 fontsize=12,
@@ -345,7 +368,7 @@ def animate():
                 arrowprops=dict(arrowstyle="->", color=LINE_RED, lw=2),
             )
             ax2.annotate(
-                r"$\gamma > 0$" + "\n(cluster)",
+                r"$\gamma > 0$" + "\n(Bluetooth fit)",
                 xy=(4.5, np.polyval(c_clust, 4.5)),
                 xytext=(5.8, np.polyval(c_clust, 4.5) - 3.0),
                 fontsize=12,
@@ -356,7 +379,7 @@ def animate():
             )
             n_total = len(all_trap_eh) + len(all_clust_eh)
             ax2.set_title(
-                rf"Classification theorem: $\mathrm{{sign}}(\gamma)$ separates all {n_total:,} pairs",
+                rf"Historical assigned-group diagnostic: {n_total:,} contributing rows",
                 fontsize=11,
                 fontweight="semibold",
             )

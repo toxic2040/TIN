@@ -40,9 +40,9 @@ visualization and SPICE support: `pip install -e ".[dev,viz,spice]"`.
 
 Open an issue before writing code for:
 
-- Changes to the public core package (`tin/core/`) — these
-  modules serve the manuscript stack and 290,000+ accounted configurations.
-  Breaking changes need careful thought.
+- Changes to the public core package (`tin/core/`) — these modules serve the
+  maintained simulator and historical experiment surfaces. Breaking changes
+  need careful thought and explicit before/after evidence.
 - New theory or mechanism claims — the epistemic framework
   (definition / consequence / discovery) is load-bearing.
 - Anything that changes numerical output of existing experiments.

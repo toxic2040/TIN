@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-"""
-Tau Sensitivity Sweep — C4 Reserve Requirement vs Commodity Half-Life
+"""Historical C4 reserve-model sweep versus commodity half-life.
 
-Sweeps tau_half from 90 to 3600 days and computes R_h_min at each hub
-for the EMJ relay chain. Produces:
+This script reproduces an archived synthetic EMJ relay-chain calculation. It
+sweeps tau_half from 90 to 3600 days and computes the model quantity R_h_min at
+each hub. It produces:
 
   1. R_h_min(tau_half) curve at each hub — the architectural radius as
      a function of commodity physics, not topology.
 
-  2. Critical tau_half where each hub transitions from FAIL to PASS —
-     the ZBO specification for that hub.
+  2. The tau_half value where each model row crosses a historical 20-year
+     reporting threshold.
 
-  3. The universal design rule: cumulative exposure vs tau crossover.
+  3. A cumulative-exposure heuristic and a cadence-only cycler-count example.
 
-The sweep uses the analytical DR (oracle path product), which is the
-correct architectural input for steady-state sustainability assessment.
-Simulation DR with retry is reported for comparison but not used for
-the primary verdict (retry consumes pipeline capacity — see notes).
+These are archived model outputs, not mission feasibility, ZBO requirements,
+fleet-sizing advice, or a universal sustainability rule. The analytical DR is
+an oracle-path product under the assumptions encoded below; it is not validated
+as an operational architecture assessment.
 """
 
 import json
@@ -132,7 +132,7 @@ def compute_dr_analytical(n_hops, tau_half_s):
 
 
 def r_min(dr, epsilon=EPSILON):
-    """Minimum reserve epochs for given DR and risk tolerance."""
+    """Model reserve epochs for a given DR and risk-tolerance parameter."""
     if dr <= 0:
         return float("inf")
     if dr >= 1.0:
@@ -141,7 +141,7 @@ def r_min(dr, epsilon=EPSILON):
 
 
 def r_min_years(dr, cadence_s, epsilon=EPSILON):
-    """Minimum reserve in years."""
+    """Convert the model reserve epochs to years at the stated cadence."""
     r = r_min(dr, epsilon)
     if r == float("inf"):
         return float("inf")
@@ -323,8 +323,8 @@ def _sweep_worker(args):
 
 def main():
     print("=" * 70)
-    print("  TAU SENSITIVITY SWEEP")
-    print("  C4 Reserve Requirement vs Commodity Half-Life")
+    print("  HISTORICAL TAU SENSITIVITY MODEL SWEEP")
+    print("  ARCHIVED C4 RESERVE OUTPUTS — NOT MISSION OR DESIGN GUIDANCE")
     print("=" * 70)
 
     # ── Step 1: Compute S_T at each hub (engine, once) ──
@@ -359,11 +359,12 @@ def main():
     with ProcessPoolExecutor(max_workers=n_workers) as pool:
         sweep_results = list(pool.map(_sweep_worker, tasks))
 
-    # ── Step 3: Find critical tau_half for each hub ──
+    # ── Step 3: Historical reporting-threshold crossings ──
     print(f"\n\n{'=' * 70}")
-    print("  CRITICAL TAU_HALF — Where Each Hub Transitions FAIL → PASS")
+    print("  HISTORICAL 20-YEAR REPORTING-THRESHOLD CROSSINGS")
     print(f"{'=' * 70}")
-    print("  Threshold: R_h_min < 20 years = PASS")
+    print("  Archived convention: modeled R_h <= 20 years is below the reporting threshold")
+    print("  This convention is not a feasibility, safety, or ZBO requirement.")
 
     threshold_years = 20
 
@@ -385,33 +386,31 @@ def main():
 
         if critical_tau:
             print(
-                f"\n  {node_label:20s}: critical tau_half = {critical_tau} days "
+                f"\n  {node_label:20s}: modeled crossing tau_half = {critical_tau} days "
                 f"({critical_tau / 365.25:.1f} years)"
             )
-            print(f"    Below {critical_tau}d: FAIL (R_h > {threshold_years} years)")
-            print(f"    Above {critical_tau}d: PASS (R_h < {threshold_years} years)")
-            # ZBO specification
-            print(
-                f"    → ZBO spec: cryocooler must achieve tau_half >= {critical_tau} days "
-                f"to make this hub self-sustaining"
-            )
+            print(f"    Below {critical_tau}d: modeled R_h > {threshold_years} years")
+            print(f"    At/above {critical_tau}d: modeled R_h <= {threshold_years} years")
+            print("    No ZBO specification or mission requirement is inferred from this crossing.")
         else:
-            # Check if it always passes or always fails
+            # Check which side of the historical reporting threshold contains all rows.
             all_pass = all(
                 (res.get(node_label, {}).get("r_years", float("inf")) or float("inf"))
                 <= threshold_years
                 for res in sweep_results
             )
             if all_pass:
-                print(f"\n  {node_label:20s}: PASS at all tau_half (always viable)")
+                print(
+                    f"\n  {node_label:20s}: below the model threshold at all tested tau_half values"
+                )
             else:
                 last_r = sweep_results[-1].get(node_label, {}).get("r_years", float("inf"))
                 last_r_str = f"{last_r:.1f}" if last_r and last_r < 1e6 else "inf"
                 print(
-                    f"\n  {node_label:20s}: FAIL at all tested tau_half "
+                    f"\n  {node_label:20s}: above the model threshold at all tested tau_half values "
                     f"(R_h = {last_r_str} years even at tau_half = {tau_values[-1]}d)"
                 )
-                print("    → ZBO alone cannot save this hub. Topology change required.")
+                print("    This synthetic result does not prescribe a topology or hardware change.")
 
     # ── Step 4: Detailed table at key tau_half values ──
     key_taus = [90, 120, 180, 260, 365, 540, 730, 1095, 1460, 1825, 2190, 3650]
@@ -446,9 +445,9 @@ def main():
             row += f" {dr:7.4f} {r_str:>8s} |"
         print(row)
 
-    # ── Step 5: Universal design rule ──
+    # ── Step 5: Historical cumulative-exposure heuristic ──
     print(f"\n\n{'=' * 70}")
-    print("  UNIVERSAL DESIGN RULE")
+    print("  HISTORICAL CUMULATIVE-EXPOSURE HEURISTIC")
     print(f"{'=' * 70}")
 
     # Compute cumulative exposure at each hop
@@ -469,20 +468,21 @@ def main():
             f"{cum_exposure / DAY:8.1f} d | {tau_ratio:8.2f} tau"
         )
 
-    print("\n  Design rule: For commodity with half-life tau_half,")
-    print("  the architecture becomes unsustainable when cumulative")
-    print("  path exposure exceeds approximately tau_half / ln(2).")
-    print("  For LH2 (tau_half = 180d): critical exposure ≈ 260 days.")
-    print("  EM coast alone (243d) is 0.94 tau — already at the boundary.")
+    print("\n  Archived model relation: compare cumulative path exposure with")
+    print("  tau_half / ln(2) under the encoded exponential-decay assumptions.")
+    print("  For the LH2 parameter row (tau_half = 180d), that reference is ≈260 days.")
+    print("  The encoded EM coast is 243d, or 0.94 of that reference interval.")
+    print("  No universal sustainability boundary or design rule is established.")
 
-    # ── Step 6: Fleet sizing ──
+    # ── Step 6: Historical cadence-only cycler-count scaling ──
     print(f"\n\n{'=' * 70}")
-    print("  FLEET SIZING — How Many Cyclers to Make C4 Pass?")
+    print("  HISTORICAL CYCLER-COUNT SCALING EXAMPLE — NOT FLEET GUIDANCE")
     print(f"{'=' * 70}")
 
     print("\n  If N cyclers with complementary phasing reduce the")
     print("  resupply cadence by factor N, R_h_years scales by 1/N.")
-    print("  (Assumes additional cyclers don't change DR or exposure.)")
+    print("  (Assumes additional cyclers change neither DR nor exposure.)")
+    print("  This arithmetic is not a fleet recommendation or feasibility result.")
 
     tau_half_s = 180 * DAY
     for node_label in KEY_HUBS:
@@ -495,7 +495,7 @@ def main():
 
         r = r_min(dr)
         if r == float("inf"):
-            print(f"\n  {node_label}: DR = {dr:.6f} → cannot solve with fleet sizing alone")
+            print(f"\n  {node_label}: modeled DR = {dr:.6f}; cadence-only scaling is undefined")
             continue
 
         r_yr_1 = r * cadence / YEAR
@@ -515,12 +515,16 @@ def main():
         )
         if n_cyclers > 1:
             print(
-                f"    → Need {n_cyclers} cyclers with complementary phasing to meet "
-                f"{threshold_years}-year threshold"
+                f"    Under the stated cadence-only scaling, N={n_cyclers} places the "
+                f"reported R_h below {threshold_years} years; this is not a fleet requirement."
             )
 
     # ── Save results ──
     output = {
+        "claim_status": (
+            "historical synthetic model output; not mission feasibility, ZBO, "
+            "fleet-sizing, or universal design guidance"
+        ),
         "epsilon": EPSILON,
         "threshold_years": threshold_years,
         "tau_values_days": tau_values,

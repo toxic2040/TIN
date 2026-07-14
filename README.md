@@ -5,6 +5,12 @@
 [![CI](https://github.com/toxic2040/TIN/actions/workflows/ci.yml/badge.svg)](https://github.com/toxic2040/TIN/actions/workflows/ci.yml)
 [![Zenodo](https://img.shields.io/badge/Zenodo-classification%20working%20paper-blue)](https://doi.org/10.5281/zenodo.18851385)
 
+> **Research status:** the TIN/percolation claim program closed on 2026-06-26.
+> This repository remains a maintained DTN simulator and historical
+> reproducibility surface. The global gamma classifier and cross-domain gap
+> claims are retired; the Zenodo paper is retained as a historical deposit, not
+> as a current validated claim surface.
+
 ## The problem
 
 Every relay architecture is a timetable. A lunar surface crew waiting for a data uplink doesn't care about orbital mechanics — they care whether the next contact window opens before the bundle expires. Whether bundles arrive depends on *when* contacts open, *how many hops* exist, and *what the routing policy does* with uncertainty.
@@ -34,7 +40,7 @@ pip install -e ".[dev]"
 pytest tests/ -x -q
 ```
 
-89 tests. The only required dependency is NumPy.
+The only required dependency is NumPy.
 
 ## Reproducibility
 
@@ -74,7 +80,13 @@ All deterministic metrics (delivery, polar_touches, custody hops, handoffs) are 
 
 `pytest tests/test_repro_determinism.py` is a one-minute smoke test that checks seed plumbing without running the full simulation.
 
-`python runs/verify_paper_claims.py --full` re-checks the quantitative claims of the Zenodo paper against the shipped result data (38 checks; four further claim families need the full simulation corpus and are reported as not checkable).
+`python runs/verify_paper_claims.py --full` reproduces historical manuscript
+values from the artifacts available in the checkout. Aggregate checks that
+require complete source families report `SKIP`; wholly unavailable claim
+families are omitted and listed as not checkable. Set `DATASETS_ROOT` to a
+retained local corpus to enable additional checks. A `PASS` means the loaded
+artifact matches the historical manuscript value, not that the scientific
+claim was independently validated.
 
 ## Scope of this repository
 
@@ -98,7 +110,7 @@ TIN/
 │   ├── core/               #   dtn, routing, oracle, base, optimal_router
 │   ├── config/             #   lunar default config
 │   └── scenarios/          #   scenario definitions
-├── tests/                  # 89 tests (pytest)
+├── tests/                  # pytest suite
 ├── runs/                   # reproducibility entrypoints + committed baselines (runs/results/)
 ├── docs/                   # archived result data backing the claim verifier
 ├── archive/                # curated v0.3.x era record
@@ -124,7 +136,7 @@ not a journal publication or an accepted IEEE article.
 **A Classification Framework for Temporal Contact Graphs: Morphology,
 Confinement, and the Routing Efficiency Frontier**
 
-J. Councilman — Zenodo working paper, version 7.5, 2026.
+J. Councilman — Zenodo working paper, version 7.5.1, 2026.
 
 DOI: [10.5281/zenodo.18851385](https://doi.org/10.5281/zenodo.18851385)
 

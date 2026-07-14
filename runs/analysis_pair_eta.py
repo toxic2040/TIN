@@ -1,4 +1,4 @@
-"""analysis_pair_eta.py — Test the per-pair η ansatz.
+"""Historical per-pair eta-ansatz diagnostic.
 
 Ansatz: η_pair = η_mean · exp(δE[H]_pair · λ · γ)
 
@@ -7,9 +7,13 @@ For each CRAWDAD trace:
   2. Compute η_pair = mean(eta_normal) per pair, η_mean = global mean
   3. Compute E[H]_pair and δE[H]_pair = E[H]_pair - E[H]_mean
   4. Estimate λ from eta_lyap: λ = mean(log(eta_lyap) / E[H])
-  5. Estimate γ from cross-trace analysis
-  6. Test: does log(η_pair / η_mean) correlate with δE[H]_pair · λ?
-  7. Check if γ sign correctly predicts amplification vs damping
+  5. Load an archived gamma slope, or retain the legacy fixed 0.9 assumption
+  6. Compare log(η_pair / η_mean) with δE[H]_pair · λ
+  7. Report in-sample residual and association summaries
+
+This is not independent validation, a causal model, or a gamma classifier.  The
+fallback gamma value is an explicit historical assumption, not an estimate from
+the currently shipped inputs.
 
 Reads: crawdad_contacts.Exp{1,2,3,6}_results.json
 Writes: analysis_pair_eta_results.json
@@ -33,10 +37,10 @@ EXPERIMENTS = {
 
 
 def _load_gamma():
-    """Load p_eff-specific γ values from cross-trace analysis JSON."""
+    """Load archived p_eff-specific gamma slopes when the source is present."""
     path = _HERE / "crawdad_cross_trace_analysis.json"
     if not path.exists():
-        # Fallback to approximate values if JSON not available
+        # The caller reports the legacy fixed fallback explicitly.
         return None
     with open(path) as f:
         cta = json.load(f)
@@ -95,7 +99,7 @@ def _analyze_trace(exp_name, data, gamma_data=None):
         if lam_mean >= 0:
             continue
 
-        # Use p_eff-specific γ from cross-trace analysis if available
+        # Use an archived p_eff-specific gamma slope if available.
         gamma = 0.9  # fallback
         if gamma_data and exp_name in gamma_data:
             p_key = str(round(p_eff, 4))
@@ -111,7 +115,7 @@ def _analyze_trace(exp_name, data, gamma_data=None):
         # Per-pair test
         log_ratio_obs = []  # log(η_pair / η_mean)
         delta_eh = []  # δE[H]_pair
-        predicted = []  # δE[H]_pair · λ · γ (the predicted log ratio)
+        predicted = []  # δE[H]_pair · λ · γ (archived ansatz value)
         pair_labels = []
         eta_pair_vals = []
         eh_pair_vals = []
@@ -204,15 +208,19 @@ def _analyze_trace(exp_name, data, gamma_data=None):
 
 def main():
     print()
-    print("  Per-Pair η Ansatz Validation")
+    print("  HISTORICAL PER-PAIR eta-ANSATZ DIAGNOSTIC")
+    print("  NOT INDEPENDENT VALIDATION, A CAUSAL MODEL, OR A CLASSIFIER")
     print("  " + "=" * 50)
     print()
 
     gamma_data = _load_gamma()
     if gamma_data:
-        print("  Loaded p_eff-specific γ from crawdad_cross_trace_analysis.json")
+        gamma_source = "archived p_eff-specific slopes from crawdad_cross_trace_analysis.json"
+        print(f"  Gamma source: {gamma_source}")
     else:
-        print("  WARNING: using fallback γ=0.9 (cross-trace JSON not found)")
+        gamma_source = "legacy fixed gamma=0.9 assumption; source JSON absent"
+        print(f"  Gamma source: {gamma_source}")
+        print("  This fallback is not a source-backed estimate or current claim.")
     print()
 
     all_results = {}
@@ -245,8 +253,8 @@ def main():
             )
         print()
 
-    # Cross-trace summary: does variance decrease with n (Cluster prediction)?
-    print("  CROSS-TRACE: CV(η_pair) vs n")
+    # Archived cross-trace CV summary; no source-domain prediction is inferred.
+    print("  HISTORICAL CROSS-TRACE CV(eta_pair) vs n")
     for p_target in [0.02, 0.05, 0.1, 0.3, 0.5]:
         p_str = str(round(p_target, 4))
         pts = []
@@ -263,7 +271,10 @@ def main():
             decreasing = all(cvs[i] >= cvs[i + 1] for i in range(len(cvs) - 1))
             print(f"    p={p_str}: {trend}  {'DECREASING' if decreasing else 'non-monotonic'}")
 
-    # Save
+    # Save with compatibility trace keys plus explicit claim metadata.
+    all_results["_description"] = "Historical per-pair eta-ansatz diagnostic"
+    all_results["_claim_status"] = "not validation, causal inference, or a classifier"
+    all_results["_gamma_source"] = gamma_source
     out_path = _HERE / "analysis_pair_eta_results.json"
     with open(out_path, "w") as f:
         json.dump(all_results, f, indent=2, allow_nan=True)

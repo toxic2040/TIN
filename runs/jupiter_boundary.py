@@ -1,16 +1,17 @@
-"""run_jupiter_boundary.py — Phase 2: Jupiter as Classification Boundary Body.
+"""Historical Jupiter and Saturn gamma-by-distance diagnostic.
 
-Phase 1 discovered that Jupiter's aggregate γ ≈ 0 and it sign-switches
-across its synodic cycle. This script performs a deep analysis:
+This script reproduces an archived analysis of fitted gamma slopes across
+distance and link-reliability bins:
 
 1. Fine-grained distance-binned γ for Jupiter (from phi_decompose + phi_sweep)
-2. Comparison with Saturn (also near-boundary, aggregate γ ≈ +0.10)
-3. Per-p_ref gamma analysis (does the boundary shift with link reliability?)
+2. Comparison with Saturn (also near-zero in the archived aggregate)
+3. Per-p_ref gamma analysis across the encoded link-reliability values
 4. f_fwd proxy and Φ evolution across the synodic cycle
-5. Direct comparison: inner planets (deep trap) vs outer (boundary) vs CRAWDAD
+5. Descriptive comparison across the eight orbital targets
 
-The goal is to characterize the phase transition boundary in the
-(distance, p_eff, n_orb) parameter space.
+The former classification and phase-transition-boundary interpretations are
+retired. Near-zero values and sign changes are reported only as properties of
+the loaded model rows; they are not a classifier or mechanism boundary.
 
 Reads:  runs/phi_decompose_results.json
         runs/phi_sweep_shard_jupiter.json
@@ -116,7 +117,7 @@ def analyze_body_by_distance_and_pref(records, n_dist_bins=5):
 
 
 def analyze_boundary_crossing(grid):
-    """Find where γ crosses zero in the (distance, p_ref) space."""
+    """Find descriptive gamma zero crossings in the loaded binned rows."""
     crossings = []
     for bin_key, info in sorted(grid.items()):
         for p_ref_str, g in sorted(info.get("gamma_by_pref", {}).items()):
@@ -169,7 +170,8 @@ def analyze_boundary_crossing(grid):
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("Phase 2: Jupiter Boundary Analysis")
+    print("HISTORICAL JUPITER/SATURN GAMMA SIGN DIAGNOSTIC")
+    print("CLASSIFIER AND PHASE-BOUNDARY INTERPRETATIONS RETIRED")
     print("=" * 70)
 
     # --- Load phi_decompose for Jupiter, Saturn, and comparison bodies ---
@@ -181,9 +183,6 @@ def main():
     by_target = defaultdict(list)
     for r in phi_data["results"]:
         by_target[r["target"]].append(r)
-
-    boundary_bodies = ["jupiter", "saturn", "europa", "titan"]
-    deep_trap = ["mars", "mercury", "ceres", "venus"]
 
     # --- Per-target aggregate gamma at multiple p_ref values ---
     print("\n" + "=" * 70)
@@ -224,9 +223,9 @@ def main():
             r2_str = f"R²={g['R2']:.2f}" if not math.isnan(g["R2"]) else "R²=nan"
             print(f"    p={p_str}: γ = {sign}{g['gamma']:.3f}  ({r2_str}, n={g['n']})")
 
-    # --- Jupiter boundary crossing ---
+    # --- Jupiter descriptive zero crossings ---
     jupiter_crossings = analyze_boundary_crossing(jupiter_grid)
-    print(f"\n  Sign changes found: {jupiter_crossings['n_sign_changes']}")
+    print(f"\n  Descriptive zero-sign changes found: {jupiter_crossings['n_sign_changes']}")
     for sc in jupiter_crossings.get("sign_changes", []):
         print(
             f"    p_ref={sc['p_ref']:.3f}: crossing at d ≈ {sc['d_cross_au']:.2f} AU "
@@ -247,16 +246,16 @@ def main():
             print(f"    p={p_str}: γ = {sign}{g['gamma']:.3f}  ({r2_str}, n={g['n']})")
 
     saturn_crossings = analyze_boundary_crossing(saturn_grid)
-    print(f"\n  Sign changes found: {saturn_crossings['n_sign_changes']}")
+    print(f"\n  Descriptive zero-sign changes found: {saturn_crossings['n_sign_changes']}")
     for sc in saturn_crossings.get("sign_changes", []):
         print(
             f"    p_ref={sc['p_ref']:.3f}: crossing at d ≈ {sc['d_cross_au']:.2f} AU "
             f"(γ: {sc['gamma_near']:+.3f} → {sc['gamma_far']:+.3f})"
         )
 
-    # --- Comparison: all 8 bodies, aggregate gamma at p=0.1 ---
+    # --- Comparison: all 8 bodies, composite gamma near p=0.1 ---
     print("\n" + "=" * 70)
-    print("ALL BODIES: AGGREGATE γ AT p_ref = 0.1")
+    print("ALL BODIES: HISTORICAL COMPOSITE γ NEAR p_ref = 0.1")
     print("=" * 70)
 
     body_ranking = []
@@ -266,10 +265,10 @@ def main():
     body_ranking.sort(key=lambda x: x[1] if not math.isnan(x[1]) else 0)
 
     for target, gamma, r2, n in body_ranking:
-        marker = " <<<" if abs(gamma) < 0.15 and not math.isnan(gamma) else ""
+        marker = " <<< near zero" if abs(gamma) < 0.15 and not math.isnan(gamma) else ""
         print(f"  {target:10s}: γ = {gamma:+.3f}  (R² = {r2:.3f}, n = {n}){marker}")
 
-    print("\n  Bodies marked <<< are within 0.15 of zero (boundary candidates)")
+    print("\n  'near zero' marks the fitted-slope reference only; it is not a class boundary.")
 
     # --- Φ evolution across Jupiter synodic cycle ---
     print("\n" + "=" * 70)
@@ -309,7 +308,10 @@ def main():
     elapsed = time.time() - t0
     output = {
         "experiment": "jupiter_boundary",
-        "description": "Jupiter and Saturn as classification boundary bodies",
+        "claim_status": (
+            "historical modeled diagnostic; classifier and phase-boundary interpretations retired"
+        ),
+        "description": "Archived gamma-by-distance and p_ref summaries for Jupiter and Saturn",
         "elapsed_s": round(elapsed, 1),
         "gamma_by_target_and_pref": target_gamma_table,
         "jupiter_distance_pref_grid": jupiter_grid,

@@ -1,18 +1,23 @@
-"""plot_fig1_classification.py — Figure 1 for classification_theorem.tex.
+"""Historical Figure 1 reproducer for classification_theorem.tex.
 
-Two-panel classification figure (CONSISTENT RAW-SLOPE SCALE):
+This script preserves the published composite table and figure. It is not a
+current classifier: four orbital values below are hardcoded with unavailable
+source rows, and the published cross-domain gap is retired.
+
+Two-panel historical figure:
   Left:  raw slope γ = d[ln(Phi)]/d[E[H]] vs p_eff for cluster-class traces
-  Right: raw slope γ at p_eff=0.1 bar chart for all 8 trap-class bodies
+  Right: historical composite raw-slope bar chart for all 8 orbital bodies
 
-Both panels use raw slopes (not normalized γ̃), ensuring a uniform
-cross-domain comparison. Heliocentric values at p_eff=0.1 are from
+The left panel uses trace values at explicit p_eff, including p_eff=0.1. The
+right panel reproduces the historical orbital composite; a common probability
+convention for those eight values is not established. Its values are from
 runs/helio_gamma_missing_bodies_results.json (4 new bodies) and from
-gen_classification_figures.py ORBITAL_GAMMA dict (4 existing bodies).
+gen_classification_figures.py HISTORICAL_ORBITAL_GAMMA dict (4 existing bodies).
 
 Data sources:
   runs/crawdad_cross_trace_analysis.json        — CRAWDAD gamma_normal by p_eff
   runs/helio_gamma_missing_bodies_results.json  — Venus, Europa, Jupiter, Saturn raw slopes
-  ORBITAL_GAMMA_P01 below                       — Mercury, Mars, Ceres, Titan at p=0.1
+  TRAP_GAMMA below                              — historical composite table values
 """
 
 import json
@@ -28,11 +33,12 @@ RUNS = os.path.dirname(os.path.abspath(__file__))
 FIG_DIR = os.path.join(os.path.dirname(RUNS), "figures")
 os.makedirs(FIG_DIR, exist_ok=True)
 
-# ── Heliocentric trap-class γ at p_eff=0.1 (raw slope, consistent scale) ─────
+# ── Historical heliocentric composite (raw slopes) ───────────────────────────
 # Sources:
-#   Mercury, Mars, Ceres, Titan: ORBITAL_GAMMA dict in gen_classification_figures.py
+#   Mercury, Mars, Ceres, Titan: HISTORICAL_ORBITAL_GAMMA dict in
+#   gen_classification_figures.py
 #   Venus, Europa, Jupiter, Saturn: runs/helio_gamma_missing_bodies_results.json
-# All values are raw slopes d[ln(Phi)]/d[E[H]] at a common p_eff=0.1.
+# Historical table values; this composite is not a validated common-scale set.
 # Sorted most-negative → least-negative (top to bottom in bar chart).
 TRAP_GAMMA = {
     "Ceres": -1.20,
@@ -97,7 +103,12 @@ def plot():
         figsize=(10, 4.8),
         gridspec_kw={"width_ratios": [1.45, 1]},
     )
-    fig.subplots_adjust(wspace=0.35)
+    fig.suptitle(
+        "Historical composite figure — global classifier retired",
+        fontsize=12,
+        fontweight="semibold",
+    )
+    fig.subplots_adjust(top=0.86, wspace=0.35)
 
     # ══ LEFT panel — Cluster class (raw slopes) ═══════════════════════════
     traces = ["Exp1", "Exp2", "Exp3", "Exp6"]
@@ -109,10 +120,9 @@ def plot():
         r"Exp6 ($n{=}98$)",
     ]
 
-    # Gap band at p=0.1 reference (raw-slope scale)
-    #   trap_max  = Titan at p=0.1 = −0.10
-    #   cluster_min = Exp2 at p=0.1 = +1.85
-    trap_max_p01 = max(TRAP_GAMMA.values())  # −0.10 (Titan)
+    # Published arithmetic: the supported Exp2 p_eff=0.1 value was paired with
+    # the historical composite Titan value. No common p_eff is claimed.
+    historical_trap_max = max(TRAP_GAMMA.values())  # −0.10 (Titan)
     cluster_min_p01 = min(raw_slopes[t][0.1] for t in traces)  # +1.85 (Exp2)
 
     # γ=0 class boundary
@@ -140,7 +150,7 @@ def plot():
     ax_l.set_ylim(-0.5, 4.2)
     ax_l.set_xlabel(r"$p_{\mathrm{eff}}$", fontsize=11)
     ax_l.set_ylabel(r"$\gamma$ (raw slope)", fontsize=11)
-    ax_l.set_title("Cluster class", fontsize=11, fontweight="semibold")
+    ax_l.set_title("Tested Bluetooth traces", fontsize=11, fontweight="semibold")
     ax_l.legend(
         loc="upper right",
         framealpha=0.88,
@@ -148,11 +158,11 @@ def plot():
         borderpad=0.5,
     )
     ax_l.grid(True, alpha=0.25)
-    # Annotate gap at p=0.1
+    # Preserve the published arithmetic while labeling its retired status.
     ax_l.annotate(
-        r"$\Delta\gamma \geq 1.95$" + "\n(at $p=0.1$)",
+        r"published $\Delta\gamma = 1.95$" + "\n(retired)",
         xy=(0.1, cluster_min_p01),
-        xytext=(0.18, (cluster_min_p01 + trap_max_p01) / 2),
+        xytext=(0.18, (cluster_min_p01 + historical_trap_max) / 2),
         fontsize=8,
         color="#888888",
         style="italic",
@@ -191,7 +201,7 @@ def plot():
     ax_r.set_yticklabels(bodies, fontsize=9.5)
     ax_r.invert_yaxis()
     ax_r.set_xlabel(r"$\gamma$", fontsize=11)
-    ax_r.set_title("Trap class", fontsize=11, fontweight="semibold")
+    ax_r.set_title("Historical composite orbital table", fontsize=11, fontweight="semibold")
     ax_r.set_xlim(-1.45, 0.35)
     ax_r.grid(True, axis="x", alpha=0.25)
     ax_r.tick_params(left=False)

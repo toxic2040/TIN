@@ -19,7 +19,7 @@ import hashlib
 import json
 import os
 import subprocess
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 RUNS_DIR = Path(__file__).parent
@@ -40,7 +40,7 @@ def sha256(path: Path) -> str:
 
 def file_mtime_iso(path: Path) -> str:
     ts = os.path.getmtime(path)
-    return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+    return datetime.fromtimestamp(ts, tz=UTC).isoformat()
 
 
 def git_head_short() -> str:
@@ -94,6 +94,10 @@ def match_script(json_path: Path, all_scripts: dict[str, Path]) -> Path | None:
     else:
         return None
 
+    # Exact script-name evidence takes precedence over naming heuristics.
+    if stem in all_scripts:
+        return all_scripts[stem]
+
     # Direct match: run_{stem}.py
     if f"run_{stem}" in all_scripts:
         return all_scripts[f"run_{stem}"]
@@ -126,10 +130,11 @@ def match_script(json_path: Path, all_scripts: dict[str, Path]) -> Path | None:
         if "run_routing_independence" in all_scripts:
             return all_scripts["run_routing_independence"]
 
-    # Summary files -> epyc orchestrator scripts
+    # Summary files may bind only to a phase-specific orchestrator. Do not use
+    # epyc_phase5.py as a generic fallback for unrelated summaries.
     if stem.endswith("_summary"):
-        phase = stem.replace("_summary", "")
-        for candidate in (f"epyc_{phase}", f"run_{phase}", "epyc_phase5"):
+        phase = stem.removesuffix("_summary")
+        for candidate in (phase, f"epyc_{phase}", f"run_{phase}"):
             if candidate in all_scripts:
                 return all_scripts[candidate]
 
@@ -227,7 +232,7 @@ def collect_jsons(runs_dir: Path) -> list[Path]:
     In a git checkout, use the tracked file list. Outside git, fall back to
     a recursive scan so the script remains usable from an unpacked archive.
     """
-    skip = {"PROVENANCE.json"}
+    skip = {"CONFIG_MANIFEST.current.json", "CONFIG_MANIFEST.json", "PROVENANCE.json"}
     try:
         out = subprocess.check_output(
             ["git", "ls-files", "runs"],
@@ -291,7 +296,7 @@ def build_manifest(runs_dir: Path) -> dict:
             unmatched_files.append(rel_str)
 
     manifest = {
-        "generated": datetime.now(tz=timezone.utc).isoformat(),
+        "generated": datetime.now(tz=UTC).isoformat(),
         "git_head": head,
         "runs_dir": str(runs_dir),
         "total_jsons": len(jsons),
@@ -317,14 +322,15 @@ def write_markdown(manifest: dict, out_path: Path):
         "",
         "## Scope",
         "",
-        "This file summarizes result provenance for the public checkout. The",
-        "machine-readable hash and count manifest is `runs/CONFIG_MANIFEST.json`.",
-        "`runs/PROVENANCE.json` is generated locally by this script and is ignored",
-        "because it records checkout-specific mtimes and local match state.",
+        "This file summarizes result provenance for the public checkout.",
+        "`runs/CONFIG_MANIFEST.json` is the committed historical hash and",
+        "heuristic-count snapshot. `runs/PROVENANCE.json` is generated locally",
+        "by this script, contains current per-entry hashes and producer-match state,",
+        "and is ignored because it also records checkout-specific mtimes.",
         "",
         "The historical runner table is not used as a source of truth here. Several",
         "tracked results are retained as public data artifacts even when their",
-        "original producing runners are not present in current public `main`.",
+        "original producing runners are not present in the current public checkout.",
         "",
         "---",
         "",
@@ -352,9 +358,10 @@ def write_markdown(manifest: dict, out_path: Path):
         f"- Archived artifacts: {len(archived_entries)}",
         f"- Unmatched tracked JSONs: {manifest['unmatched']}",
         "",
-        "Unmatched does not mean invalid. It means this checkout does not contain a",
-        "current public runner that the naming matcher can bind to that result. Use",
-        "`runs/CONFIG_MANIFEST.json` for hash verification.",
+        "Unmatched alone establishes neither validity nor reproducibility. It means",
+        "this checkout does not contain a current public runner that the naming",
+        "matcher can bind to that result. Use the per-entry `result_sha256` in",
+        "generated `runs/PROVENANCE.json` or the tracked git blob for integrity checks.",
     ]
 
     lines += [

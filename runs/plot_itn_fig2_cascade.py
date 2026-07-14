@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""ITN Fig 2: Cascade failure — TRAP vs CLUSTER absorption.
+"""Historical serial-chain and diamond failure schematic.
 
-Left panel:  TRAP topology (serial chain, path multiplicity = 1).
-             Hub failure cascades to downstream — no alternative route.
+Left panel:  a serial chain with path multiplicity 1 and a manually failed hub.
+Right panel: a diamond with path multiplicity 2 and a pre-specified alternate path.
 
-Right panel: CLUSTER topology (diamond, path multiplicity = 2).
-             Hub failure absorbed — traffic reroutes through alternate path.
-
-Illustrates Whitepaper Section 14: bootstrap percolation on
-time-expanded transport graphs, and the connection between the
-TRAP/CLUSTER classification and cascade resilience.
+The former TRAP/CLUSTER classification and causal resilience interpretation
+are retired. This construction is an illustrative topology comparison, not
+measured cascade evidence, a classifier, or design guidance.
 """
 
 import matplotlib
@@ -153,12 +150,17 @@ if USE_STYLE:
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_double("pre", height_ratio=0.40))
 else:
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.0, 3.0))
-fig.subplots_adjust(wspace=0.30)
+fig.subplots_adjust(wspace=0.30, top=0.80)
+fig.suptitle(
+    "Historical topology schematic — not classifier or resilience validation",
+    fontsize=9,
+    y=0.96,
+)
 
 # ═══════════════════════════════════════════════════════════════════
-# LEFT PANEL — TRAP: serial chain, cascade propagates
+# LEFT PANEL — serial-chain construction
 # ═══════════════════════════════════════════════════════════════════
-_setup_ax(ax1, "\\textbf{TRAP} --- serial chain ($m_v = 1$)")
+_setup_ax(ax1, "Historical serial-chain example ($m_v = 1$)")
 
 # Nodes
 _draw_node(ax1, 0.08, 0.50, "S", "active", "Source")
@@ -171,9 +173,9 @@ _draw_edge(ax1, 0.08, 0.50, 0.35, 0.50, "active")
 _draw_edge(ax1, 0.35, 0.50, 0.62, 0.50, "active")
 _draw_edge(ax1, 0.62, 0.50, 0.92, 0.50, "broken")
 
-# Cascade annotation
+# Illustrative downstream-loss annotation
 ax1.annotate(
-    "cascade",
+    "modeled loss",
     xy=(0.82, 0.50),
     xytext=(0.77, 0.78),
     fontsize=6,
@@ -187,7 +189,7 @@ ax1.annotate(
 ax1.text(
     0.50,
     -0.08,
-    "No alternate path --- failure propagates downstream",
+    "Illustrative outcome with no alternate path in this construction",
     ha="center",
     va="top",
     fontsize=5.5,
@@ -195,9 +197,9 @@ ax1.text(
 )
 
 # ═══════════════════════════════════════════════════════════════════
-# RIGHT PANEL — CLUSTER: diamond, cascade absorbed
+# RIGHT PANEL — diamond construction
 # ═══════════════════════════════════════════════════════════════════
-_setup_ax(ax2, "\\textbf{CLUSTER} --- parallel paths ($m_v = 2$)")
+_setup_ax(ax2, "Historical diamond example ($m_v = 2$)")
 
 # Nodes
 _draw_node(ax2, 0.08, 0.50, "S", "active", "Source")
@@ -213,9 +215,9 @@ _draw_edge(ax2, 0.42, 0.78, 0.92, 0.50, "broken")
 _draw_edge(ax2, 0.08, 0.50, 0.42, 0.22, "rerouted")
 _draw_edge(ax2, 0.42, 0.22, 0.92, 0.50, "rerouted", "rerouted")
 
-# Absorption annotation
+# Illustrative alternate-route annotation
 ax2.annotate(
-    "absorbed",
+    "modeled reroute",
     xy=(0.92, 0.58),
     xytext=(0.80, 0.88),
     fontsize=6,
@@ -229,7 +231,7 @@ ax2.annotate(
 ax2.text(
     0.50,
     -0.08,
-    "Alternate path absorbs failure --- destination operational",
+    "Illustrative outcome with the alternate path pre-specified",
     ha="center",
     va="top",
     fontsize=5.5,

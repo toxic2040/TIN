@@ -1,15 +1,19 @@
-"""Generate figures for classification_theorem.tex.
+"""Regenerate historical working-paper figures.
+
+The global classifier is retired. The four orbital series below are hardcoded
+historical values with unavailable source rows; they are retained only to
+reproduce the released figure surface.
 
 Four figures:
-1. γ vs p_eff — two families with opposite slopes (orbital + social)
-2. γ_normal vs ρ_pair — non-monotonic in n, density controls saturation
-3. Mars 4-tier time series (DR, η, S_T) + Braess opposition snapshot
-4. η vs d_AU for relay tiers (T3/T4) with distance law fit
+1. Historical γ vs p_eff composite (orbital + social source groups)
+2. Historical four-trace γ_normal vs ρ_pair association
+3. Historical Mars 4-tier time series (DR, η, S_T)
+4. Historical η vs d_AU fit for relay tiers (T3/T4)
 
 Reads:
   runs/crawdad_cross_trace_analysis.json
   runs/mars_architecture_results.json
-  (orbital γ hardcoded from validated sweep data)
+  (orbital γ hardcoded in the historical figure generator; source rows unavailable)
 
 Writes to figures/ directory.
 """
@@ -39,8 +43,9 @@ def load_mars():
         return json.load(f)
 
 
-# Orbital γ_normal by p_eff (from validated sweep, representative targets)
-ORBITAL_GAMMA = {
+# Historical orbital values hardcoded by the original figure generator. Their
+# underlying sweep rows and exact probability conventions were not recovered.
+HISTORICAL_ORBITAL_GAMMA = {
     "Mercury": {0.02: -0.20, 0.05: -0.60, 0.10: -1.01, 0.20: -1.50, 0.50: -1.71},
     "Mars": {0.02: -0.08, 0.05: -0.25, 0.10: -0.40, 0.20: -0.47, 0.50: -0.52},
     "Ceres": {0.02: -0.30, 0.05: -0.80, 0.10: -1.20, 0.20: -1.59, 0.50: -1.83},
@@ -49,17 +54,17 @@ ORBITAL_GAMMA = {
 
 
 def fig1_gamma_vs_p():
-    """γ vs p_eff: two families with opposite slopes."""
+    """Reproduce the historical composite gamma panel."""
     fig, ax = plt.subplots(1, 1, figsize=(7, 5))
 
-    # Orbital (trap class) — dashed, red tones
+    # Historical hardcoded orbital group — dashed, red tones
     red_shades = ["#8B0000", "#CC3333", "#E06666", "#FF9999"]
-    for i, (name, data) in enumerate(ORBITAL_GAMMA.items()):
+    for i, (name, data) in enumerate(HISTORICAL_ORBITAL_GAMMA.items()):
         ps = sorted(data.keys())
         gs = [data[p] for p in ps]
         ax.plot(ps, gs, "s--", color=red_shades[i], label=name, markersize=5)
 
-    # Social (cluster class) — solid, blue tones
+    # Tested Bluetooth source group — solid, blue tones
     craw = load_crawdad()
     gc = craw["gamma_classification"]["gamma_normal"]
     blue_shades = ["#000080", "#3366CC", "#4488DD", "#66AAEE"]
@@ -78,7 +83,7 @@ def fig1_gamma_vs_p():
     ax.axhline(0, color="gray", linewidth=0.8, linestyle=":")
     ax.set_xlabel(r"Link reliability $p_{\mathrm{eff}}$", fontsize=12)
     ax.set_ylabel(r"$\gamma$", fontsize=14)
-    ax.set_title(r"Morphology order parameter $\gamma$ vs link reliability", fontsize=12)
+    ax.set_title(r"Historical $\gamma$ panel — global classifier retired", fontsize=12)
     ax.set_xscale("log")
 
     # Custom legend: two groups
@@ -90,7 +95,7 @@ def fig1_gamma_vs_p():
             linestyle="--",
             marker="s",
             markersize=5,
-            label="Orbital (trap)",
+            label="Historical hardcoded orbital values",
         )
     ]
     handles_cluster = [
@@ -101,7 +106,7 @@ def fig1_gamma_vs_p():
             linestyle="-",
             marker="o",
             markersize=5,
-            label="Social (cluster)",
+            label="Tested Bluetooth traces",
         )
     ]
     ax.legend(fontsize=8, ncol=2, loc="lower left")
@@ -116,7 +121,7 @@ def fig1_gamma_vs_p():
 
 
 def fig2_gamma_vs_density():
-    """γ_normal vs ρ_pair — non-monotonic, density controls saturation."""
+    """Reproduce the historical four-trace gamma/density association."""
     craw = load_crawdad()
     traces = ["Exp1", "Exp2", "Exp3", "Exp6"]
     ns = [craw["traces"][t]["n_nodes"] for t in traces]
@@ -142,7 +147,7 @@ def fig2_gamma_vs_density():
         )
     ax1.set_xlabel("Network size $n$", fontsize=12)
     ax1.set_ylabel(r"$\bar{\gamma}_{\mathrm{normal}}$", fontsize=13)
-    ax1.set_title("Non-monotonic in $n$", fontsize=11)
+    ax1.set_title("Observed ordering by $n$", fontsize=11)
     ax1.grid(True, alpha=0.3)
     ax1.set_ylim(0.75, 1.02)
 
@@ -164,12 +169,12 @@ def fig2_gamma_vs_density():
         r"Per-pair contact density $\rho_{\mathrm{pair}}$ (contacts/pair/hr)", fontsize=11
     )
     ax2.set_ylabel(r"$\bar{\gamma}_{\mathrm{normal}}$", fontsize=13)
-    ax2.set_title(r"Monotonic in $\rho_{\mathrm{pair}}$ (at fixed $n$ range)", fontsize=11)
+    ax2.set_title(r"Observed association with $\rho_{\mathrm{pair}}$", fontsize=11)
     ax2.grid(True, alpha=0.3)
     ax2.set_ylim(0.75, 1.02)
 
     fig.suptitle(
-        "Saturation controlled by per-pair contact density, not network size",
+        "Historical four-trace association — descriptive, not causal",
         fontsize=12,
         fontweight="bold",
         y=1.02,
@@ -182,7 +187,7 @@ def fig2_gamma_vs_density():
 
 
 def fig3_mars_timeseries():
-    """Mars 4-tier DR/η/S_T time series + Braess snapshot."""
+    """Reproduce the historical Mars 4-tier model time series."""
     mars = load_mars()
     results = mars["results"]
     from collections import defaultdict
@@ -225,7 +230,11 @@ def fig3_mars_timeseries():
         ax.axvline(480, color="green", linewidth=0.8, linestyle=":", alpha=0.5)
 
     axes[2].set_xlabel("Epoch day (780-day synodic cycle)", fontsize=12)
-    fig.suptitle("Mars 4-Tier Architecture Across a Synodic Cycle", fontsize=13, fontweight="bold")
+    fig.suptitle(
+        "Historical Mars 4-Tier Model Output — Not Design Guidance",
+        fontsize=13,
+        fontweight="bold",
+    )
     fig.tight_layout()
     path = os.path.join(FIG_DIR, "fig_mars_architecture.pdf")
     fig.savefig(path, dpi=150)
@@ -234,7 +243,7 @@ def fig3_mars_timeseries():
 
 
 def fig4_eta_vs_distance():
-    """η vs d_AU for T3/T4 with distance law fit."""
+    """Reproduce the historical η vs d_AU fit for T3/T4."""
     mars = load_mars()
     results = mars["results"]
 
@@ -276,7 +285,7 @@ def fig4_eta_vs_distance():
     ax.legend(handles=handles, fontsize=10)
     ax.set_xlabel(r"Earth--Mars distance $d_{\mathrm{AU}}$ (AU)", fontsize=12)
     ax.set_ylabel(r"$\ln\eta$", fontsize=13)
-    ax.set_title("Routing Efficiency vs Distance: The Chain Law Ceiling", fontsize=12)
+    ax.set_title("Historical Routing-Efficiency Fit — Archived Model Output", fontsize=12)
     ax.grid(True, alpha=0.3)
 
     fig.tight_layout()
@@ -287,7 +296,7 @@ def fig4_eta_vs_distance():
 
 
 if __name__ == "__main__":
-    print("Generating classification paper figures...")
+    print("Generating historical working-paper figures...")
     fig1_gamma_vs_p()
     fig2_gamma_vs_density()
     fig3_mars_timeseries()

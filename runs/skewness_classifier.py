@@ -1,17 +1,20 @@
-"""run_skewness_classifier.py — Phase 2: Skewness as Independent Classifier.
+"""Historical skewness comparison for two assigned source-domain groups.
 
-Phase 1 Experiment 4 discovered that cluster-class networks have Tracy-Widom-like
-negative skewness (-0.222) while trap-class networks have near-zero skewness.
+The original Phase 2 analysis assigned orbital rows to a "trap" group and
+Bluetooth rows to a "cluster" group, then optimized a threshold on those same
+labels. Those labels are not independent of the retired gamma-classification
+program, so the calculation is retained only as an in-sample historical
+comparison.
 
-This script sharpens that finding:
-1. Can skewness alone classify trap vs cluster? What's the accuracy?
-2. Does the skewness-based classification agree with γ-based classification?
-3. Is there a clean threshold in skewness that separates the classes?
+This script reproduces the archived calculation:
+1. Compare skewness across the assigned orbital and Bluetooth groups
+2. Measure in-sample threshold agreement with those assigned labels
+3. Record the historical threshold without treating it as a classifier
 4. How does skewness vary with p_eff and E[H]?
-5. Bootstrap CI on the mean skewness per class
+5. Bootstrap CI on the mean skewness per assigned group
 
-If skewness works as an independent classifier, it's the fastest diagnostic:
-computable from per-seed DR variance without any oracle sweep or gamma fit.
+No independent classifier, cross-domain replacement, or current decision rule
+is claimed.
 
 Reads:  runs/phi_decompose_results.json
         runs/crawdad_contacts.Exp{1,2,3,6}_results.json
@@ -80,7 +83,7 @@ def extract_per_config_skewness(phi_data, min_seeds=15):
                 "mean_ln_eta": float(np.mean(arr)),
                 "var_ln_eta": float(np.var(arr, ddof=1)),
                 "n_seeds": len(arr),
-                "true_class": "trap",  # all orbital
+                "assigned_group": "orbital",
             }
         )
 
@@ -118,7 +121,7 @@ def extract_crawdad_skewness(cdata, trace_name, min_seeds=5):
                 "mean_ln_eta": float(np.mean(arr)),
                 "var_ln_eta": float(np.var(arr, ddof=1)),
                 "n_seeds": len(arr),
-                "true_class": "cluster",
+                "assigned_group": "bluetooth",
             }
         )
 
@@ -126,7 +129,7 @@ def extract_crawdad_skewness(cdata, trace_name, min_seeds=5):
 
 
 def find_optimal_threshold(trap_skews, cluster_skews):
-    """Find the skewness threshold that maximizes classification accuracy."""
+    """Find the historical split maximizing in-sample assigned-group agreement."""
     all_vals = sorted(set(trap_skews + cluster_skews))
     if len(all_vals) < 2:
         return float("nan"), 0.0
@@ -140,9 +143,8 @@ def find_optimal_threshold(trap_skews, cluster_skews):
     for i in range(len(all_vals) - 1):
         thresh = (all_vals[i] + all_vals[i + 1]) / 2.0
 
-        # Classify: skewness < thresh → trap, >= thresh → cluster
-        # Actually: trap has LESS negative skew, cluster has MORE negative skew
-        # So: skewness > thresh → trap, <= thresh → cluster
+        # Preserve the original in-sample split convention. The group labels are
+        # assigned from source domain; this is not an independent classifier.
         trap_correct = np.sum(trap_arr > thresh)
         clust_correct = np.sum(clust_arr <= thresh)
         acc = (trap_correct + clust_correct) / (len(trap_arr) + len(clust_arr))
@@ -180,17 +182,17 @@ def bootstrap_mean_ci(values, n_boot=1000, ci=0.95):
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("Phase 2: Skewness as Independent Classifier")
+    print("HISTORICAL SKEWNESS GROUP COMPARISON — CLASSIFIER RETIRED")
     print("=" * 70)
 
-    # --- Orbital (trap) ---
+    # --- Assigned orbital group (historically called trap) ---
     phi_path = _HERE / "phi_decompose_results.json"
     print(f"\nLoading {phi_path.name} ...")
     phi_data = _load_json(phi_path)
     trap_configs = extract_per_config_skewness(phi_data, min_seeds=15)
-    print(f"  {len(trap_configs):,} trap configs with ≥15 seeds")
+    print(f"  {len(trap_configs):,} assigned orbital rows with ≥15 seeds")
 
-    # --- CRAWDAD (cluster) ---
+    # --- Assigned Bluetooth group (historically called cluster) ---
     cluster_configs = []
     for trace in ["Exp1", "Exp2", "Exp3", "Exp6"]:
         cpath = _HERE / f"crawdad_contacts.{trace}_results.json"
@@ -205,11 +207,14 @@ def main():
     trap_skews = [c["skewness"] for c in trap_configs if np.isfinite(c["skewness"])]
     cluster_skews = [c["skewness"] for c in cluster_configs if np.isfinite(c["skewness"])]
 
-    print(f"\n  Total: {len(trap_skews)} trap, {len(cluster_skews)} cluster (finite skewness)")
+    print(
+        f"\n  Total: {len(trap_skews)} assigned orbital, "
+        f"{len(cluster_skews)} assigned Bluetooth rows (finite skewness)"
+    )
 
     # --- Distribution comparison ---
     print("\n" + "=" * 70)
-    print("SKEWNESS DISTRIBUTION BY CLASS")
+    print("HISTORICAL SKEWNESS DISTRIBUTION BY ASSIGNED GROUP")
     print("=" * 70)
 
     trap_arr = np.array(trap_skews)
@@ -218,12 +223,16 @@ def main():
     trap_lo, trap_hi = bootstrap_mean_ci(trap_skews)
     clust_lo, clust_hi = bootstrap_mean_ci(cluster_skews)
 
-    print(f"\n  TRAP:    mean = {np.mean(trap_arr):+.3f}  95% CI [{trap_lo:+.3f}, {trap_hi:+.3f}]")
+    print(
+        f"\n  ORBITAL ASSIGNED GROUP: mean = {np.mean(trap_arr):+.3f}  "
+        f"95% CI [{trap_lo:+.3f}, {trap_hi:+.3f}]"
+    )
     print(f"           median = {np.median(trap_arr):+.3f}, std = {np.std(trap_arr):.3f}")
     print(f"           {100 * np.mean(trap_arr < 0):.1f}% negative")
 
     print(
-        f"\n  CLUSTER: mean = {np.mean(clust_arr):+.3f}  95% CI [{clust_lo:+.3f}, {clust_hi:+.3f}]"
+        f"\n  BLUETOOTH ASSIGNED GROUP: mean = {np.mean(clust_arr):+.3f}  "
+        f"95% CI [{clust_lo:+.3f}, {clust_hi:+.3f}]"
     )
     print(f"           median = {np.median(clust_arr):+.3f}, std = {np.std(clust_arr):.3f}")
     print(f"           {100 * np.mean(clust_arr < 0):.1f}% negative")
@@ -232,19 +241,17 @@ def main():
     ci_overlap = trap_hi > clust_lo and clust_hi > trap_lo
     print(f"\n  95% CIs overlap: {ci_overlap}")
 
-    # --- Separation at per-config level ---
-    print("\n--- Per-config separation ---")
-    # What fraction of individual configs are correctly classified by sign?
-    # Cluster should be more negative, trap more positive (or less negative)
+    # --- Historical in-sample assigned-group separation ---
+    print("\n--- Historical in-sample assigned-group separation (descriptive only) ---")
     gap = np.mean(trap_arr) - np.mean(clust_arr)
-    print(f"  Mean gap: {gap:+.3f} (trap minus cluster)")
+    print(f"  Mean gap: {gap:+.3f} (assigned orbital minus assigned Bluetooth)")
 
     # --- Optimal threshold ---
     thresh, acc = find_optimal_threshold(trap_skews, cluster_skews)
-    print(f"\n  Optimal threshold: skewness = {thresh:+.3f}")
-    print(f"  Accuracy at threshold: {100 * acc:.1f}%")
+    print(f"\n  Historical in-sample split: skewness = {thresh:+.3f}")
+    print(f"  Assigned-group agreement at split: {100 * acc:.1f}%")
 
-    # --- Per-target skewness (are some orbital targets cluster-like in skewness?) ---
+    # --- Per-target skewness within the assigned orbital group ---
     print("\n" + "=" * 70)
     print("PER-TARGET SKEWNESS")
     print("=" * 70)
@@ -277,7 +284,7 @@ def main():
 
     # --- p_eff dependence ---
     print("\n" + "=" * 70)
-    print("SKEWNESS vs p_eff")
+    print("HISTORICAL SKEWNESS vs p_eff BY ASSIGNED GROUP")
     print("=" * 70)
 
     by_pref = defaultdict(lambda: {"trap": [], "cluster": []})
@@ -296,19 +303,18 @@ def main():
         t_mean = f"{np.mean(t_vals):+.3f}" if t_vals else "  ---"
         c_mean = f"{np.mean(c_vals):+.3f}" if c_vals else "  ---"
         print(
-            f"  p = {p:.2f}:  trap = {t_mean} (n={len(t_vals):4d})  "
-            f"cluster = {c_mean} (n={len(c_vals):4d})"
+            f"  p = {p:.2f}:  orbital = {t_mean} (n={len(t_vals):4d})  "
+            f"Bluetooth = {c_mean} (n={len(c_vals):4d})"
         )
 
-    # --- Agreement with γ classification ---
+    # --- Historical comparison with gamma-assigned groups ---
     print("\n" + "=" * 70)
-    print("AGREEMENT WITH γ CLASSIFICATION")
+    print("HISTORICAL GAMMA-ASSIGNED GROUP COMPARISON — NOT INDEPENDENT")
     print("=" * 70)
 
     # For each orbital target, does skewness sign agree with γ sign?
-    # Trap targets should have LESS negative skewness than cluster
-    # Inner planets (deep trap): less negative
-    # Outer planets (boundary): more negative?
+    # Preserve the original inner/outer orbital subset comparison without
+    # interpreting either subset as a class.
     inner = ["mars", "mercury", "venus", "ceres"]
     outer = ["jupiter", "saturn", "europa", "titan"]
 
@@ -316,24 +322,37 @@ def main():
     outer_skews = [s for t in outer for s in by_target.get(t, [])]
 
     print(
-        f"\n  Inner planets (deep trap):  mean skew = {np.mean(inner_skews):+.3f} (n={len(inner_skews)})"
+        f"\n  Inner orbital subset:       mean skew = {np.mean(inner_skews):+.3f} "
+        f"(n={len(inner_skews)})"
     )
     print(
-        f"  Outer bodies (boundary):   mean skew = {np.mean(outer_skews):+.3f} (n={len(outer_skews)})"
+        f"  Outer orbital subset:      mean skew = {np.mean(outer_skews):+.3f} "
+        f"(n={len(outer_skews)})"
     )
     print(
-        f"  CRAWDAD (cluster):         mean skew = {np.mean(clust_arr):+.3f} (n={len(clust_arr)})"
+        f"  Bluetooth assigned group:  mean skew = {np.mean(clust_arr):+.3f} (n={len(clust_arr)})"
     )
 
     if inner_skews and outer_skews:
         print(f"\n  Inner vs outer difference: {np.mean(inner_skews) - np.mean(outer_skews):+.3f}")
-        print(f"  Outer vs cluster difference: {np.mean(outer_skews) - np.mean(clust_arr):+.3f}")
+        print(
+            f"  Outer orbital vs Bluetooth difference: "
+            f"{np.mean(outer_skews) - np.mean(clust_arr):+.3f}"
+        )
 
     # --- Save ---
     elapsed = time.time() - t0
     output = {
         "experiment": "skewness_classifier",
-        "description": "Skewness of ln(eta) as independent classifier of trap/cluster",
+        "description": (
+            "Historical in-sample skewness comparison for source-domain-assigned groups; "
+            "the classifier interpretation is retired"
+        ),
+        "claim_status": "historical diagnostic; not an independent classifier or decision rule",
+        "label_semantics": {
+            "trap_stats": "assigned orbital group",
+            "cluster_stats": "assigned Bluetooth group",
+        },
         "elapsed_s": round(elapsed, 1),
         "trap_stats": {
             "mean": float(np.mean(trap_arr)),

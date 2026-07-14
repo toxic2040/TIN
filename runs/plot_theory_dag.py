@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Diagram 1: Theory Dependency Tree.
+"""Diagram 1: historical theory dependency tree.
 
-Structured top-to-bottom like a call graph — axiom subsets produce
-results, results branch into theorems/discoveries/design rules.
+Structured top-to-bottom like a call graph. Historical premise sets lead to
+archived claim branches and recorded negative results.
 No diagonal arrows. Reads like code.
+
+This is a map of the historical program, including retired claim branches. No
+branch is presented as a current theorem, mechanism, predictor, universality
+result, or design rule.
 """
 
 import matplotlib
@@ -19,9 +23,7 @@ FIG_DIR = Path(__file__).parent.parent / "figures"
 C = {
     "axiom": "#CC3311",
     "identity": "#EE7733",
-    "theorem": "#CCBB44",
-    "discovery": "#4477AA",
-    "design": "#009988",
+    "archived": "#4477AA",
     "negative": "#AA3377",
     "connector": "#AAAAAA",
     "bg": "#FAFAFA",
@@ -34,49 +36,49 @@ C = {
 
 TREE = [
     # ── Trunk 1: Temporal structure ────────────────────────────────
-    (0, "Ax1 (Discrete Contacts) + Ax2 (Directed Time)", "axiom", ""),
+    (0, "Historical premises: discrete contacts + directed time", "axiom", ""),
     (1, "S_T  — temporal reachability", "identity", "P1"),
-    (2, "S_T monotone  (Braess cannot occur in S_T)", "theorem", "P1, GT 34"),
-    (2, "Percolation threshold  (phase transition at critical fleet)", "theorem", "P1"),
-    (2, "N_eff catastrophe predictor  (AUC = 1.0)", "discovery", "P2"),
-    (3, "C1: Support check  (n_src >= 2 at every node)", "design", "P3"),
-    (2, "Layer 0.5 dominance  (all S_T collapses trace here)", "discovery", "P2"),
-    (3, "Pure temporal composition failure NOT OBSERVED  (344 expts)", "negative", "P2"),
+    (2, "Archived S_T monotonicity claim  (not reasserted)", "archived", "P1, GT 34"),
+    (2, "Retired critical-fleet phase-transition claim", "negative", "P1"),
+    (2, "Archived N_eff AUC = 1.0 diagnostic  (predictor claim retired)", "negative", "P2"),
+    (3, "Archived support check: n_src >= 2  (not design guidance)", "archived", "P3"),
+    (2, "Archived Layer 0.5 association  (dominance claim retired)", "negative", "P2"),
+    (3, "No pure temporal-composition failure in 344 archived tests", "archived", "P2"),
     # spacer
     (-1, "", "", ""),
     # ── Trunk 2: Transport physics ─────────────────────────────────
-    (0, "Ax3 (Custody) + Ax4 (Path Composition) + Ax5 (Decay)", "axiom", ""),
+    (0, "Historical premises: custody + path composition + decay", "axiom", ""),
     (1, "eta  — transport efficiency", "identity", "P1"),
-    (2, "Self-averaging  (eta_OPSP matches MC, CV < 0.4%)", "theorem", "P1"),
-    (2, "var_log_p -> gamma  (R^2 = 0.903, structural law)", "discovery", "P2"),
-    (3, "Oracle annihilation  (gamma_retry -> 0 on 7/8 bodies)", "discovery", "P2"),
-    (4, "Venus anomaly  (oracle WORSENS trap, dur_tail_ratio)", "negative", "P2"),
-    (3, "C3: Trap severity screening  (rank by sigma^2_t)", "design", "P3"),
-    (2, "Convex hull  (affine parametric shortest paths)", "theorem", "P3"),
-    (3, "Commodity-dependent effective graphs  (hull facets)", "discovery", "P3"),
-    (4, "C2: Effective graph per commodity", "design", "P3"),
-    (2, "TRAP / CLUSTER classification  (gamma, zero overlap)", "discovery", "P1"),
-    (3, "Achievability gap  (Moon 35.5x, DP vs greedy)", "discovery", "P1"),
-    (3, "Forwarding ratio boundary  (f_fwd = 1.00 exact)", "discovery", "P1"),
+    (2, "Archived self-averaging comparison  (scoped tested regime)", "archived", "P1"),
+    (2, "Archived var_log_p/gamma association  (R^2 = 0.903; law claim retired)", "negative", "P2"),
+    (3, "Archived retry-slope near-zero count  (7/8 bodies; no causal claim)", "archived", "P2"),
+    (4, "Archived Venus retry-slope comparison", "archived", "P2"),
+    (3, "Archived sigma^2_t ranking proposal  (not design guidance)", "archived", "P3"),
+    (2, "Archived affine shortest-path construction", "archived", "P3"),
+    (3, "Archived commodity-dependent graph construction", "archived", "P3"),
+    (4, "Archived per-commodity graph proposal  (not design guidance)", "archived", "P3"),
+    (2, "TRAP / CLUSTER global threshold  (retired)", "negative", "P1"),
+    (3, "Archived Moon DP/greedy ratio: 35.5x", "archived", "P1"),
+    (3, "Archived forwarding-ratio reference: f_fwd = 1.00", "archived", "P1"),
     # spacer
     (-1, "", "", ""),
     # ── Trunk 3: The factorization ─────────────────────────────────
     (0, "S_T  +  eta  (from trunks above)", "identity", ""),
     (1, "DR = S_T x eta  — conditional-probability identity", "identity", "P1"),
-    (2, "Braess localization  (Braess lives entirely in eta)", "theorem", "P1"),
-    (2, "DR monotone despite eta dip  (91,540 configs)", "discovery", "P2"),
-    (2, "J_beta = 0.242 +/- 0.001  (TASEP saturation invariance)", "discovery", "P4"),
-    (3, "Three-phase structure  (LD, HD, MC)", "discovery", "P4"),
-    (3, "Golden-mean hypothesis FALSIFIED", "negative", "P4"),
-    (2, "C4: Self-consistency  (finite-campaign sustainability)", "design", "P3"),
-    (3, "C2/C4 FAIL on EMJ  (Jupiter unsustainable at all tau)", "negative", "P3"),
+    (2, "Archived Braess decomposition  (causal localization retired)", "negative", "P1"),
+    (2, "Archived DR/eta sample summary  (91,540 rows)", "archived", "P2"),
+    (2, "Archived J_beta fit: 0.242 +/- 0.001  (invariance claim retired)", "negative", "P4"),
+    (3, "Archived LD / HD / MC labels  (descriptive only)", "archived", "P4"),
+    (3, "Archived golden-mean test: hypothesis not supported in tested rows", "negative", "P4"),
+    (2, "Archived C4 finite-campaign checklist  (not operational guidance)", "archived", "P3"),
+    (3, "Archived EMJ model-band comparison  (no mission verdict)", "negative", "P3"),
     # spacer
     (-1, "", "", ""),
     # ── Trunk 4: One-tau (fewer axioms needed) ─────────────────────
-    (0, "Ax1 + Ax3 + Ax5  only  (Ax2, Ax4 NOT required)", "axiom", ""),
-    (1, "One-tau sustainability threshold", "theorem", "Theory"),
-    (2, "Universality  (DTN, kinetics, cold chain, biology, neural)", "discovery", "Theory"),
-    (2, "EMJ: Mars-Jupiter coast at 4.34 tau  (non-perturbative)", "discovery", "P3"),
+    (0, "Historical reduced premise set: Ax1 + Ax3 + Ax5", "axiom", ""),
+    (1, "Archived one-tau reference line  (threshold claim retired)", "negative", "Theory"),
+    (2, "Retired cross-domain universality analogy", "negative", "Theory"),
+    (2, "Archived EMJ modeled ratio: 4.34 tau  (no feasibility inference)", "archived", "P3"),
 ]
 
 
@@ -89,10 +91,10 @@ def draw():
     connector_x_off = 0.2  # connector line offset from text
 
     n_rows = len(TREE)
-    fig_h = max(n_rows * y_step + 1.5, 6)
+    fig_h = max(n_rows * y_step + 2.0, 6)
     fig, ax = plt.subplots(figsize=(13, fig_h))
     ax.set_xlim(0, 13)
-    ax.set_ylim(0, n_rows * y_step + 1.0)
+    ax.set_ylim(0, n_rows * y_step + 1.4)
     ax.invert_yaxis()
     ax.axis("off")
 
@@ -100,20 +102,30 @@ def draw():
     ax.text(
         6.5,
         0.15,
-        "TIN Theory Dependency Tree",
+        "TIN Historical Theory Dependency Tree",
         ha="center",
         va="center",
         fontsize=13,
         fontweight="bold",
     )
+    ax.text(
+        6.5,
+        0.43,
+        "Archived claim labels only — no theorem, predictor, mechanism, universality, or design rule is current",
+        ha="center",
+        va="center",
+        fontsize=7,
+        color="#666666",
+        fontstyle="italic",
+    )
 
     # Column headers
-    header_y = 0.55
+    header_y = 0.72
     ax.text(x_base, header_y, "Structure", fontsize=8, fontweight="bold", color="#666666")
     ax.text(tag_x, header_y, "Paper", fontsize=8, fontweight="bold", color="#666666", ha="center")
     ax.axhline(y=header_y + 0.15, xmin=0.04, xmax=0.96, color="#DDDDDD", lw=0.5)
 
-    y = 0.85
+    y = 1.02
     # Track the x position of each indent level for connector lines
     # We draw vertical connector lines for parent-child relationships
     trunk_lines = {}  # indent -> (x, y_start)
@@ -202,12 +214,10 @@ def draw():
 
     # ── Legend ──────────────────────────────────────────────────────
     legend_items = [
-        ("square", "axiom", "Axiom subset"),
-        ("o", "identity", "Identity"),
-        ("o", "theorem", "Theorem"),
-        ("o", "discovery", "Discovery"),
-        ("o", "design", "Design rule"),
-        ("X", "negative", "Negative result"),
+        ("square", "axiom", "Historical premise set"),
+        ("o", "identity", "Identity / bookkeeping"),
+        ("o", "archived", "Archived claim branch"),
+        ("X", "negative", "Retired / negative branch"),
     ]
     ly = y + 0.2
     lx = 1.5

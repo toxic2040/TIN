@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""ITN Fig 3: The one-tau rule — reserve sustainability threshold.
+"""Historical synthetic one-tau reserve-recurrence figure.
 
-Simulates the hub reserve recurrence from Whitepaper Section 8.2:
+Replays the illustrative hub recurrence used in an archived whitepaper draft:
 
     R_{n+1} = R_n * D_store  +  delivery  -  consumption
 
-where delivery = dispatch * 2^{-T_transit / tau_half}.  When the
-cumulative transit exposure T_transit exceeds tau_half, delivery
-cannot keep pace with consumption and reserves deplete monotonically
-regardless of dispatch rate.
+where delivery = dispatch * 2^{-T_transit / tau_half}.  The displayed
+zero-crossing follows from the fixed dispatch, consumption, and storage-decay
+constants below.
 
-Shows reserve trajectories for different T/tau ratios, from
-sustainable (cislunar) through catastrophic (Mars-Jupiter).
+The former universal one-tau, sustainability, and mission-design readings are
+retired.  This is a synthetic model illustration, not a feasibility result,
+reserve requirement, fleet rule, or operational recommendation.
 """
 
 import matplotlib
@@ -36,7 +36,7 @@ SCENARIOS = [
     (0.2, "Cislunar\n(54\\,d)", "#4477AA"),
     (0.5, "Earth--Mars\nw/ ZBO (90\\,d)", "#33BBEE"),
     (0.8, "Earth--Mars\nstandard (144\\,d)", "#009988"),
-    (1.0, "One-tau\nthreshold", "#333333"),
+    (1.0, "Archived one-tau\nreference", "#333333"),
     (1.5, "Long coast\n(270\\,d)", "#EE7733"),
     (2.5, "Earth--Jupiter\nrelay (450\\,d)", "#CC3311"),
     (4.0, "Mars--Jupiter\n(730\\,d)", "#881100"),
@@ -55,7 +55,12 @@ def run_recurrence(xi, n_epochs):
 
 # ── Figure: two panels ─────────────────────────────────────────────
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_double("pre", height_ratio=0.48))
-fig.subplots_adjust(wspace=0.32)
+fig.subplots_adjust(wspace=0.32, top=0.82)
+fig.suptitle(
+    "Historical Synthetic Reserve Recurrence — One-Tau Design Claim Retired",
+    fontsize=9,
+    y=0.98,
+)
 
 epochs = np.arange(N_EPOCHS + 1)
 
@@ -74,13 +79,25 @@ for xi, label, color in SCENARIOS:
         y_end = 0.15 + (xi - 1.0) * 0.35
     ax1.text(N_EPOCHS + 0.8, y_end, label, fontsize=4.3, color=color, va="center", linespacing=1.0)
 
-# One-tau threshold annotation
+# Descriptive trajectory annotations under the fixed recurrence inputs.
 ax1.axhline(0, color="#CCCCCC", lw=0.5, zorder=0)
 ax1.text(
-    20, R0 * 0.92, "sustainable $\\uparrow$", fontsize=5.5, color="#009988", ha="center", alpha=0.5
+    20,
+    R0 * 0.92,
+    "modeled reserve remains positive",
+    fontsize=5.5,
+    color="#009988",
+    ha="center",
+    alpha=0.5,
 )
 ax1.text(
-    20, R0 * 0.05, "depleting $\\downarrow$", fontsize=5.5, color="#CC3311", ha="center", alpha=0.5
+    20,
+    R0 * 0.05,
+    "modeled reserve clips at zero",
+    fontsize=5.5,
+    color="#CC3311",
+    ha="center",
+    alpha=0.5,
 )
 
 ax1.set_xlabel("Resupply epoch $n$")
@@ -97,8 +114,8 @@ delivery = DISPATCH * 2.0 ** (-xi_range)
 R_ss = (delivery - CONSUME) / (1.0 - D_STORE)
 R_ss_clipped = np.maximum(R_ss, 0.0)
 
-# Sustainable region (fill)
-xi_crit = 1.0  # threshold for dispatch/consume = 2
+# Archived zero-crossing reference for dispatch/consume = 2.
+xi_crit = 1.0
 ax2.fill_between(
     xi_range[xi_range <= xi_crit], 0, R_ss_clipped[xi_range <= xi_crit], alpha=0.08, color="#009988"
 )
@@ -112,12 +129,12 @@ ax2.fill_between(
 
 ax2.plot(xi_range, R_ss_clipped, "-", color="#333333", lw=1.5)
 
-# Threshold line
+# Historical reference line under the stated constants.
 ax2.axvline(xi_crit, color="#CC3311", ls="--", lw=0.8, alpha=0.6)
 ax2.text(
     xi_crit + 0.08,
     R_ss_clipped.max() * 0.75,
-    "$\\xi_{\\mathrm{crit}} = 1$\n$T = \\tau_{1/2}$",
+    "$\\xi = 1$ archived reference\n$T = \\tau_{1/2}$",
     fontsize=6.5,
     color="#CC3311",
     va="top",
@@ -136,11 +153,11 @@ for xi_s, lab, col in emj_scenarios:
     dy = 0.35 if xi_s < xi_crit else 0.20
     ax2.text(xi_s, y_s + dy, lab, fontsize=5, color=col, ha="center", va="bottom")
 
-# Region labels
+# Descriptive model-region labels; no operational verdict is implied.
 ax2.text(
     0.5,
     -0.35,
-    "sustainable",
+    "positive modeled equilibrium",
     fontsize=6.5,
     color="#009988",
     ha="center",
@@ -150,7 +167,7 @@ ax2.text(
 ax2.text(
     3.0,
     -0.35,
-    "unsustainable",
+    "zero-clipped modeled equilibrium",
     fontsize=6.5,
     color="#CC3311",
     ha="center",
@@ -167,4 +184,4 @@ ax2.set_ylim(-0.65, y_top)
 # ── Save ───────────────────────────────────────────────────────────
 save_fig(fig, "itn_one_tau_rule")
 plt.close(fig)
-print("Done.")
+print("Wrote historical synthetic recurrence figure; design and feasibility claims retired.")
